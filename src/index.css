@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@theme {
+  /* Navy — extracted from the client's original USS SRS app mockups (#1E1B51) */
+  --color-brand-50: #eef0fa;
+  --color-brand-100: #dde1f5;
+  --color-brand-200: #b8c0e8;
+  --color-brand-300: #8f9bd8;
+  --color-brand-400: #6270c2;
+  --color-brand-500: #4450a8;
+  --color-brand-600: #33408f;
+  --color-brand-700: #262f72;
+  --color-brand-800: #1e1b51;
+  --color-brand-900: #16123d;
+  --color-brand-950: #0d0a26;
+
+  /* Teal — accent extracted from the same mockups (#5BC5C9) */
+  --color-accent-50: #eafbfb;
+  --color-accent-100: #d0f5f5;
+  --color-accent-200: #a3ebec;
+  --color-accent-300: #6fdbde;
+  --color-accent-400: #46c8cc;
+  --color-accent-500: #2fb0b5;
+  --color-accent-600: #229397;
+  --color-accent-700: #1c757a;
+
+  /* Gold — small emphasis accent extracted from the same mockups (#FFC046) */
+  --color-gold-400: #ffc046;
+  --color-gold-500: #f2a91f;
+  --color-gold-600: #d68f0f;
+
+  --font-sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+
+  --animate-fade-in: fade-in 0.4s ease-out;
+  --animate-slide-up: slide-up 0.4s ease-out;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+html {
+  overflow-x: hidden;
+}
+
+:root {
+  color-scheme: light;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--color-brand-50);
+  color: #1e293b;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-brand-300) transparent;
+}

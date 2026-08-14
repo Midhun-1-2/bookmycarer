@@ -1,0 +1,64 @@
+[
+  {
+    "id": "cat-aged-care",
+    "name": "Aged Care",
+    "slug": "aged-care",
+    "icon": "HeartHandshake",
+    "description": "Compassionate, experienced support for seniors who want to live independently and safely at home.",
+    "services": [
+      { "id": "svc-elderly-companionship", "name": "Elderly Companionship", "priceFrom": 350 },
+      { "id": "svc-dementia-care", "name": "Dementia & Alzheimer's Care", "priceFrom": 450 },
+      { "id": "svc-mobility-support", "name": "Mobility & Fall Prevention Support", "priceFrom": 400 },
+      { "id": "svc-respite-care", "name": "Respite Care for Families", "priceFrom": 400 }
+    ]
+  },
+  {
+    "id": "cat-personal-care",
+    "name": "Personal Care",
+    "slug": "personal-care",
+    "icon": "HandHeart",
+    "description": "Daily living assistance delivered with dignity — bathing, grooming, dressing, and hygiene support.",
+    "services": [
+      { "id": "svc-bathing-grooming", "name": "Bathing & Grooming Assistance", "priceFrom": 300 },
+      { "id": "svc-medication-management", "name": "Medication Management", "priceFrom": 350 },
+      { "id": "svc-feeding-support", "name": "Feeding Support", "priceFrom": 300 }
+    ]
+  },
+  {
+    "id": "cat-nursing",
+    "name": "Nursing Services",
+    "slug": "nursing-services",
+    "icon": "Stethoscope",
+    "description": "Qualified nursing professionals for wound care, injections, vitals monitoring, and post-op recovery.",
+    "services": [
+      { "id": "svc-wound-care", "name": "Wound Care & Dressing", "priceFrom": 500 },
+      { "id": "svc-injections", "name": "Injections & IV Therapy", "priceFrom": 450 },
+      { "id": "svc-post-op-nursing", "name": "Post-Operative Nursing", "priceFrom": 600 },
+      { "id": "svc-vitals-monitoring", "name": "Vitals Monitoring", "priceFrom": 400 }
+    ]
+  },
+  {
+    "id": "cat-domestic",
+    "name": "Domestic Assistance / Cleaning Services",
+    "slug": "domestic-assistance",
+    "icon": "Sparkles",
+    "description": "Reliable help with housekeeping, cooking, and errands so families can focus on care, not chores.",
+    "services": [
+      { "id": "svc-housekeeping", "name": "Housekeeping", "priceFrom": 250 },
+      { "id": "svc-cooking", "name": "Meal Preparation", "priceFrom": 300 },
+      { "id": "svc-laundry", "name": "Laundry & Linen Care", "priceFrom": 200 }
+    ]
+  },
+  {
+    "id": "cat-companionship",
+    "name": "Social Companionship & Travel/Transport Assistance",
+    "slug": "social-companionship-travel",
+    "icon": "Car",
+    "description": "Friendly companionship for outings, appointments, and everyday travel — never navigate alone.",
+    "services": [
+      { "id": "svc-companion-outings", "name": "Companion for Outings", "priceFrom": 300 },
+      { "id": "svc-appointment-escort", "name": "Appointment Escort", "priceFrom": 350 },
+      { "id": "svc-transport-assistance", "name": "Transport Assistance", "priceFrom": 300 }
+    ]
+  }
+]

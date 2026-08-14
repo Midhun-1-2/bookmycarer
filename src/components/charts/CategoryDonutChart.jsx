@@ -1,0 +1,53 @@
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts'
+
+const COLORS = ['#33408f', '#2fb0b5', '#6270c2', '#ffc046', '#8f9bd8', '#1e1b51']
+
+function CustomTooltip({ active, payload }) {
+  if (!active || !payload?.length) return null
+  return (
+    <div className="rounded-lg border border-brand-100 bg-white px-3 py-2 text-xs shadow-lg shadow-brand-900/10">
+      <p className="font-medium text-slate-700">{payload[0].name}</p>
+      <p className="text-brand-700">{payload[0].value} bookings</p>
+    </div>
+  )
+}
+
+export default function CategoryDonutChart({ data }) {
+  if (!data.length) {
+    return <p className="py-10 text-center text-sm text-slate-400">No data yet.</p>
+  }
+  return (
+    <div>
+      <ResponsiveContainer width="100%" height={200}>
+        <PieChart>
+          <Pie
+            data={data}
+            dataKey="value"
+            nameKey="name"
+            innerRadius={55}
+            outerRadius={82}
+            paddingAngle={3}
+            strokeWidth={0}
+          >
+            {data.map((entry, i) => (
+              <Cell key={entry.name} fill={COLORS[i % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip content={<CustomTooltip />} />
+        </PieChart>
+      </ResponsiveContainer>
+      <ul className="mt-2 grid grid-cols-1 gap-x-4 gap-y-1.5 sm:grid-cols-2">
+        {data.map((entry, i) => (
+          <li key={entry.name} className="flex min-w-0 items-center gap-1.5 text-xs text-slate-600">
+            <span
+              className="h-2.5 w-2.5 shrink-0 rounded-full"
+              style={{ backgroundColor: COLORS[i % COLORS.length] }}
+            />
+            <span className="truncate">{entry.name}</span>
+            <span className="ml-auto shrink-0 font-medium text-slate-500">{entry.value}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}

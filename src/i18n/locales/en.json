@@ -1,0 +1,13 @@
+{
+  "nav": { "home": "Home", "careTypeServices": "Care Type & Services", "location": "Location", "caregiverLogin": "Caregiver Login", "loginBookNow": "Login / Book Now", "dashboard": "Go to dashboard" },
+  "hero": {
+    "badge": "Now serving families across India",
+    "title1": "Compassionate care,",
+    "title2": "delivered to your door.",
+    "subtitle": "Book My Carers connects families with verified caregivers, nurses, and support staff — matched to your needs, on your schedule.",
+    "cta1": "Book a caregiver",
+    "cta2": "Browse services"
+  },
+  "trust": { "verified": "Background-verified caregivers", "flexible": "Flexible hourly, daily & weekly plans", "rated": "Rated 4.7+ average by families" },
+  "browse": { "title": "Browse by Care Type", "subtitle": "Choose the kind of support your family needs.", "viewAll": "View all", "explore": "Explore" }
+}

@@ -1,0 +1,123 @@
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { Star, MapPin, BadgeCheck, IndianRupee, MapPinned } from 'lucide-react'
+import {
+  bookingsApi,
+  matchStaffForBooking,
+  confirmBookingMatch,
+  getStaffAverageRating,
+} from '../../lib/mockApi'
+import Card from '../../components/ui/Card'
+import Button from '../../components/ui/Button'
+import Badge from '../../components/ui/Badge'
+
+export default function MatchingResultsPage() {
+  const { bookingId } = useParams()
+  const navigate = useNavigate()
+  const [booking, setBooking] = useState(null)
+  const [matches, setMatches] = useState(null)
+  const [allBookings, setAllBookings] = useState([])
+  const [selecting, setSelecting] = useState(null)
+
+  useEffect(() => {
+    let active = true
+    async function load() {
+      const b = await bookingsApi.get(bookingId)
+      if (!active) return
+      setBooking(b)
+      const m = await matchStaffForBooking(b)
+      const all = await bookingsApi.list()
+      if (!active) return
+      setMatches(m)
+      setAllBookings(all)
+    }
+    load()
+    return () => {
+      active = false
+    }
+  }, [bookingId])
+
+  async function handleSelect(staffId) {
+    setSelecting(staffId)
+    await confirmBookingMatch(bookingId, staffId)
+    navigate(`/user/book/${bookingId}/checkout`)
+  }
+
+  if (!booking || matches === null) {
+    return (
+      <div className="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6">
+        <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-2 border-brand-200 border-t-brand-600" />
+        <p className="text-sm text-slate-500">Matching you with available caregivers…</p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
+      <h1 className="text-2xl font-semibold text-slate-900">Available caregivers for you</h1>
+      <p className="mt-1 text-sm text-slate-500">
+        Matched by skill and location for your {booking.serviceName} booking.
+      </p>
+
+      {matches.length === 0 ? (
+        <Card className="mt-6 text-center text-sm text-slate-500">
+          No caregivers are currently available for this category. Our team will reach out shortly.
+        </Card>
+      ) : (
+        <div className="mt-6 space-y-4">
+          {matches.map((staff, i) => (
+            <motion.div
+              key={staff.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: i * 0.05 }}
+            >
+              <Card animate={false} className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+                <div className="flex items-center gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-100 text-base font-semibold text-brand-700">
+                    {staff.name.split(' ').map((n) => n[0]).join('')}
+                  </div>
+                  <div>
+                    <p className="flex items-center gap-1.5 font-semibold text-slate-900">
+                      {staff.name}
+                      <BadgeCheck size={15} className="text-brand-600" />
+                    </p>
+                    <p className="flex items-center gap-1 text-xs text-slate-500">
+                      <MapPin size={12} /> {staff.area}, {staff.city} · {staff.experienceYears} yrs experience
+                    </p>
+                    <p className="mt-0.5 flex items-center gap-3 text-xs text-slate-500">
+                      <span className="flex items-center gap-1">
+                        <IndianRupee size={11} /> {staff.hourlyRate ?? '—'}/hr
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <MapPinned size={11} /> Up to {staff.serviceRadiusKm ?? '—'} km
+                      </span>
+                    </p>
+                    <div className="mt-1.5 flex flex-wrap gap-1.5">
+                      {staff.skills.map((s) => (
+                        <Badge key={s} tone="brand">{s}</Badge>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex w-full flex-col items-end gap-2 sm:w-auto">
+                  <span className="flex items-center gap-1 text-sm font-medium text-gold-500">
+                    <Star size={14} fill="currentColor" /> {getStaffAverageRating(staff.id, allBookings, staff.rating)}
+                  </span>
+                  <Button
+                    size="sm"
+                    onClick={() => handleSelect(staff.id)}
+                    disabled={selecting !== null}
+                  >
+                    {selecting === staff.id ? 'Confirming…' : 'Select caregiver'}
+                  </Button>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
