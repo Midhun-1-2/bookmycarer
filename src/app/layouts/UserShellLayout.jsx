@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import { HeartHandshake, Menu, X, LogOut, Bell } from 'lucide-react'
 import { useSession } from '../../lib/session'
 import Footer from '../../components/layout/Footer'
@@ -8,12 +9,13 @@ import ChatbotWidget from '../../features/chatbot/ChatbotWidget'
 import PanicButton from '../../features/panic/PanicButton'
 
 const NAV = [
-  { to: '/user/dashboard', label: 'Browse Services' },
-  { to: '/user/bookings', label: 'My Bookings' },
-  { to: '/user/profile', label: 'Profile' },
+  { to: '/user/dashboard', label: 'userShell.browseServices' },
+  { to: '/user/bookings', label: 'userShell.myBookings' },
+  { to: '/user/profile', label: 'userShell.profile' },
 ]
 
 export default function UserShellLayout() {
+  const { t } = useTranslation()
   const { session, logout } = useSession()
   const [mobileOpen, setMobileOpen] = useState(false)
   const navigate = useNavigate()
@@ -43,13 +45,13 @@ export default function UserShellLayout() {
                   `rounded-lg px-3 py-2 text-sm font-medium ${isActive ? 'bg-brand-100 text-brand-700' : 'text-slate-600 hover:text-brand-700'}`
                 }
               >
-                {item.label}
+                {t(item.label)}
               </NavLink>
             ))}
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <button className="rounded-full p-2 text-slate-500 hover:bg-brand-50" aria-label="Notifications">
+            <button className="rounded-full p-2 text-slate-500 hover:bg-brand-50" aria-label={t('topbar.notifications')}>
               <Bell size={19} />
             </button>
             <div className="text-right">
@@ -59,13 +61,13 @@ export default function UserShellLayout() {
             <button
               onClick={handleLogout}
               className="cursor-pointer rounded-lg p-2 text-rose-600 hover:bg-rose-50"
-              aria-label="Log out"
+              aria-label={t('sidebar.logout')}
             >
               <LogOut size={18} />
             </button>
           </div>
 
-          <button className="rounded-lg p-2 text-slate-600 lg:hidden" onClick={() => setMobileOpen(true)}>
+          <button className="rounded-lg p-2 text-slate-600 lg:hidden" onClick={() => setMobileOpen(true)} aria-label={t('sidebar.openMenu')}>
             <Menu size={22} />
           </button>
         </div>
@@ -88,8 +90,8 @@ export default function UserShellLayout() {
                 transition={{ type: 'tween', duration: 0.25 }}
               >
                 <div className="mb-4 flex items-center justify-between">
-                  <span className="text-base font-semibold text-slate-900">Menu</span>
-                  <button onClick={() => setMobileOpen(false)} className="rounded-full p-1.5 text-slate-400 hover:bg-brand-50">
+                  <span className="text-base font-semibold text-slate-900">{t('sidebar.menu')}</span>
+                  <button onClick={() => setMobileOpen(false)} className="rounded-full p-1.5 text-slate-400 hover:bg-brand-50" aria-label={t('sidebar.closeMenu')}>
                     <X size={18} />
                   </button>
                 </div>
@@ -102,7 +104,7 @@ export default function UserShellLayout() {
                       `block rounded-lg px-3 py-2.5 text-sm font-medium ${isActive ? 'bg-brand-100 text-brand-700' : 'text-slate-600 hover:bg-brand-50'}`
                     }
                   >
-                    {item.label}
+                    {t(item.label)}
                   </NavLink>
                 ))}
                 <button
@@ -110,7 +112,7 @@ export default function UserShellLayout() {
                   className="mt-3 flex w-full cursor-pointer items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-rose-600 hover:bg-rose-50"
                 >
                   <LogOut size={17} />
-                  Log out
+                  {t('sidebar.logout')}
                 </button>
               </motion.div>
             </motion.div>

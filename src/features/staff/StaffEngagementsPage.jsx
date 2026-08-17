@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { CalendarClock, MapPin, ArrowRight } from 'lucide-react'
 import { bookingsApi } from '../../lib/mockApi'
 import { useSession } from '../../lib/session'
@@ -8,6 +9,7 @@ import Card from '../../components/ui/Card'
 import Badge from '../../components/ui/Badge'
 
 export default function StaffEngagementsPage() {
+  const { t } = useTranslation()
   const { session } = useSession()
   const [bookings, setBookings] = useState(null)
 
@@ -26,13 +28,13 @@ export default function StaffEngagementsPage() {
 
   return (
     <div className="mx-auto max-w-4xl">
-      <h1 className="text-2xl font-semibold text-slate-900">Engagements</h1>
-      <p className="mt-1 text-sm text-slate-500">All bookings assigned to you.</p>
+      <h1 className="text-2xl font-semibold text-slate-900">{t('staffEngagements.title')}</h1>
+      <p className="mt-1 text-sm text-slate-500">{t('staffEngagements.subtitle')}</p>
 
       {bookings === null ? (
-        <p className="mt-6 text-sm text-slate-400">Loading…</p>
+        <p className="mt-6 text-sm text-slate-400">{t('staffEngagements.loading')}</p>
       ) : bookings.length === 0 ? (
-        <Card className="mt-6 text-center text-sm text-slate-500">No engagements assigned yet.</Card>
+        <Card className="mt-6 text-center text-sm text-slate-500">{t('staffEngagements.empty')}</Card>
       ) : (
         <div className="mt-6 space-y-3">
           {bookings.map((b) => (
@@ -41,7 +43,7 @@ export default function StaffEngagementsPage() {
                 <div>
                   <div className="flex items-center gap-2">
                     <p className="font-semibold text-slate-900">{b.serviceName}</p>
-                    <Badge tone={STATUS_TONE[b.status]}>{STATUS_LABEL[b.status]}</Badge>
+                    <Badge tone={STATUS_TONE[b.status]}>{t(STATUS_LABEL[b.status])}</Badge>
                   </div>
                   <p className="mt-1 flex items-center gap-1 text-xs text-slate-500">
                     <CalendarClock size={12} /> {b.startDate} · {b.time}

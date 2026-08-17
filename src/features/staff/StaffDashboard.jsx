@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { CalendarClock, MapPin, Star, ArrowRight } from 'lucide-react'
 import { bookingsApi, staffApi, getStaffAverageRating } from '../../lib/mockApi'
 import { useSession } from '../../lib/session'
@@ -11,6 +12,7 @@ import RevenueTrendChart from '../../components/charts/RevenueTrendChart'
 import StatusBarChart from '../../components/charts/StatusBarChart'
 
 export default function StaffDashboard() {
+  const { t } = useTranslation()
   const { session } = useSession()
   const [bookings, setBookings] = useState(null)
   const [seedRating, setSeedRating] = useState(0)
@@ -32,46 +34,46 @@ export default function StaffDashboard() {
 
   return (
     <div className="mx-auto max-w-5xl">
-      <h1 className="text-2xl font-semibold text-slate-900">Welcome back, {session.name.split(' ')[0]}</h1>
-      <p className="mt-1 text-sm text-slate-500">Here's what's on your schedule.</p>
+      <h1 className="text-2xl font-semibold text-slate-900">{t('staffDashboard.welcome', { name: session.name.split(' ')[0] })}</h1>
+      <p className="mt-1 text-sm text-slate-500">{t('staffDashboard.subtitle')}</p>
 
       <div className="mt-6 grid grid-cols-3 gap-3">
         <Card animate={false} className="text-center">
           <p className="text-xl font-semibold text-brand-700">{upcoming.length}</p>
-          <p className="text-xs text-slate-500">Upcoming</p>
+          <p className="text-xs text-slate-500">{t('staffDashboard.upcoming')}</p>
         </Card>
         <Card animate={false} className="text-center">
           <p className="text-xl font-semibold text-brand-700">{completed.length}</p>
-          <p className="text-xs text-slate-500">Completed</p>
+          <p className="text-xs text-slate-500">{t('staffDashboard.completed')}</p>
         </Card>
         <Card animate={false} className="flex flex-col items-center justify-center text-center">
           <p className="flex items-center gap-1 text-xl font-semibold text-gold-500">
             <Star size={16} fill="currentColor" /> {getStaffAverageRating(session.id, bookings, seedRating) || '—'}
           </p>
-          <p className="text-xs text-slate-500">Rating</p>
+          <p className="text-xs text-slate-500">{t('staffDashboard.rating')}</p>
         </Card>
       </div>
 
       <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-3">
         <Card className="lg:col-span-2" animate={false}>
-          <h3 className="text-sm font-semibold text-slate-900">Your earnings — last 14 days</h3>
+          <h3 className="text-sm font-semibold text-slate-900">{t('staffDashboard.earningsChartTitle')}</h3>
           <RevenueTrendChart data={revenueByDay(bookings, 14)} />
         </Card>
         <Card animate={false}>
-          <h3 className="text-sm font-semibold text-slate-900">Engagements by status</h3>
+          <h3 className="text-sm font-semibold text-slate-900">{t('staffDashboard.statusChartTitle')}</h3>
           <StatusBarChart data={bookingsByStatus(bookings)} />
         </Card>
       </div>
 
       <div className="mt-6 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-slate-900">Upcoming engagements</h2>
+        <h2 className="text-lg font-semibold text-slate-900">{t('staffDashboard.upcomingEngagements')}</h2>
         <Link to="/staff/engagements" className="flex items-center gap-1 text-sm font-medium text-brand-700 hover:underline">
-          View all <ArrowRight size={14} />
+          {t('staffDashboard.viewAll')} <ArrowRight size={14} />
         </Link>
       </div>
 
       {upcoming.length === 0 ? (
-        <Card className="mt-3 text-center text-sm text-slate-500">No upcoming engagements right now.</Card>
+        <Card className="mt-3 text-center text-sm text-slate-500">{t('staffDashboard.noUpcoming')}</Card>
       ) : (
         <div className="mt-3 space-y-3">
           {upcoming.map((b) => (
@@ -80,7 +82,7 @@ export default function StaffDashboard() {
                 <div>
                   <div className="flex items-center gap-2">
                     <p className="font-semibold text-slate-900">{b.serviceName}</p>
-                    <Badge tone={STATUS_TONE[b.status]}>{STATUS_LABEL[b.status]}</Badge>
+                    <Badge tone={STATUS_TONE[b.status]}>{t(STATUS_LABEL[b.status])}</Badge>
                   </div>
                   <p className="mt-1 flex items-center gap-1 text-xs text-slate-500">
                     <CalendarClock size={12} /> {b.startDate} · {b.time}

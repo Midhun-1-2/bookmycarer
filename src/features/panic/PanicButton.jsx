@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import { AlertTriangle, CheckCircle2 } from 'lucide-react'
 import Modal from '../../components/ui/Modal'
 import Button from '../../components/ui/Button'
 
 export default function PanicButton() {
+  const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const [sent, setSent] = useState(false)
 
@@ -24,12 +26,12 @@ export default function PanicButton() {
         whileTap={{ scale: 0.95 }}
         onClick={() => setOpen(true)}
         className="fixed bottom-5 left-5 z-40 flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-rose-600 text-white shadow-lg shadow-rose-600/40"
-        aria-label="Emergency alert"
+        aria-label={t('panic.emergencyAlertAriaLabel')}
       >
         <AlertTriangle size={22} />
       </motion.button>
 
-      <Modal open={open} onClose={handleClose} title={sent ? undefined : 'Emergency Alert'}>
+      <Modal open={open} onClose={handleClose} title={sent ? undefined : t('panic.emergencyAlertTitle')}>
         <AnimatePresence mode="wait">
           {sent ? (
             <motion.div
@@ -39,27 +41,25 @@ export default function PanicButton() {
               className="flex flex-col items-center py-4 text-center"
             >
               <CheckCircle2 size={44} className="text-emerald-500" />
-              <p className="mt-3 font-semibold text-slate-900">Alert sent</p>
+              <p className="mt-3 font-semibold text-slate-900">{t('panic.alertSentTitle')}</p>
               <p className="mt-1 text-sm text-slate-500">
-                Our support team and your emergency contact have been notified with your last known
-                location. Stay safe — someone will reach out shortly.
+                {t('panic.alertSentMessage')}
               </p>
               <Button className="mt-5 w-full" onClick={handleClose}>
-                Close
+                {t('panic.close')}
               </Button>
             </motion.div>
           ) : (
             <motion.div key="confirm" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <p className="text-sm text-slate-600">
-                This will immediately notify Book My Carers support and your registered emergency
-                contact that you need help. Only use this in a genuine emergency.
+                {t('panic.confirmMessage', { brand: 'Book My Carers' })}
               </p>
               <div className="mt-5 flex gap-2">
                 <Button variant="outline" className="flex-1" onClick={handleClose}>
-                  Cancel
+                  {t('panic.cancel')}
                 </Button>
                 <Button variant="danger" className="flex-1" onClick={handleTrigger}>
-                  Send alert
+                  {t('panic.sendAlert')}
                 </Button>
               </div>
             </motion.div>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import { Star, MapPin, BadgeCheck, IndianRupee, MapPinned } from 'lucide-react'
 import {
   bookingsApi,
@@ -13,6 +14,7 @@ import Button from '../../components/ui/Button'
 import Badge from '../../components/ui/Badge'
 
 export default function MatchingResultsPage() {
+  const { t } = useTranslation()
   const { bookingId } = useParams()
   const navigate = useNavigate()
   const [booking, setBooking] = useState(null)
@@ -48,21 +50,21 @@ export default function MatchingResultsPage() {
     return (
       <div className="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6">
         <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-2 border-brand-200 border-t-brand-600" />
-        <p className="text-sm text-slate-500">Matching you with available caregivers…</p>
+        <p className="text-sm text-slate-500">{t('booking.matchingLoading')}</p>
       </div>
     )
   }
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-      <h1 className="text-2xl font-semibold text-slate-900">Available caregivers for you</h1>
+      <h1 className="text-2xl font-semibold text-slate-900">{t('booking.availableCaregiversTitle')}</h1>
       <p className="mt-1 text-sm text-slate-500">
-        Matched by skill and location for your {booking.serviceName} booking.
+        {t('booking.matchedSubtitle', { serviceName: booking.serviceName })}
       </p>
 
       {matches.length === 0 ? (
         <Card className="mt-6 text-center text-sm text-slate-500">
-          No caregivers are currently available for this category. Our team will reach out shortly.
+          {t('booking.noCaregivers')}
         </Card>
       ) : (
         <div className="mt-6 space-y-4">
@@ -84,14 +86,14 @@ export default function MatchingResultsPage() {
                       <BadgeCheck size={15} className="text-brand-600" />
                     </p>
                     <p className="flex items-center gap-1 text-xs text-slate-500">
-                      <MapPin size={12} /> {staff.area}, {staff.city} · {staff.experienceYears} yrs experience
+                      <MapPin size={12} /> {staff.area}, {staff.city} · {staff.experienceYears} {t('booking.yrsExperience')}
                     </p>
                     <p className="mt-0.5 flex items-center gap-3 text-xs text-slate-500">
                       <span className="flex items-center gap-1">
                         <IndianRupee size={11} /> {staff.hourlyRate ?? '—'}/hr
                       </span>
                       <span className="flex items-center gap-1">
-                        <MapPinned size={11} /> Up to {staff.serviceRadiusKm ?? '—'} km
+                        <MapPinned size={11} /> {t('booking.upToPrefix')} {staff.serviceRadiusKm ?? '—'} km
                       </span>
                     </p>
                     <div className="mt-1.5 flex flex-wrap gap-1.5">
@@ -110,7 +112,7 @@ export default function MatchingResultsPage() {
                     onClick={() => handleSelect(staff.id)}
                     disabled={selecting !== null}
                   >
-                    {selecting === staff.id ? 'Confirming…' : 'Select caregiver'}
+                    {selecting === staff.id ? t('booking.confirming') : t('booking.selectCaregiver')}
                   </Button>
                 </div>
               </Card>

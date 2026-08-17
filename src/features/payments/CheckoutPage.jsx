@@ -1,19 +1,21 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import { CreditCard, Smartphone, Landmark, CheckCircle2, IndianRupee } from 'lucide-react'
 import { bookingsApi, staffApi, payForBooking } from '../../lib/mockApi'
 import Card from '../../components/ui/Card'
 import Button from '../../components/ui/Button'
 
-const METHODS = [
-  { id: 'upi', label: 'UPI', icon: Smartphone },
-  { id: 'card', label: 'Credit / Debit Card', icon: CreditCard },
-  { id: 'netbanking', label: 'Netbanking', icon: Landmark },
-]
-
 export default function CheckoutPage() {
+  const { t } = useTranslation()
   const { bookingId } = useParams()
+
+  const METHODS = [
+    { id: 'upi', label: t('checkout.methodUpi'), icon: Smartphone },
+    { id: 'card', label: t('checkout.methodCard'), icon: CreditCard },
+    { id: 'netbanking', label: t('checkout.methodNetbanking'), icon: Landmark },
+  ]
   const navigate = useNavigate()
   const [booking, setBooking] = useState(null)
   const [staffName, setStaffName] = useState('')
@@ -43,14 +45,14 @@ export default function CheckoutPage() {
 
   return (
     <div className="mx-auto max-w-md px-4 py-10 sm:px-6">
-      <h1 className="text-2xl font-semibold text-slate-900">Complete payment</h1>
-      <p className="mt-1 text-sm text-slate-500">Secured by Razorpay (simulated for this prototype).</p>
+      <h1 className="text-2xl font-semibold text-slate-900">{t('checkout.title')}</h1>
+      <p className="mt-1 text-sm text-slate-500">{t('checkout.subtitle')}</p>
 
       <Card className="mt-6" animate={false}>
         <div className="flex items-center justify-between border-b border-brand-50 pb-3">
           <div>
             <p className="text-sm font-medium text-slate-900">{booking.serviceName}</p>
-            <p className="text-xs text-slate-500">Caregiver: {staffName || 'Assigned'}</p>
+            <p className="text-xs text-slate-500">{t('checkout.caregiverLabel', { name: staffName || t('checkout.assignedFallback') })}</p>
           </div>
           <p className="flex items-center text-lg font-semibold text-brand-700">
             <IndianRupee size={16} />
@@ -67,18 +69,18 @@ export default function CheckoutPage() {
               className="flex flex-col items-center py-6 text-center"
             >
               <CheckCircle2 size={44} className="text-emerald-500" />
-              <p className="mt-3 font-semibold text-slate-900">Payment successful</p>
+              <p className="mt-3 font-semibold text-slate-900">{t('checkout.paymentSuccessful')}</p>
               <p className="mt-1 text-sm text-slate-500">
-                A WhatsApp confirmation and invoice have been sent to your registered number.
+                {t('checkout.successMessage')}
               </p>
               <Button className="mt-5 w-full" onClick={() => navigate(`/user/bookings/${bookingId}`)}>
-                View booking
+                {t('checkout.viewBooking')}
               </Button>
             </motion.div>
           ) : (
             <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="pt-4">
               <p className="mb-3 text-xs font-medium uppercase tracking-wide text-slate-400">
-                Choose payment method
+                {t('checkout.choosePaymentMethod')}
               </p>
               <div className="space-y-2">
                 {METHODS.map(({ id, label, icon: Icon }) => (
@@ -102,7 +104,7 @@ export default function CheckoutPage() {
                 onClick={handlePay}
                 disabled={status === 'processing'}
               >
-                {status === 'processing' ? 'Processing…' : `Pay ₹${booking.payment.amount}`}
+                {status === 'processing' ? t('checkout.processing') : t('checkout.payAmount', { amount: booking.payment.amount })}
               </Button>
             </motion.div>
           )}

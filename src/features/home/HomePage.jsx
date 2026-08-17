@@ -22,7 +22,7 @@ export default function HomePage() {
     id: cat.id,
     title: cat.name,
     description: cat.description,
-    ctaLabel: 'Explore services',
+    ctaLabel: t('carousel.exploreServices'),
     ctaTo: `/services/${cat.slug}`,
     image: getCategoryPhotoUrl(cat.icon, { w: 900 }),
   }))
@@ -78,7 +78,7 @@ export default function HomePage() {
             <div className="absolute -inset-6 -z-10 rounded-full bg-brand-200/50 blur-3xl" />
             <img
               src={HERO_PHOTO_URL}
-              alt="Caregiver supporting a senior at home"
+              alt={t('home.heroImageAlt')}
               className="mx-auto aspect-[4/5] w-full max-w-md rounded-3xl object-cover shadow-xl shadow-brand-900/15 sm:aspect-square"
             />
           </motion.div>
@@ -111,13 +111,13 @@ export default function HomePage() {
 
       <section className="bg-brand-600">
         <div className="mx-auto max-w-7xl px-4 py-14 text-center sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-semibold text-white sm:text-3xl">Ready to find the right caregiver?</h2>
+          <h2 className="text-2xl font-semibold text-white sm:text-3xl">{t('home.ctaTitle')}</h2>
           <p className="mx-auto mt-2 max-w-xl text-brand-100">
-            Tell us what you need and we'll match you with qualified, verified staff near you.
+            {t('home.ctaSubtitle')}
           </p>
           <Link to="/login/user" className="mt-6 inline-block">
             <Button size="lg" variant="secondary">
-              Get started
+              {t('home.ctaButton')}
             </Button>
           </Link>
         </div>

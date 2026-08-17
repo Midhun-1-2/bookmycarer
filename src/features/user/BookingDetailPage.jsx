@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { CalendarClock, MapPin, Phone, ShieldAlert, IndianRupee, ArrowLeft, KeyRound, MessageSquareText } from 'lucide-react'
 import { bookingsApi, staffApi, requestCheckInOtp, submitReview } from '../../lib/mockApi'
 import { STATUS_TONE, STATUS_LABEL } from '../../lib/bookingStatus'
@@ -8,7 +9,19 @@ import Badge from '../../components/ui/Badge'
 import Button from '../../components/ui/Button'
 import StarRating, { StarRatingDisplay } from '../../components/ui/StarRating'
 
+const PAYMENT_STATUS_LABEL = {
+  paid: 'userBookingDetail.paymentStatus.paid',
+  pending: 'userBookingDetail.paymentStatus.pending',
+}
+
+const SCHEDULE_TYPE_LABEL = {
+  hourly: 'userBookingDetail.scheduleType.hourly',
+  daily: 'userBookingDetail.scheduleType.daily',
+  weekly: 'userBookingDetail.scheduleType.weekly',
+}
+
 export default function BookingDetailPage() {
+  const { t } = useTranslation()
   const { bookingId } = useParams()
   const [booking, setBooking] = useState(null)
   const [staff, setStaff] = useState(null)
@@ -49,18 +62,18 @@ export default function BookingDetailPage() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:px-8">
       <Link to="/user/bookings" className="flex items-center gap-1 text-sm font-medium text-brand-700 hover:underline">
-        <ArrowLeft size={14} /> My Bookings
+        <ArrowLeft size={14} /> {t('userBookingDetail.backToBookings')}
       </Link>
 
       <div className="mt-3 flex items-center gap-2">
         <h1 className="text-2xl font-semibold text-slate-900">{booking.serviceName}</h1>
-        <Badge tone={STATUS_TONE[booking.status]}>{STATUS_LABEL[booking.status]}</Badge>
+        <Badge tone={STATUS_TONE[booking.status]}>{t(STATUS_LABEL[booking.status])}</Badge>
       </div>
 
       <Card className="mt-5 space-y-4" animate={false}>
         <div className="flex items-center gap-2 text-sm text-slate-700">
           <CalendarClock size={16} className="text-brand-600" />
-          {booking.startDate} at {booking.time} · <span className="capitalize">{booking.scheduleType}</span>
+          {booking.startDate} {t('userBookingDetail.at')} {booking.time} · <span className="capitalize">{t(SCHEDULE_TYPE_LABEL[booking.scheduleType])}</span>
         </div>
         <div className="flex items-center gap-2 text-sm text-slate-700">
           <MapPin size={16} className="text-brand-600" />
@@ -72,7 +85,7 @@ export default function BookingDetailPage() {
         </div>
         <div className="flex items-center gap-2 text-sm text-slate-700">
           <ShieldAlert size={16} className="text-brand-600" />
-          Emergency contact: {booking.emergencyContact}
+          {t('userBookingDetail.emergencyContact')} {booking.emergencyContact}
         </div>
 
         {booking.careTags?.length > 0 && (
@@ -86,7 +99,7 @@ export default function BookingDetailPage() {
 
       {staff && (
         <Card className="mt-4" animate={false}>
-          <p className="text-xs font-medium uppercase tracking-wide text-slate-400">Your caregiver</p>
+          <p className="text-xs font-medium uppercase tracking-wide text-slate-400">{t('userBookingDetail.yourCaregiver')}</p>
           <div className="mt-2 flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-100 font-semibold text-brand-700">
               {staff.name.split(' ').map((n) => n[0]).join('')}
@@ -101,21 +114,21 @@ export default function BookingDetailPage() {
 
       <Card className="mt-4" animate={false}>
         <div className="flex items-center justify-between">
-          <p className="text-sm text-slate-500">Invoice amount</p>
+          <p className="text-sm text-slate-500">{t('userBookingDetail.invoiceAmount')}</p>
           <p className="flex items-center text-lg font-semibold text-brand-700">
             <IndianRupee size={16} />
             {booking.payment.amount}
           </p>
         </div>
-        <p className="mt-1 text-xs capitalize text-slate-400">Payment {booking.payment.status}</p>
+        <p className="mt-1 text-xs capitalize text-slate-400">{t('userBookingDetail.paymentPrefix')} {t(PAYMENT_STATUS_LABEL[booking.payment.status])}</p>
         {booking.payment.status === 'pending' && booking.staffId && (
           <Link to={`/user/book/${booking.id}/checkout`}>
-            <Button className="mt-3 w-full">Pay now</Button>
+            <Button className="mt-3 w-full">{t('userBookingDetail.payNow')}</Button>
           </Link>
         )}
         {booking.status === 'pending' && !booking.staffId && (
           <Link to={`/user/book/${booking.id}/match`}>
-            <Button className="mt-3 w-full" variant="outline">View caregiver matches</Button>
+            <Button className="mt-3 w-full" variant="outline">{t('userBookingDetail.viewCaregiverMatches')}</Button>
           </Link>
         )}
       </Card>
@@ -124,16 +137,16 @@ export default function BookingDetailPage() {
         <Card className="mt-4" animate={false}>
           <p className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-slate-400">
             <KeyRound size={13} />
-            {booking.status === 'confirmed' ? 'Check-in passcode' : 'Check-out passcode'}
+            {booking.status === 'confirmed' ? t('userBookingDetail.checkInPasscode') : t('userBookingDetail.checkOutPasscode')}
           </p>
           <p className="mt-1 text-xs text-slate-500">
-            Generate a code when your caregiver arrives and share it with them verbally to verify presence.
+            {t('userBookingDetail.passcodeDescription')}
           </p>
           {otp ? (
             <p className="mt-3 text-3xl font-bold tracking-[0.3em] text-brand-700">{otp}</p>
           ) : (
             <Button className="mt-3" variant="outline" onClick={handleGenerateOtp} disabled={generatingOtp}>
-              {generatingOtp ? 'Generating…' : 'Generate passcode'}
+              {generatingOtp ? t('userBookingDetail.generating') : t('userBookingDetail.generatePasscode')}
             </Button>
           )}
         </Card>
@@ -141,10 +154,10 @@ export default function BookingDetailPage() {
 
       {(booking.checkIn || booking.checkOut) && (
         <Card className="mt-4" animate={false}>
-          <p className="text-xs font-medium uppercase tracking-wide text-slate-400">Shift verification</p>
+          <p className="text-xs font-medium uppercase tracking-wide text-slate-400">{t('userBookingDetail.shiftVerification')}</p>
           <div className="mt-2 space-y-1 text-sm text-slate-700">
-            {booking.checkIn && <p>Checked in: {new Date(booking.checkIn).toLocaleString()}</p>}
-            {booking.checkOut && <p>Checked out: {new Date(booking.checkOut).toLocaleString()}</p>}
+            {booking.checkIn && <p>{t('userBookingDetail.checkedIn', { time: new Date(booking.checkIn).toLocaleString() })}</p>}
+            {booking.checkOut && <p>{t('userBookingDetail.checkedOut', { time: new Date(booking.checkOut).toLocaleString() })}</p>}
           </div>
         </Card>
       )}
@@ -153,7 +166,7 @@ export default function BookingDetailPage() {
         <Card className="mt-4" animate={false}>
           <h3 className="flex items-center gap-2 text-sm font-semibold text-slate-900">
             <MessageSquareText size={16} className="text-brand-600" />
-            {booking.review ? 'Your review' : 'Rate your caregiver'}
+            {booking.review ? t('userBookingDetail.yourReview') : t('userBookingDetail.rateYourCaregiver')}
           </h3>
           {booking.review ? (
             <div className="mt-3">
@@ -167,13 +180,13 @@ export default function BookingDetailPage() {
               <StarRating value={reviewRating} onChange={setReviewRating} />
               <textarea
                 rows={3}
-                placeholder="How was your experience? (optional)"
+                placeholder={t('userBookingDetail.reviewPlaceholder')}
                 value={reviewComment}
                 onChange={(e) => setReviewComment(e.target.value)}
                 className="w-full rounded-lg border border-brand-200 bg-white p-3 text-sm outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-100"
               />
               <Button type="submit" disabled={!reviewRating || submittingReview}>
-                {submittingReview ? 'Submitting…' : 'Submit review'}
+                {submittingReview ? t('userBookingDetail.submittingReview') : t('userBookingDetail.submitReviewButton')}
               </Button>
             </form>
           )}

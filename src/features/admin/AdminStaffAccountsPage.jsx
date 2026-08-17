@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Plus, Star, IndianRupee } from 'lucide-react'
 import { staffApi, bookingsApi, categoriesApi, createStaffAccount, getStaffAverageRating } from '../../lib/mockApi'
 import { useSession } from '../../lib/session'
@@ -10,7 +11,13 @@ import Badge from '../../components/ui/Badge'
 
 const emptyForm = { name: '', phone: '', city: '', area: '', skills: '', categories: [], hourlyRate: '300', serviceRadiusKm: '10' }
 
+const STAFF_STATUS_LABELS = {
+  active: 'adminStaff.statusActive',
+  inactive: 'adminStaff.statusInactive',
+}
+
 export default function AdminStaffAccountsPage() {
+  const { t } = useTranslation()
   const { session } = useSession()
   const [staff, setStaff] = useState(null)
   const [bookings, setBookings] = useState([])
@@ -63,12 +70,12 @@ export default function AdminStaffAccountsPage() {
     <div>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900">Staff Accounts</h1>
-          <p className="mt-1 text-sm text-slate-500">Create and manage caregiver staff accounts.</p>
+          <h1 className="text-2xl font-semibold text-slate-900">{t('adminStaff.title')}</h1>
+          <p className="mt-1 text-sm text-slate-500">{t('adminStaff.subtitle')}</p>
         </div>
         <Button onClick={() => setOpen(true)}>
           <Plus size={17} />
-          Create staff
+          {t('adminStaff.createStaff')}
         </Button>
       </div>
 
@@ -76,14 +83,14 @@ export default function AdminStaffAccountsPage() {
         <div className="mt-6">
           <Table>
             <TableHead>
-              <Th>Name</Th>
-              <Th>Phone</Th>
-              <Th>Location</Th>
-              <Th>Categories</Th>
-              <Th>Rate</Th>
-              <Th>Radius</Th>
-              <Th>Rating</Th>
-              <Th>Status</Th>
+              <Th>{t('adminStaff.colName')}</Th>
+              <Th>{t('adminStaff.colPhone')}</Th>
+              <Th>{t('adminStaff.colLocation')}</Th>
+              <Th>{t('adminStaff.colCategories')}</Th>
+              <Th>{t('adminStaff.colRate')}</Th>
+              <Th>{t('adminStaff.colRadius')}</Th>
+              <Th>{t('adminStaff.colRating')}</Th>
+              <Th>{t('adminStaff.colStatus')}</Th>
             </TableHead>
             <TableBody>
               {staff.map((s) => (
@@ -105,14 +112,14 @@ export default function AdminStaffAccountsPage() {
                       {s.hourlyRate ?? '—'}/hr
                     </span>
                   </Td>
-                  <Td>{s.serviceRadiusKm ? `${s.serviceRadiusKm} km` : '—'}</Td>
+                  <Td>{s.serviceRadiusKm ? t('adminStaff.radiusKm', { radius: s.serviceRadiusKm }) : '—'}</Td>
                   <Td>
                     <span className="flex items-center gap-1 text-gold-500">
                       <Star size={13} fill="currentColor" /> {getStaffAverageRating(s.id, bookings, s.rating) || '—'}
                     </span>
                   </Td>
                   <Td>
-                    <Badge tone={s.status === 'active' ? 'success' : 'neutral'}>{s.status}</Badge>
+                    <Badge tone={s.status === 'active' ? 'success' : 'neutral'}>{t(STAFF_STATUS_LABELS[s.status] ?? s.status)}</Badge>
                   </Td>
                 </Tr>
               ))}
@@ -121,16 +128,16 @@ export default function AdminStaffAccountsPage() {
         </div>
       )}
 
-      <Modal open={open} onClose={() => setOpen(false)} title="Create staff account">
+      <Modal open={open} onClose={() => setOpen(false)} title={t('adminStaff.createStaffAccount')}>
         <form onSubmit={handleCreate} className="space-y-4">
           <Input
-            label="Full name"
+            label={t('adminStaff.fullName')}
             required
             value={form.name}
             onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
           />
           <Input
-            label="Phone number"
+            label={t('adminStaff.phoneNumber')}
             required
             inputMode="numeric"
             maxLength={10}
@@ -139,40 +146,40 @@ export default function AdminStaffAccountsPage() {
           />
           <div className="grid grid-cols-2 gap-4">
             <Input
-              label="City"
+              label={t('adminStaff.city')}
               required
               value={form.city}
               onChange={(e) => setForm((f) => ({ ...f, city: e.target.value }))}
             />
             <Input
-              label="Area"
+              label={t('adminStaff.area')}
               required
               value={form.area}
               onChange={(e) => setForm((f) => ({ ...f, area: e.target.value }))}
             />
           </div>
           <Input
-            label="Skills (comma-separated)"
-            placeholder="Wound Care, Medication Management"
+            label={t('adminStaff.skillsCommaSeparated')}
+            placeholder={t('adminStaff.skillsPlaceholder')}
             value={form.skills}
             onChange={(e) => setForm((f) => ({ ...f, skills: e.target.value }))}
           />
           <div className="grid grid-cols-2 gap-4">
             <Input
-              label="Hourly rate (₹)"
+              label={t('adminStaff.hourlyRateInr')}
               type="number"
               value={form.hourlyRate}
               onChange={(e) => setForm((f) => ({ ...f, hourlyRate: e.target.value }))}
             />
             <Input
-              label="Service radius (km)"
+              label={t('adminStaff.serviceRadiusKm')}
               type="number"
               value={form.serviceRadiusKm}
               onChange={(e) => setForm((f) => ({ ...f, serviceRadiusKm: e.target.value }))}
             />
           </div>
           <div>
-            <p className="mb-1.5 text-sm font-medium text-slate-700">Service categories</p>
+            <p className="mb-1.5 text-sm font-medium text-slate-700">{t('adminStaff.serviceCategories')}</p>
             <div className="flex flex-wrap gap-2">
               {categories.map((cat) => (
                 <button
@@ -191,7 +198,7 @@ export default function AdminStaffAccountsPage() {
             </div>
           </div>
           <Button type="submit" className="w-full" disabled={saving}>
-            {saving ? 'Creating…' : 'Create staff account'}
+            {saving ? t('adminStaff.creating') : t('adminStaff.createStaffAccount')}
           </Button>
         </form>
       </Modal>

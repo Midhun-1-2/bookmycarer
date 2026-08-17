@@ -1,4 +1,5 @@
 import { Link, useParams, Navigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { CheckCircle2, ClipboardList, IndianRupee } from 'lucide-react'
 import { categoriesApi, servicePagesApi } from '../../lib/mockApi'
 import { getCategoryIcon } from '../../lib/icons'
@@ -7,6 +8,7 @@ import Card from '../../components/ui/Card'
 import Button from '../../components/ui/Button'
 
 export default function ServiceDetailPage() {
+  const { t } = useTranslation()
   const { categorySlug, serviceId } = useParams()
   const { session } = useSession()
   const categories = categoriesApi.listSync()
@@ -20,10 +22,10 @@ export default function ServiceDetailPage() {
   const page = pages.find((p) => p.serviceId === serviceId && p.status === 'published')
   const Icon = getCategoryIcon(category.icon)
 
-  const description = page?.description ?? `${service.name} delivered by verified, trained caregivers as part of our ${category.name} offering.`
-  const features = page?.features ?? ['Verified & background-checked caregiver', 'Flexible scheduling', 'Direct support from our care team']
-  const requirements = page?.requirements ?? ['Address and emergency contact required at booking']
-  const pricing = page?.pricing ?? [{ label: 'Hourly', price: service.priceFrom, unit: '/ hr' }]
+  const description = page?.description ?? t('serviceDetail.defaultDescription', { serviceName: service.name, categoryName: category.name })
+  const features = page?.features ?? [t('serviceDetail.defaultFeature1'), t('serviceDetail.defaultFeature2'), t('serviceDetail.defaultFeature3')]
+  const requirements = page?.requirements ?? [t('serviceDetail.defaultRequirement')]
+  const pricing = page?.pricing ?? [{ label: t('serviceDetail.hourly'), price: service.priceFrom, unit: t('common.perHourUnit') }]
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
@@ -47,7 +49,7 @@ export default function ServiceDetailPage() {
         <Card>
           <h3 className="flex items-center gap-2 text-sm font-semibold text-slate-900">
             <CheckCircle2 size={16} className="text-brand-600" />
-            Features & benefits
+            {t('serviceDetail.featuresAndBenefits')}
           </h3>
           <ul className="mt-3 space-y-2 text-sm text-slate-600">
             {features.map((f) => (
@@ -61,7 +63,7 @@ export default function ServiceDetailPage() {
         <Card>
           <h3 className="flex items-center gap-2 text-sm font-semibold text-slate-900">
             <ClipboardList size={16} className="text-brand-600" />
-            Requirements
+            {t('serviceDetail.requirements')}
           </h3>
           <ul className="mt-3 space-y-2 text-sm text-slate-600">
             {requirements.map((r) => (
@@ -75,7 +77,7 @@ export default function ServiceDetailPage() {
       </div>
 
       <Card className="mt-5">
-        <h3 className="text-sm font-semibold text-slate-900">Pricing</h3>
+        <h3 className="text-sm font-semibold text-slate-900">{t('serviceDetail.pricing')}</h3>
         <div className="mt-3 flex flex-wrap gap-3">
           {pricing.map((p) => (
             <div key={p.label} className="rounded-xl border border-brand-100 bg-brand-50 px-4 py-3">
@@ -96,7 +98,7 @@ export default function ServiceDetailPage() {
           }
           className="mt-5 inline-block"
         >
-          <Button size="lg">Book this service</Button>
+          <Button size="lg">{t('serviceDetail.bookThisService')}</Button>
         </Link>
       </Card>
     </div>

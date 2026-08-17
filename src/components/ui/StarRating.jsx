@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Star } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { cn } from '../../lib/cn'
 
 export function StarRatingDisplay({ value, size = 14, className }) {
@@ -12,6 +13,7 @@ export function StarRatingDisplay({ value, size = 14, className }) {
 }
 
 export default function StarRating({ value, onChange, size = 24 }) {
+  const { t } = useTranslation()
   const [hovered, setHovered] = useState(0)
 
   return (
@@ -24,7 +26,7 @@ export default function StarRating({ value, onChange, size = 24 }) {
           onMouseEnter={() => setHovered(n)}
           onMouseLeave={() => setHovered(0)}
           className="cursor-pointer text-gold-500"
-          aria-label={`Rate ${n} star${n > 1 ? 's' : ''}`}
+          aria-label={t('starRating.rateStars', { count: n })}
         >
           <Star size={size} fill={(hovered || value) >= n ? 'currentColor' : 'none'} strokeWidth={1.5} />
         </button>

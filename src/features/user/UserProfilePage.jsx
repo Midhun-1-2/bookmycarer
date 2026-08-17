@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { User, Phone, MapPin, FileText, IndianRupee, CheckCircle2, ShieldCheck, BadgeCheck } from 'lucide-react'
 import { bookingsApi, usersApi } from '../../lib/mockApi'
 import { useSession } from '../../lib/session'
@@ -8,6 +9,7 @@ import Button from '../../components/ui/Button'
 import Badge from '../../components/ui/Badge'
 
 export default function UserProfilePage() {
+  const { t } = useTranslation()
   const { session } = useSession()
   const [profile, setProfile] = useState(null)
   const [bookings, setBookings] = useState([])
@@ -37,7 +39,7 @@ export default function UserProfilePage() {
     e.preventDefault()
     setAadharError('')
     if (!/^\d{12}$/.test(aadharInput)) {
-      setAadharError('Enter a valid 12-digit Aadhar number.')
+      setAadharError(t('userProfile.aadharError'))
       return
     }
     setVerifying(true)
@@ -57,70 +59,70 @@ export default function UserProfilePage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
-      <h1 className="text-2xl font-semibold text-slate-900">Profile</h1>
-      <p className="mt-1 text-sm text-slate-500">Your details, bookings, and invoices.</p>
+      <h1 className="text-2xl font-semibold text-slate-900">{t('userProfile.title')}</h1>
+      <p className="mt-1 text-sm text-slate-500">{t('userProfile.subtitle')}</p>
 
       <div className="mt-6 grid grid-cols-3 gap-3">
         <Card animate={false} className="text-center">
           <p className="text-xl font-semibold text-brand-700">{bookings.length}</p>
-          <p className="text-xs text-slate-500">Bookings</p>
+          <p className="text-xs text-slate-500">{t('userProfile.bookingsLabel')}</p>
         </Card>
         <Card animate={false} className="text-center">
           <p className="text-xl font-semibold text-brand-700">{invoices.length}</p>
-          <p className="text-xs text-slate-500">Invoices</p>
+          <p className="text-xs text-slate-500">{t('userProfile.invoicesLabel')}</p>
         </Card>
         <Card animate={false} className="text-center">
           <p className="text-xl font-semibold text-brand-700">₹{totalSpent}</p>
-          <p className="text-xs text-slate-500">Total spent</p>
+          <p className="text-xs text-slate-500">{t('userProfile.totalSpentLabel')}</p>
         </Card>
       </div>
 
       <Card className="mt-5" animate={false}>
         <h3 className="flex items-center gap-2 text-sm font-semibold text-slate-900">
           <User size={16} className="text-brand-600" />
-          Personal details
+          {t('userProfile.personalDetails')}
         </h3>
         <form onSubmit={handleSave} className="mt-4 space-y-4">
           <Input
-            label="Full name"
+            label={t('userProfile.fullName')}
             value={profile.name}
             onChange={(e) => setProfile((p) => ({ ...p, name: e.target.value }))}
           />
-          <Input label="Phone number" value={profile.phone} disabled />
+          <Input label={t('userProfile.phoneNumber')} value={profile.phone} disabled />
           <div className="grid grid-cols-2 gap-4">
             <Input
-              label="City"
+              label={t('userProfile.city')}
               value={profile.city}
               onChange={(e) => setProfile((p) => ({ ...p, city: e.target.value }))}
             />
             <Input
-              label="Area"
+              label={t('userProfile.area')}
               value={profile.area}
               onChange={(e) => setProfile((p) => ({ ...p, area: e.target.value }))}
             />
           </div>
-          <Button type="submit">{saved ? <><CheckCircle2 size={16} /> Saved</> : 'Save changes'}</Button>
+          <Button type="submit">{saved ? <><CheckCircle2 size={16} /> {t('userProfile.saved')}</> : t('userProfile.saveChanges')}</Button>
         </form>
       </Card>
 
       <Card className="mt-5" animate={false}>
         <h3 className="flex items-center gap-2 text-sm font-semibold text-slate-900">
           <ShieldCheck size={16} className="text-brand-600" />
-          Identity verification
+          {t('userProfile.identityVerification')}
         </h3>
         {profile.aadharVerified ? (
           <div className="mt-3 flex items-center gap-2">
             <Badge tone="success">
               <BadgeCheck size={12} className="mr-1 inline" />
-              Aadhar verified
+              {t('userProfile.aadharVerified')}
             </Badge>
             <span className="text-sm text-slate-500">•••• •••• {profile.aadharLast4}</span>
           </div>
         ) : (
           <form onSubmit={handleVerifyAadhar} className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-end">
             <Input
-              label="Aadhar number"
-              placeholder="12-digit Aadhar number"
+              label={t('userProfile.aadharNumber')}
+              placeholder={t('userProfile.aadharPlaceholder')}
               inputMode="numeric"
               maxLength={12}
               value={aadharInput}
@@ -129,7 +131,7 @@ export default function UserProfilePage() {
               className="flex-1"
             />
             <Button type="submit" disabled={verifying} className="sm:mb-0">
-              {verifying ? 'Verifying…' : 'Verify'}
+              {verifying ? t('userProfile.verifying') : t('userProfile.verify')}
             </Button>
           </form>
         )}
@@ -138,10 +140,10 @@ export default function UserProfilePage() {
       <Card className="mt-5" animate={false}>
         <h3 className="flex items-center gap-2 text-sm font-semibold text-slate-900">
           <FileText size={16} className="text-brand-600" />
-          Invoices
+          {t('userProfile.invoices')}
         </h3>
         {invoices.length === 0 ? (
-          <p className="mt-2 text-sm text-slate-400">No paid invoices yet.</p>
+          <p className="mt-2 text-sm text-slate-400">{t('userProfile.noInvoices')}</p>
         ) : (
           <ul className="mt-3 divide-y divide-brand-50">
             {invoices.map((b) => (

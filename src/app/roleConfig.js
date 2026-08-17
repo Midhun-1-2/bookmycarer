@@ -17,11 +17,13 @@ export const ROLES = {
   SUPER_ADMIN: 'super-admin',
 }
 
+// Values are i18next translation keys (not display text) — resolve with t() at render time,
+// since this module loads before i18next may have initialized/changed language.
 export const ROLE_LABEL = {
-  [ROLES.USER]: 'Care Seeker',
-  [ROLES.STAFF]: 'Caregiver Staff',
-  [ROLES.ADMIN]: 'Admin',
-  [ROLES.SUPER_ADMIN]: 'Super Admin',
+  [ROLES.USER]: 'roleLabel.user',
+  [ROLES.STAFF]: 'roleLabel.staff',
+  [ROLES.ADMIN]: 'roleLabel.admin',
+  [ROLES.SUPER_ADMIN]: 'roleLabel.superAdmin',
 }
 
 export const ROLE_HOME = {
@@ -31,28 +33,29 @@ export const ROLE_HOME = {
   [ROLES.SUPER_ADMIN]: '/super-admin/dashboard',
 }
 
+// `label` fields below are i18next translation keys — resolve with t(item.label) at render time.
 export const STAFF_NAV = [
-  { to: '/staff/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { to: '/staff/engagements', label: 'Engagements', icon: CalendarClock },
-  { to: '/staff/profile', label: 'Profile', icon: UserCog },
+  { to: '/staff/dashboard', label: 'staffNav.dashboard', icon: LayoutDashboard },
+  { to: '/staff/engagements', label: 'staffNav.engagements', icon: CalendarClock },
+  { to: '/staff/profile', label: 'staffNav.profile', icon: UserCog },
 ]
 
 export const ADMIN_NAV = [
-  { to: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { to: '/admin/staff', label: 'Staff Accounts', icon: Users },
-  { to: '/admin/categories', label: 'Service Categories', icon: FolderKanban },
-  { to: '/admin/service-pages', label: 'Service Pages CMS', icon: FileText },
-  { to: '/admin/bookings', label: 'Bookings Oversight', icon: ClipboardList },
+  { to: '/admin/dashboard', label: 'adminNav.dashboard', icon: LayoutDashboard },
+  { to: '/admin/staff', label: 'adminNav.staffAccounts', icon: Users },
+  { to: '/admin/categories', label: 'adminNav.serviceCategories', icon: FolderKanban },
+  { to: '/admin/service-pages', label: 'adminNav.servicePagesCms', icon: FileText },
+  { to: '/admin/bookings', label: 'adminNav.bookingsOversight', icon: ClipboardList },
 ]
 
 export const SUPER_ADMIN_NAV = [
-  { to: '/super-admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { to: '/super-admin/admins', label: 'Admin Accounts', icon: ShieldCheck },
-  { to: '/admin/staff', label: 'Staff Accounts', icon: Users },
-  { to: '/admin/categories', label: 'Service Categories', icon: FolderKanban },
-  { to: '/admin/service-pages', label: 'Service Pages CMS', icon: FileText },
-  { to: '/admin/bookings', label: 'Bookings Oversight', icon: ClipboardList },
-  { to: '/super-admin/settings', label: 'System Settings', icon: Settings },
+  { to: '/super-admin/dashboard', label: 'superAdminNav.dashboard', icon: LayoutDashboard },
+  { to: '/super-admin/admins', label: 'superAdminNav.adminAccounts', icon: ShieldCheck },
+  { to: '/admin/staff', label: 'adminNav.staffAccounts', icon: Users },
+  { to: '/admin/categories', label: 'adminNav.serviceCategories', icon: FolderKanban },
+  { to: '/admin/service-pages', label: 'adminNav.servicePagesCms', icon: FileText },
+  { to: '/admin/bookings', label: 'adminNav.bookingsOversight', icon: ClipboardList },
+  { to: '/super-admin/settings', label: 'superAdminNav.systemSettings', icon: Settings },
 ]
 
 export function roleAllows(sessionRole, allowedRoles) {

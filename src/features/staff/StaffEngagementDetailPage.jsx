@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { CalendarClock, MapPin, Phone, ShieldAlert, ArrowLeft, KeyRound, CheckCircle2 } from 'lucide-react'
 import { bookingsApi, verifyCheckIn, verifyCheckOut } from '../../lib/mockApi'
 import { STATUS_TONE, STATUS_LABEL } from '../../lib/bookingStatus'
@@ -8,7 +9,14 @@ import Badge from '../../components/ui/Badge'
 import Input from '../../components/ui/Input'
 import Button from '../../components/ui/Button'
 
+const SCHEDULE_TYPE_LABEL_KEY = {
+  hourly: 'staffEngagementDetail.scheduleType.hourly',
+  daily: 'staffEngagementDetail.scheduleType.daily',
+  weekly: 'staffEngagementDetail.scheduleType.weekly',
+}
+
 export default function StaffEngagementDetailPage() {
+  const { t } = useTranslation()
   const { bookingId } = useParams()
   const [booking, setBooking] = useState(null)
   const [code, setCode] = useState('')
@@ -44,18 +52,18 @@ export default function StaffEngagementDetailPage() {
   return (
     <div className="mx-auto max-w-2xl">
       <Link to="/staff/engagements" className="flex items-center gap-1 text-sm font-medium text-brand-700 hover:underline">
-        <ArrowLeft size={14} /> Engagements
+        <ArrowLeft size={14} /> {t('staffEngagementDetail.engagements')}
       </Link>
 
       <div className="mt-3 flex items-center gap-2">
         <h1 className="text-2xl font-semibold text-slate-900">{booking.serviceName}</h1>
-        <Badge tone={STATUS_TONE[booking.status]}>{STATUS_LABEL[booking.status]}</Badge>
+        <Badge tone={STATUS_TONE[booking.status]}>{t(STATUS_LABEL[booking.status])}</Badge>
       </div>
 
       <Card className="mt-5 space-y-4" animate={false}>
         <div className="flex items-center gap-2 text-sm text-slate-700">
           <CalendarClock size={16} className="text-brand-600" />
-          {booking.startDate} at {booking.time} · <span className="capitalize">{booking.scheduleType}</span>
+          {booking.startDate} at {booking.time} · <span className="capitalize">{t(SCHEDULE_TYPE_LABEL_KEY[booking.scheduleType] ?? SCHEDULE_TYPE_LABEL_KEY.hourly)}</span>
         </div>
         <div className="flex items-center gap-2 text-sm text-slate-700">
           <MapPin size={16} className="text-brand-600" />
@@ -67,7 +75,7 @@ export default function StaffEngagementDetailPage() {
         </div>
         <div className="flex items-center gap-2 text-sm text-slate-700">
           <ShieldAlert size={16} className="text-brand-600" />
-          Emergency contact: {booking.emergencyContact}
+          {t('staffEngagementDetail.emergencyContact', { contact: booking.emergencyContact })}
         </div>
         {booking.careTags?.length > 0 && (
           <div className="flex flex-wrap gap-1.5">
@@ -82,14 +90,14 @@ export default function StaffEngagementDetailPage() {
         <Card className="mt-4" animate={false}>
           <p className="flex items-center gap-2 text-sm font-semibold text-slate-900">
             <KeyRound size={16} className="text-brand-600" />
-            {booking.status === 'confirmed' ? 'Check in to this shift' : 'Check out of this shift'}
+            {booking.status === 'confirmed' ? t('staffEngagementDetail.checkInTitle') : t('staffEngagementDetail.checkOutTitle')}
           </p>
           <p className="mt-1 text-xs text-slate-500">
-            Ask the care seeker for the passcode generated at the venue and enter it below.
+            {t('staffEngagementDetail.passcodeInstructions')}
           </p>
           <div className="mt-3 flex gap-2">
             <Input
-              placeholder="Enter passcode"
+              placeholder={t('staffEngagementDetail.enterPasscode')}
               inputMode="numeric"
               maxLength={4}
               value={code}
@@ -98,7 +106,7 @@ export default function StaffEngagementDetailPage() {
               className="flex-1"
             />
             <Button onClick={handleVerify} disabled={verifying || code.length < 4}>
-              {verifying ? 'Verifying…' : 'Verify'}
+              {verifying ? t('staffEngagementDetail.verifying') : t('staffEngagementDetail.verify')}
             </Button>
           </div>
         </Card>
@@ -107,8 +115,10 @@ export default function StaffEngagementDetailPage() {
       {booking.status === 'completed' && (
         <Card className="mt-4 flex items-center gap-2 text-sm text-emerald-700" animate={false}>
           <CheckCircle2 size={17} />
-          Shift completed. Checked in {new Date(booking.checkIn).toLocaleTimeString()}, checked out{' '}
-          {new Date(booking.checkOut).toLocaleTimeString()}.
+          {t('staffEngagementDetail.shiftCompleted', {
+            checkIn: new Date(booking.checkIn).toLocaleTimeString(),
+            checkOut: new Date(booking.checkOut).toLocaleTimeString(),
+          })}
         </Card>
       )}
     </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { Users, FolderKanban, ClipboardList, IndianRupee, ShieldCheck, ArrowRight } from 'lucide-react'
 import { staffApi, categoriesApi, bookingsApi, adminsApi, usersApi } from '../../lib/mockApi'
 import { revenueByDay, bookingsByCategory, bookingsByStatus } from '../../lib/chartData'
@@ -10,6 +11,7 @@ import StatusBarChart from '../../components/charts/StatusBarChart'
 import StaffBarChart from '../../components/charts/StaffBarChart'
 
 export default function SuperAdminDashboard() {
+  const { t } = useTranslation()
   const [stats, setStats] = useState(null)
   const [charts, setCharts] = useState(null)
 
@@ -37,30 +39,30 @@ export default function SuperAdminDashboard() {
         byCategory: bookingsByCategory(bookings, categories),
         byStatus: bookingsByStatus(bookings),
         byRole: [
-          { name: 'Users', value: users.length },
-          { name: 'Staff', value: staff.length },
-          { name: 'Admins', value: admins.filter((a) => a.role === 'admin').length },
-          { name: 'Super Admins', value: admins.filter((a) => a.role === 'super-admin').length },
+          { name: t('superAdminDashboard.chartUsers'), value: users.length },
+          { name: t('superAdminDashboard.chartStaff'), value: staff.length },
+          { name: t('superAdminDashboard.chartAdmins'), value: admins.filter((a) => a.role === 'admin').length },
+          { name: t('superAdminDashboard.chartSuperAdmins'), value: admins.filter((a) => a.role === 'super-admin').length },
         ],
       })
     }
     load()
-  }, [])
+  }, [t])
 
   if (!stats || !charts) return null
 
   const cards = [
-    { label: 'Admin accounts', value: stats.adminCount, icon: ShieldCheck, to: '/super-admin/admins' },
-    { label: 'Staff accounts', value: stats.staffCount, icon: Users, to: '/admin/staff' },
-    { label: 'Service categories', value: stats.categoryCount, icon: FolderKanban, to: '/admin/categories' },
-    { label: 'Total bookings', value: stats.totalBookings, icon: ClipboardList, to: '/admin/bookings' },
-    { label: 'Revenue collected', value: `₹${stats.revenue}`, icon: IndianRupee, to: '/admin/bookings' },
+    { label: t('superAdminDashboard.cardAdminAccounts'), value: stats.adminCount, icon: ShieldCheck, to: '/super-admin/admins' },
+    { label: t('superAdminDashboard.cardStaffAccounts'), value: stats.staffCount, icon: Users, to: '/admin/staff' },
+    { label: t('superAdminDashboard.cardServiceCategories'), value: stats.categoryCount, icon: FolderKanban, to: '/admin/categories' },
+    { label: t('superAdminDashboard.cardTotalBookings'), value: stats.totalBookings, icon: ClipboardList, to: '/admin/bookings' },
+    { label: t('superAdminDashboard.cardRevenueCollected'), value: `₹${stats.revenue}`, icon: IndianRupee, to: '/admin/bookings' },
   ]
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold text-slate-900">Super Admin overview</h1>
-      <p className="mt-1 text-sm text-slate-500">Full platform visibility and control.</p>
+      <h1 className="text-2xl font-semibold text-slate-900">{t('superAdminDashboard.title')}</h1>
+      <p className="mt-1 text-sm text-slate-500">{t('superAdminDashboard.subtitle')}</p>
 
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {cards.map(({ label, value, icon: Icon, to }) => (
@@ -81,22 +83,22 @@ export default function SuperAdminDashboard() {
 
       <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-3">
         <Card className="lg:col-span-2" animate={false}>
-          <h3 className="text-sm font-semibold text-slate-900">Platform revenue — last 30 days</h3>
+          <h3 className="text-sm font-semibold text-slate-900">{t('superAdminDashboard.headingRevenue')}</h3>
           <RevenueTrendChart data={charts.revenue} />
         </Card>
         <Card animate={false}>
-          <h3 className="text-sm font-semibold text-slate-900">Bookings by category</h3>
+          <h3 className="text-sm font-semibold text-slate-900">{t('superAdminDashboard.headingByCategory')}</h3>
           <CategoryDonutChart data={charts.byCategory} />
         </Card>
       </div>
 
       <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2">
         <Card animate={false}>
-          <h3 className="text-sm font-semibold text-slate-900">Bookings by status</h3>
+          <h3 className="text-sm font-semibold text-slate-900">{t('superAdminDashboard.headingByStatus')}</h3>
           <StatusBarChart data={charts.byStatus} />
         </Card>
         <Card animate={false}>
-          <h3 className="text-sm font-semibold text-slate-900">Platform composition</h3>
+          <h3 className="text-sm font-semibold text-slate-900">{t('superAdminDashboard.headingComposition')}</h3>
           <StaffBarChart data={charts.byRole} />
         </Card>
       </div>

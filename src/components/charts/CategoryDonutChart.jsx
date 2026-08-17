@@ -1,20 +1,22 @@
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts'
+import { useTranslation } from 'react-i18next'
 
 const COLORS = ['#33408f', '#2fb0b5', '#6270c2', '#ffc046', '#8f9bd8', '#1e1b51']
 
-function CustomTooltip({ active, payload }) {
+function CustomTooltip({ active, payload, t }) {
   if (!active || !payload?.length) return null
   return (
     <div className="rounded-lg border border-brand-100 bg-white px-3 py-2 text-xs shadow-lg shadow-brand-900/10">
       <p className="font-medium text-slate-700">{payload[0].name}</p>
-      <p className="text-brand-700">{payload[0].value} bookings</p>
+      <p className="text-brand-700">{t('charts.bookingsCount', { count: payload[0].value })}</p>
     </div>
   )
 }
 
 export default function CategoryDonutChart({ data }) {
+  const { t } = useTranslation()
   if (!data.length) {
-    return <p className="py-10 text-center text-sm text-slate-400">No data yet.</p>
+    return <p className="py-10 text-center text-sm text-slate-400">{t('charts.noData')}</p>
   }
   return (
     <div>
@@ -33,7 +35,7 @@ export default function CategoryDonutChart({ data }) {
               <Cell key={entry.name} fill={COLORS[i % COLORS.length]} />
             ))}
           </Pie>
-          <Tooltip content={<CustomTooltip />} />
+          <Tooltip content={<CustomTooltip t={t} />} />
         </PieChart>
       </ResponsiveContainer>
       <ul className="mt-2 grid grid-cols-1 gap-x-4 gap-y-1.5 sm:grid-cols-2">

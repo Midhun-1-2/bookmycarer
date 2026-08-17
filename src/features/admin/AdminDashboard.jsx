@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Users, FolderKanban, ClipboardList, IndianRupee, ArrowRight } from 'lucide-react'
 import { staffApi, categoriesApi, bookingsApi } from '../../lib/mockApi'
@@ -10,6 +11,7 @@ import StatusBarChart from '../../components/charts/StatusBarChart'
 import StaffBarChart from '../../components/charts/StaffBarChart'
 
 export default function AdminDashboard() {
+  const { t } = useTranslation()
   const [stats, setStats] = useState(null)
   const [charts, setCharts] = useState(null)
 
@@ -43,16 +45,16 @@ export default function AdminDashboard() {
   if (!stats || !charts) return null
 
   const cards = [
-    { label: 'Staff accounts', value: stats.staffCount, icon: Users, to: '/admin/staff' },
-    { label: 'Service categories', value: stats.categoryCount, icon: FolderKanban, to: '/admin/categories' },
-    { label: 'Pending bookings', value: stats.pendingBookings, icon: ClipboardList, to: '/admin/bookings' },
-    { label: 'Revenue collected', value: `₹${stats.revenue}`, icon: IndianRupee, to: '/admin/bookings' },
+    { label: t('adminDashboard.staffAccounts'), value: stats.staffCount, icon: Users, to: '/admin/staff' },
+    { label: t('adminDashboard.serviceCategories'), value: stats.categoryCount, icon: FolderKanban, to: '/admin/categories' },
+    { label: t('adminDashboard.pendingBookings'), value: stats.pendingBookings, icon: ClipboardList, to: '/admin/bookings' },
+    { label: t('adminDashboard.revenueCollected'), value: `₹${stats.revenue}`, icon: IndianRupee, to: '/admin/bookings' },
   ]
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold text-slate-900">Admin overview</h1>
-      <p className="mt-1 text-sm text-slate-500">Manage staff, service categories, and bookings.</p>
+      <h1 className="text-2xl font-semibold text-slate-900">{t('adminDashboard.title')}</h1>
+      <p className="mt-1 text-sm text-slate-500">{t('adminDashboard.subtitle')}</p>
 
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {cards.map(({ label, value, icon: Icon, to }) => (
@@ -73,22 +75,22 @@ export default function AdminDashboard() {
 
       <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-3">
         <Card className="lg:col-span-2" animate={false}>
-          <h3 className="text-sm font-semibold text-slate-900">Revenue — last 14 days</h3>
+          <h3 className="text-sm font-semibold text-slate-900">{t('adminDashboard.revenueLast14Days')}</h3>
           <RevenueTrendChart data={charts.revenue} />
         </Card>
         <Card animate={false}>
-          <h3 className="text-sm font-semibold text-slate-900">Bookings by category</h3>
+          <h3 className="text-sm font-semibold text-slate-900">{t('adminDashboard.bookingsByCategory')}</h3>
           <CategoryDonutChart data={charts.byCategory} />
         </Card>
       </div>
 
       <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2">
         <Card animate={false}>
-          <h3 className="text-sm font-semibold text-slate-900">Bookings by status</h3>
+          <h3 className="text-sm font-semibold text-slate-900">{t('adminDashboard.bookingsByStatus')}</h3>
           <StatusBarChart data={charts.byStatus} />
         </Card>
         <Card animate={false}>
-          <h3 className="text-sm font-semibold text-slate-900">Top staff by engagements</h3>
+          <h3 className="text-sm font-semibold text-slate-900">{t('adminDashboard.topStaffByEngagements')}</h3>
           <StaffBarChart data={charts.byStaff} />
         </Card>
       </div>

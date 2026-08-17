@@ -1,4 +1,5 @@
 import { Link, useParams, Navigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { ArrowRight, IndianRupee } from 'lucide-react'
 import { categoriesApi } from '../../lib/mockApi'
 import { getCategoryIcon } from '../../lib/icons'
@@ -8,6 +9,7 @@ import Card from '../../components/ui/Card'
 import Button from '../../components/ui/Button'
 
 export default function CategoryPage() {
+  const { t } = useTranslation()
   const { categorySlug } = useParams()
   const { session } = useSession()
   const categories = categoriesApi.listSync()
@@ -46,17 +48,17 @@ export default function CategoryPage() {
             <div>
               <h3 className="text-base font-semibold text-slate-900">{service.name}</h3>
               <p className="mt-1 flex items-center gap-1 text-sm text-slate-500">
-                Starting from
+                {t('categoryPage.startingFrom')}
                 <span className="inline-flex items-center font-medium text-brand-700">
                   <IndianRupee size={13} />
-                  {service.priceFrom}/hr
+                  {service.priceFrom}{t('common.perHour')}
                 </span>
               </p>
             </div>
             <div className="mt-4 flex flex-wrap gap-2">
               <Link to={`/services/${category.slug}/${service.id}`}>
                 <Button variant="outline" size="sm">
-                  Details <ArrowRight size={14} />
+                  {t('categoryPage.details')} <ArrowRight size={14} />
                 </Button>
               </Link>
               <Link
@@ -67,7 +69,7 @@ export default function CategoryPage() {
                 }
               >
                 <Button variant="primary" size="sm">
-                  Book now
+                  {t('categoryPage.bookNow')}
                 </Button>
               </Link>
             </div>

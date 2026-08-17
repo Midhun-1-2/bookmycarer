@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Plus } from 'lucide-react'
 import { adminsApi, createAdminAccount } from '../../lib/mockApi'
 import { Table, TableHead, TableBody, Th, Td, Tr } from '../../components/ui/Table'
@@ -10,6 +11,7 @@ import Badge from '../../components/ui/Badge'
 const emptyForm = { name: '', phone: '' }
 
 export default function SuperAdminAdminsPage() {
+  const { t } = useTranslation()
   const [admins, setAdmins] = useState(null)
   const [open, setOpen] = useState(false)
   const [form, setForm] = useState(emptyForm)
@@ -39,21 +41,21 @@ export default function SuperAdminAdminsPage() {
     <div>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900">Admin Accounts</h1>
-          <p className="mt-1 text-sm text-slate-500">Manage who has Admin access to the platform.</p>
+          <h1 className="text-2xl font-semibold text-slate-900">{t('superAdminAdmins.title')}</h1>
+          <p className="mt-1 text-sm text-slate-500">{t('superAdminAdmins.subtitle')}</p>
         </div>
         <Button onClick={() => setOpen(true)}>
           <Plus size={17} />
-          Create admin
+          {t('superAdminAdmins.createAdmin')}
         </Button>
       </div>
 
       <div className="mt-6">
         <Table>
           <TableHead>
-            <Th>Name</Th>
-            <Th>Phone</Th>
-            <Th>Role</Th>
+            <Th>{t('superAdminAdmins.tableName')}</Th>
+            <Th>{t('superAdminAdmins.tablePhone')}</Th>
+            <Th>{t('superAdminAdmins.tableRole')}</Th>
           </TableHead>
           <TableBody>
             {admins.map((a) => (
@@ -62,7 +64,7 @@ export default function SuperAdminAdminsPage() {
                 <Td>{a.phone}</Td>
                 <Td>
                   <Badge tone={a.role === 'super-admin' ? 'brand' : 'neutral'}>
-                    {a.role === 'super-admin' ? 'Super Admin' : 'Admin'}
+                    {a.role === 'super-admin' ? t('superAdminAdmins.roleSuperAdmin') : t('superAdminAdmins.roleAdmin')}
                   </Badge>
                 </Td>
               </Tr>
@@ -71,16 +73,16 @@ export default function SuperAdminAdminsPage() {
         </Table>
       </div>
 
-      <Modal open={open} onClose={() => setOpen(false)} title="Create admin account">
+      <Modal open={open} onClose={() => setOpen(false)} title={t('superAdminAdmins.modalTitle')}>
         <form onSubmit={handleCreate} className="space-y-4">
           <Input
-            label="Full name"
+            label={t('superAdminAdmins.fullName')}
             required
             value={form.name}
             onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
           />
           <Input
-            label="Phone number"
+            label={t('superAdminAdmins.phoneNumber')}
             required
             inputMode="numeric"
             maxLength={10}
@@ -88,7 +90,7 @@ export default function SuperAdminAdminsPage() {
             onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value.replace(/\D/g, '') }))}
           />
           <Button type="submit" className="w-full" disabled={saving}>
-            {saving ? 'Creating…' : 'Create admin account'}
+            {saving ? t('superAdminAdmins.creating') : t('superAdminAdmins.submitButton')}
           </Button>
         </form>
       </Modal>

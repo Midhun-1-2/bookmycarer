@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { User, CheckCircle2, Star, IndianRupee, MapPinned, MessageSquareText } from 'lucide-react'
 import { staffApi, bookingsApi, categoriesApi, getStaffAverageRating } from '../../lib/mockApi'
 import { useSession } from '../../lib/session'
@@ -8,6 +9,7 @@ import Button from '../../components/ui/Button'
 import Badge from '../../components/ui/Badge'
 
 export default function StaffProfilePage() {
+  const { t } = useTranslation()
   const { session } = useSession()
   const [profile, setProfile] = useState(null)
   const [bookings, setBookings] = useState([])
@@ -49,8 +51,8 @@ export default function StaffProfilePage() {
 
   return (
     <div className="mx-auto max-w-2xl">
-      <h1 className="text-2xl font-semibold text-slate-900">Profile</h1>
-      <p className="mt-1 text-sm text-slate-500">Your caregiver profile, rates, and reviews.</p>
+      <h1 className="text-2xl font-semibold text-slate-900">{t('staffProfile.title')}</h1>
+      <p className="mt-1 text-sm text-slate-500">{t('staffProfile.subtitle')}</p>
 
       <Card className="mt-6" animate={false}>
         <div className="flex items-center gap-4">
@@ -60,7 +62,7 @@ export default function StaffProfilePage() {
           <div>
             <p className="font-semibold text-slate-900">{profile.name}</p>
             <p className="flex items-center gap-1 text-sm text-gold-500">
-              <Star size={13} fill="currentColor" /> {averageRating || '—'} · {profile.experienceYears} yrs experience
+              <Star size={13} fill="currentColor" /> {averageRating || '—'} · {t('staffProfile.experienceYears', { count: profile.experienceYears })}
             </p>
           </div>
         </div>
@@ -81,21 +83,21 @@ export default function StaffProfilePage() {
       <Card className="mt-4" animate={false}>
         <h3 className="flex items-center gap-2 text-sm font-semibold text-slate-900">
           <IndianRupee size={16} className="text-brand-600" />
-          Rate & service area
+          {t('staffProfile.rateServiceArea')}
         </h3>
         <p className="mt-1 text-xs text-slate-500">
-          Set your own hourly rate and how far you're willing to travel for bookings.
+          {t('staffProfile.rateServiceAreaDesc')}
         </p>
         <form onSubmit={handleSaveRates} className="mt-4 space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <Input
-              label="Hourly rate (₹)"
+              label={t('staffProfile.hourlyRateLabel')}
               type="number"
               value={profile.hourlyRate ?? ''}
               onChange={(e) => setProfile((p) => ({ ...p, hourlyRate: e.target.value }))}
             />
             <Input
-              label="Service radius (km)"
+              label={t('staffProfile.serviceRadiusLabel')}
               type="number"
               value={profile.serviceRadiusKm ?? ''}
               onChange={(e) => setProfile((p) => ({ ...p, serviceRadiusKm: e.target.value }))}
@@ -103,47 +105,47 @@ export default function StaffProfilePage() {
           </div>
           <p className="flex items-center gap-1.5 text-xs text-slate-400">
             <MapPinned size={13} />
-            Bookings from care seekers up to {profile.serviceRadiusKm || 0} km away will show your profile.
+            {t('staffProfile.serviceRadiusNote', { km: profile.serviceRadiusKm || 0 })}
           </p>
-          <Button type="submit">{ratesSaved ? <><CheckCircle2 size={16} /> Saved</> : 'Save rate & radius'}</Button>
+          <Button type="submit">{ratesSaved ? <><CheckCircle2 size={16} /> {t('staffProfile.saved')}</> : t('staffProfile.saveRateRadius')}</Button>
         </form>
       </Card>
 
       <Card className="mt-4" animate={false}>
         <h3 className="flex items-center gap-2 text-sm font-semibold text-slate-900">
           <User size={16} className="text-brand-600" />
-          Contact details
+          {t('staffProfile.contactDetails')}
         </h3>
         <form onSubmit={handleSave} className="mt-4 space-y-4">
           <Input
-            label="Full name"
+            label={t('staffProfile.fullNameLabel')}
             value={profile.name}
             onChange={(e) => setProfile((p) => ({ ...p, name: e.target.value }))}
           />
-          <Input label="Phone number" value={profile.phone} disabled />
+          <Input label={t('staffProfile.phoneNumberLabel')} value={profile.phone} disabled />
           <div className="grid grid-cols-2 gap-4">
             <Input
-              label="City"
+              label={t('staffProfile.cityLabel')}
               value={profile.city}
               onChange={(e) => setProfile((p) => ({ ...p, city: e.target.value }))}
             />
             <Input
-              label="Area"
+              label={t('staffProfile.areaLabel')}
               value={profile.area}
               onChange={(e) => setProfile((p) => ({ ...p, area: e.target.value }))}
             />
           </div>
-          <Button type="submit">{saved ? <><CheckCircle2 size={16} /> Saved</> : 'Save changes'}</Button>
+          <Button type="submit">{saved ? <><CheckCircle2 size={16} /> {t('staffProfile.saved')}</> : t('staffProfile.saveChanges')}</Button>
         </form>
       </Card>
 
       <Card className="mt-4" animate={false}>
         <h3 className="flex items-center gap-2 text-sm font-semibold text-slate-900">
           <MessageSquareText size={16} className="text-brand-600" />
-          Reviews from care seekers
+          {t('staffProfile.reviewsTitle')}
         </h3>
         {reviews.length === 0 ? (
-          <p className="mt-2 text-sm text-slate-400">No reviews yet.</p>
+          <p className="mt-2 text-sm text-slate-400">{t('staffProfile.noReviews')}</p>
         ) : (
           <ul className="mt-3 divide-y divide-brand-50">
             {reviews.map((b) => (

@@ -157,7 +157,7 @@ export default function SplashNav() {
         <button
           className="rounded-lg p-2 text-slate-600 lg:hidden"
           onClick={() => setMobileOpen(true)}
-          aria-label="Open menu"
+          aria-label={t('sidebar.openMenu')}
         >
           <Menu size={22} />
         </button>
@@ -181,11 +181,11 @@ export default function SplashNav() {
               transition={{ type: 'tween', duration: 0.25 }}
             >
               <div className="mb-4 flex items-center justify-between">
-                <span className="text-base font-semibold text-slate-900">Menu</span>
+                <span className="text-base font-semibold text-slate-900">{t('sidebar.menu')}</span>
                 <button
                   onClick={() => setMobileOpen(false)}
                   className="rounded-full p-1.5 text-slate-400 hover:bg-brand-50"
-                  aria-label="Close menu"
+                  aria-label={t('sidebar.closeMenu')}
                 >
                   <X size={18} />
                 </button>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { CalendarClock, MapPin } from 'lucide-react'
 import { bookingsApi } from '../../lib/mockApi'
 import { useSession } from '../../lib/session'
@@ -7,7 +8,13 @@ import { STATUS_TONE, STATUS_LABEL } from '../../lib/bookingStatus'
 import Card from '../../components/ui/Card'
 import Badge from '../../components/ui/Badge'
 
+const PAYMENT_STATUS_LABEL = {
+  paid: 'userMyBookings.paymentStatus.paid',
+  pending: 'userMyBookings.paymentStatus.pending',
+}
+
 export default function MyBookingsPage() {
+  const { t } = useTranslation()
   const { session } = useSession()
   const [bookings, setBookings] = useState(null)
 
@@ -25,16 +32,16 @@ export default function MyBookingsPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
-      <h1 className="text-2xl font-semibold text-slate-900">My Bookings</h1>
-      <p className="mt-1 text-sm text-slate-500">Track engagements, invoices, and status.</p>
+      <h1 className="text-2xl font-semibold text-slate-900">{t('userMyBookings.title')}</h1>
+      <p className="mt-1 text-sm text-slate-500">{t('userMyBookings.subtitle')}</p>
 
       {bookings === null ? (
-        <p className="mt-6 text-sm text-slate-400">Loading…</p>
+        <p className="mt-6 text-sm text-slate-400">{t('userMyBookings.loading')}</p>
       ) : bookings.length === 0 ? (
         <Card className="mt-6 text-center text-sm text-slate-500">
-          You haven't booked any services yet.{' '}
+          {t('userMyBookings.emptyState')}{' '}
           <Link to="/user/dashboard" className="font-medium text-brand-700 hover:underline">
-            Browse services
+            {t('userMyBookings.browseServices')}
           </Link>
         </Card>
       ) : (
@@ -45,7 +52,7 @@ export default function MyBookingsPage() {
                 <div>
                   <div className="flex items-center gap-2">
                     <p className="font-semibold text-slate-900">{b.serviceName}</p>
-                    <Badge tone={STATUS_TONE[b.status]}>{STATUS_LABEL[b.status]}</Badge>
+                    <Badge tone={STATUS_TONE[b.status]}>{t(STATUS_LABEL[b.status])}</Badge>
                   </div>
                   <p className="mt-1 flex items-center gap-1 text-xs text-slate-500">
                     <CalendarClock size={12} /> {b.startDate} · {b.time}
@@ -56,7 +63,7 @@ export default function MyBookingsPage() {
                 </div>
                 <div className="text-right">
                   <p className="text-sm font-semibold text-brand-700">₹{b.payment.amount}</p>
-                  <p className="text-xs text-slate-400 capitalize">{b.payment.status}</p>
+                  <p className="text-xs text-slate-400 capitalize">{t(PAYMENT_STATUS_LABEL[b.payment.status])}</p>
                 </div>
               </Card>
             </Link>

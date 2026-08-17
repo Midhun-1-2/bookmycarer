@@ -1,10 +1,12 @@
 import { NavLink } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import { LogOut, X, HeartHandshake } from 'lucide-react'
 import { cn } from '../../lib/cn'
 import { ROLE_LABEL } from '../../app/roleConfig'
 
 function SidebarContent({ items, session, onLogout, onNavigate }) {
+  const { t } = useTranslation()
   return (
     <div className="flex h-full flex-col">
       <div className="flex items-center gap-2 px-5 py-5">
@@ -13,11 +15,11 @@ function SidebarContent({ items, session, onLogout, onNavigate }) {
         </div>
         <div>
           <p className="text-sm font-semibold text-slate-900">Book My Carers</p>
-          <p className="text-xs text-brand-600">{ROLE_LABEL[session?.role]}</p>
+          <p className="text-xs text-brand-600">{t(ROLE_LABEL[session?.role])}</p>
         </div>
       </div>
 
-      <nav className="flex-1 space-y-1 px-3">
+      <nav className="min-h-0 flex-1 space-y-1 overflow-y-auto px-3">
         {items.map(({ to, label, icon: Icon }) => (
           <NavLink
             key={to}
@@ -34,7 +36,7 @@ function SidebarContent({ items, session, onLogout, onNavigate }) {
             end
           >
             <Icon size={18} />
-            {label}
+            {t(label)}
           </NavLink>
         ))}
       </nav>
@@ -49,7 +51,7 @@ function SidebarContent({ items, session, onLogout, onNavigate }) {
           className="flex w-full cursor-pointer items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-rose-600 hover:bg-rose-50"
         >
           <LogOut size={17} />
-          Log out
+          {t('sidebar.logout')}
         </button>
       </div>
     </div>
@@ -57,9 +59,10 @@ function SidebarContent({ items, session, onLogout, onNavigate }) {
 }
 
 export default function Sidebar({ items, session, onLogout, mobileOpen, onCloseMobile }) {
+  const { t } = useTranslation()
   return (
     <>
-      <aside className="hidden w-64 shrink-0 border-r border-brand-100 bg-white lg:block">
+      <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 border-r border-brand-100 bg-white lg:block">
         <SidebarContent items={items} session={session} onLogout={onLogout} />
       </aside>
 
@@ -82,7 +85,7 @@ export default function Sidebar({ items, session, onLogout, mobileOpen, onCloseM
               <button
                 onClick={onCloseMobile}
                 className="absolute right-3 top-4 rounded-full p-1.5 text-slate-400 hover:bg-brand-50"
-                aria-label="Close menu"
+                aria-label={t('sidebar.closeMenu')}
               >
                 <X size={18} />
               </button>

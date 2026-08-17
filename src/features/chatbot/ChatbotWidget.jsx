@@ -1,46 +1,58 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import { MessageCircle, X, Send, Headset } from 'lucide-react'
 
 const FAQS = [
   {
+    id: 'pricing',
     keywords: ['price', 'pricing', 'cost', 'rate', 'charge'],
-    answer: 'Pricing depends on the service — most categories start around ₹250–350/hr. You can see exact rates on each service page under "Pricing".',
   },
   {
+    id: 'services',
     keywords: ['service', 'services', 'offer', 'category', 'categories'],
-    answer: 'We offer Aged Care, Personal Care, Nursing Services, Domestic Assistance, and Social Companionship & Travel Assistance. Browse all of them under "Care Type & Services".',
   },
   {
+    id: 'booking',
     keywords: ['book', 'booking', 'schedule', 'appointment'],
-    answer: 'To book: log in with your phone number, pick a service, fill in your address and schedule, and we\'ll match you with an available caregiver.',
   },
   {
+    id: 'payment',
     keywords: ['payment', 'pay', 'razorpay', 'upi'],
-    answer: 'Payments are handled securely via Razorpay — UPI, cards, and netbanking are all supported. You\'ll get a WhatsApp confirmation after payment.',
   },
   {
+    id: 'cancel',
     keywords: ['cancel', 'refund'],
-    answer: 'To cancel or request a refund on a booking, please reach out to our support team — they can process it from their end.',
   },
   {
+    id: 'caregiver',
     keywords: ['caregiver', 'staff', 'nurse', 'verified'],
-    answer: 'All our caregivers are background-verified and trained for their specific care category before being listed on the platform.',
   },
 ]
 
-const GREETING = {
-  role: 'bot',
-  text: "Hi! I'm the Book My Carers assistant. Ask me about pricing, services, or how booking works.",
-}
-
-function findAnswer(message) {
-  const lower = message.toLowerCase()
-  const match = FAQS.find((faq) => faq.keywords.some((k) => lower.includes(k)))
-  return match?.answer
-}
-
 export default function ChatbotWidget() {
+  const { t } = useTranslation()
+
+  const faqAnswers = {
+    pricing: t('chatbot.faqPricing'),
+    services: t('chatbot.faqServices'),
+    booking: t('chatbot.faqBooking'),
+    payment: t('chatbot.faqPayment'),
+    cancel: t('chatbot.faqCancel'),
+    caregiver: t('chatbot.faqCaregiver'),
+  }
+
+  function findAnswer(message) {
+    const lower = message.toLowerCase()
+    const match = FAQS.find((faq) => faq.keywords.some((k) => lower.includes(k)))
+    return match ? faqAnswers[match.id] : undefined
+  }
+
+  const GREETING = {
+    role: 'bot',
+    text: t('chatbot.greeting', { brand: 'Book My Carers' }),
+  }
+
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState([GREETING])
   const [input, setInput] = useState('')
@@ -54,9 +66,7 @@ export default function ChatbotWidget() {
     const answer = findAnswer(text)
     const botMsg = {
       role: 'bot',
-      text:
-        answer ??
-        "I don't have an answer for that yet. Would you like me to connect you with a human support agent?",
+      text: answer ?? t('chatbot.fallbackAnswer'),
     }
     setMessages((m) => [...m, userMsg, botMsg])
     setInput('')
@@ -66,7 +76,7 @@ export default function ChatbotWidget() {
     setEscalated(true)
     setMessages((m) => [
       ...m,
-      { role: 'bot', text: 'Connecting you to a human support agent — someone will respond here shortly.' },
+      { role: 'bot', text: t('chatbot.escalationMessage') },
     ])
   }
 
@@ -77,7 +87,7 @@ export default function ChatbotWidget() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         className="fixed bottom-5 right-5 z-40 flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-brand-600 text-white shadow-lg shadow-brand-600/40"
-        aria-label="Open chat support"
+        aria-label={t('chatbot.openChatAriaLabel')}
       >
         {open ? <X size={22} /> : <MessageCircle size={22} />}
       </motion.button>
@@ -94,8 +104,8 @@ export default function ChatbotWidget() {
             <div className="flex items-center gap-2 bg-brand-600 px-4 py-3 text-white">
               <MessageCircle size={18} />
               <div>
-                <p className="text-sm font-semibold">Book My Carers Support</p>
-                <p className="text-xs text-brand-100">Usually replies instantly</p>
+                <p className="text-sm font-semibold">{t('chatbot.supportTitle', { brand: 'Book My Carers' })}</p>
+                <p className="text-xs text-brand-100">{t('chatbot.repliesInstantly')}</p>
               </div>
             </div>
 
@@ -118,7 +128,7 @@ export default function ChatbotWidget() {
                   className="flex items-center gap-1.5 text-xs font-medium text-brand-700 hover:underline"
                 >
                   <Headset size={13} />
-                  Talk to a human
+                  {t('chatbot.talkToHuman')}
                 </button>
               )}
             </div>
@@ -127,13 +137,13 @@ export default function ChatbotWidget() {
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Type your question…"
+                placeholder={t('chatbot.inputPlaceholder')}
                 className="h-10 flex-1 rounded-full border border-brand-200 px-4 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
               />
               <button
                 type="submit"
                 className="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-brand-600 text-white hover:bg-brand-700"
-                aria-label="Send"
+                aria-label={t('chatbot.sendAriaLabel')}
               >
                 <Send size={16} />
               </button>

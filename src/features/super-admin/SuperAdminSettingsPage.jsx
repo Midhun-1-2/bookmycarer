@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { CheckCircle2, Settings } from 'lucide-react'
 import Card from '../../components/ui/Card'
 import Input from '../../components/ui/Input'
@@ -14,6 +15,7 @@ const DEFAULTS = {
 }
 
 export default function SuperAdminSettingsPage() {
+  const { t } = useTranslation()
   const [settings, setSettings] = useState(() => readStore('settings', DEFAULTS))
   const [saved, setSaved] = useState(false)
 
@@ -28,32 +30,31 @@ export default function SuperAdminSettingsPage() {
     <div className="mx-auto max-w-xl">
       <h1 className="flex items-center gap-2 text-2xl font-semibold text-slate-900">
         <Settings size={22} className="text-brand-600" />
-        System Settings
+        {t('superAdminSettings.title')}
       </h1>
       <p className="mt-1 text-sm text-slate-500">
-        Platform-wide configuration. Payment escrow and full implementation details are still to be
-        finalized with the client.
+        {t('superAdminSettings.subtitle')}
       </p>
 
       <Card className="mt-6" animate={false}>
         <form onSubmit={handleSave} className="space-y-4">
           <Input
-            label="Platform name"
+            label={t('superAdminSettings.platformName')}
             value={settings.platformName}
             onChange={(e) => setSettings((s) => ({ ...s, platformName: e.target.value }))}
           />
           <Input
-            label="Support phone"
+            label={t('superAdminSettings.supportPhone')}
             value={settings.supportPhone}
             onChange={(e) => setSettings((s) => ({ ...s, supportPhone: e.target.value }))}
           />
           <Input
-            label="Support email"
+            label={t('superAdminSettings.supportEmail')}
             value={settings.supportEmail}
             onChange={(e) => setSettings((s) => ({ ...s, supportEmail: e.target.value }))}
           />
           <Input
-            label="Escrow provider"
+            label={t('superAdminSettings.escrowProvider')}
             value={settings.escrowProvider}
             onChange={(e) => setSettings((s) => ({ ...s, escrowProvider: e.target.value }))}
           />
@@ -64,9 +65,9 @@ export default function SuperAdminSettingsPage() {
               onChange={(e) => setSettings((s) => ({ ...s, maintenanceMode: e.target.checked }))}
               className="h-4 w-4 rounded border-brand-300 text-brand-600 focus:ring-brand-500"
             />
-            Enable maintenance mode
+            {t('superAdminSettings.maintenanceMode')}
           </label>
-          <Button type="submit">{saved ? <><CheckCircle2 size={16} /> Saved</> : 'Save settings'}</Button>
+          <Button type="submit">{saved ? <><CheckCircle2 size={16} /> {t('superAdminSettings.saved')}</> : t('superAdminSettings.saveButton')}</Button>
         </form>
       </Card>
     </div>

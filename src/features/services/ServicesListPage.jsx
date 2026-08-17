@@ -1,14 +1,16 @@
+import { useTranslation } from 'react-i18next'
 import { categoriesApi } from '../../lib/mockApi'
 import CategoryCard from '../../components/CategoryCard'
 
 export default function ServicesListPage() {
+  const { t } = useTranslation()
   const categories = categoriesApi.listSync()
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-      <h1 className="text-2xl font-semibold text-slate-900 sm:text-3xl">All Care Services</h1>
+      <h1 className="text-2xl font-semibold text-slate-900 sm:text-3xl">{t('servicesListPage.title')}</h1>
       <p className="mt-1 max-w-2xl text-sm text-slate-500 sm:text-base">
-        Explore every category of at-home care available on Book My Carers.
+        {t('servicesListPage.subtitle')}
       </p>
 
       <div className="mt-8 flex flex-wrap gap-5">

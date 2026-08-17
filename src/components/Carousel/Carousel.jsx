@@ -2,9 +2,11 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import Button from '../ui/Button'
 
 export default function Carousel({ slides, autoPlayMs = 5000 }) {
+  const { t } = useTranslation()
   const [index, setIndex] = useState(0)
   const [direction, setDirection] = useState(1)
   const timerRef = useRef(null)
@@ -67,7 +69,7 @@ export default function Carousel({ slides, autoPlayMs = 5000 }) {
             <div className="absolute inset-0 bg-gradient-to-r from-brand-950/85 via-brand-900/60 to-brand-900/20" />
             <div className="relative flex h-full flex-col items-start justify-center gap-2 p-6 text-white sm:p-10">
               <span className="mb-2 rounded-full bg-white/15 px-3 py-1 text-xs font-medium backdrop-blur">
-                Featured
+                {t('carousel.featured')}
               </span>
               <h3 className="max-w-md text-2xl font-semibold sm:text-3xl">{slide.title}</h3>
               <p className="mt-2 max-w-md text-sm text-brand-50 sm:text-base">{slide.description}</p>
@@ -86,14 +88,14 @@ export default function Carousel({ slides, autoPlayMs = 5000 }) {
           <button
             onClick={prev}
             className="absolute left-3 top-1/2 z-10 hidden -translate-y-1/2 cursor-pointer rounded-full bg-white/90 p-2 text-brand-700 shadow-md hover:bg-white sm:flex"
-            aria-label="Previous slide"
+            aria-label={t('carousel.previousSlide')}
           >
             <ChevronLeft size={20} />
           </button>
           <button
             onClick={next}
             className="absolute right-3 top-1/2 z-10 hidden -translate-y-1/2 cursor-pointer rounded-full bg-white/90 p-2 text-brand-700 shadow-md hover:bg-white sm:flex"
-            aria-label="Next slide"
+            aria-label={t('carousel.nextSlide')}
           >
             <ChevronRight size={20} />
           </button>
@@ -106,7 +108,7 @@ export default function Carousel({ slides, autoPlayMs = 5000 }) {
                 className={`h-1.5 cursor-pointer rounded-full transition-all ${
                   i === index ? 'w-6 bg-white' : 'w-1.5 bg-white/50'
                 }`}
-                aria-label={`Go to slide ${i + 1}`}
+                aria-label={t('carousel.goToSlide', { number: i + 1 })}
               />
             ))}
           </div>

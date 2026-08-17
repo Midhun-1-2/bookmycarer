@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Plus, Trash2 } from 'lucide-react'
 import { categoriesApi } from '../../lib/mockApi'
 import { getCategoryIcon } from '../../lib/icons'
@@ -11,6 +12,7 @@ const ICONS = ['HeartHandshake', 'HandHeart', 'Stethoscope', 'Sparkles', 'Car']
 const emptyCategory = { name: '', description: '', icon: 'HeartHandshake' }
 
 export default function AdminCategoriesPage() {
+  const { t } = useTranslation()
   const [categories, setCategories] = useState(null)
   const [open, setOpen] = useState(false)
   const [form, setForm] = useState(emptyCategory)
@@ -65,12 +67,12 @@ export default function AdminCategoriesPage() {
     <div>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900">Service Categories</h1>
-          <p className="mt-1 text-sm text-slate-500">Manage care categories and their individual services.</p>
+          <h1 className="text-2xl font-semibold text-slate-900">{t('adminCategories.title')}</h1>
+          <p className="mt-1 text-sm text-slate-500">{t('adminCategories.subtitle')}</p>
         </div>
         <Button onClick={() => setOpen(true)}>
           <Plus size={17} />
-          Add category
+          {t('adminCategories.addCategory')}
         </Button>
       </div>
 
@@ -99,7 +101,7 @@ export default function AdminCategoriesPage() {
                       <button
                         onClick={() => handleRemoveService(cat, s.id)}
                         className="cursor-pointer text-slate-400 hover:text-rose-600"
-                        aria-label="Remove service"
+                        aria-label={t('adminCategories.removeService')}
                       >
                         <Trash2 size={15} />
                       </button>
@@ -110,7 +112,7 @@ export default function AdminCategoriesPage() {
 
               <div className="mt-3 flex gap-2">
                 <input
-                  placeholder="New service name"
+                  placeholder={t('adminCategories.newServiceName')}
                   value={draft.name}
                   onChange={(e) =>
                     setServiceDrafts((d) => ({ ...d, [cat.id]: { ...draft, name: e.target.value } }))
@@ -118,7 +120,7 @@ export default function AdminCategoriesPage() {
                   className="h-9 flex-1 rounded-lg border border-brand-200 px-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
                 />
                 <input
-                  placeholder="₹/hr"
+                  placeholder={t('adminCategories.pricePlaceholder')}
                   type="number"
                   value={draft.priceFrom}
                   onChange={(e) =>
@@ -127,7 +129,7 @@ export default function AdminCategoriesPage() {
                   className="h-9 w-24 rounded-lg border border-brand-200 px-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
                 />
                 <Button size="sm" variant="outline" onClick={() => handleAddService(cat)}>
-                  <Plus size={14} /> Add
+                  <Plus size={14} /> {t('adminCategories.add')}
                 </Button>
               </div>
             </Card>
@@ -135,22 +137,22 @@ export default function AdminCategoriesPage() {
         })}
       </div>
 
-      <Modal open={open} onClose={() => setOpen(false)} title="Add service category">
+      <Modal open={open} onClose={() => setOpen(false)} title={t('adminCategories.modalTitle')}>
         <form onSubmit={handleAddCategory} className="space-y-4">
           <Input
-            label="Category name"
+            label={t('adminCategories.categoryName')}
             required
             value={form.name}
             onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
           />
           <Input
-            label="Description"
+            label={t('adminCategories.description')}
             required
             value={form.description}
             onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
           />
           <div>
-            <p className="mb-1.5 text-sm font-medium text-slate-700">Icon</p>
+            <p className="mb-1.5 text-sm font-medium text-slate-700">{t('adminCategories.icon')}</p>
             <div className="flex flex-wrap gap-2">
               {ICONS.map((iconName) => {
                 const Icon = getCategoryIcon(iconName)
@@ -172,7 +174,7 @@ export default function AdminCategoriesPage() {
             </div>
           </div>
           <Button type="submit" className="w-full">
-            Add category
+            {t('adminCategories.addCategory')}
           </Button>
         </form>
       </Modal>

@@ -1,8 +1,10 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { X } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { cn } from '../../lib/cn'
 
 export default function Modal({ open, onClose, title, children, className }) {
+  const { t } = useTranslation()
   return (
     <AnimatePresence>
       {open && (
@@ -34,7 +36,7 @@ export default function Modal({ open, onClose, title, children, className }) {
                 type="button"
                 onClick={onClose}
                 className="ml-auto rounded-full p-1.5 text-slate-400 hover:bg-brand-50 hover:text-slate-600 cursor-pointer"
-                aria-label="Close"
+                aria-label={t('modal.close')}
               >
                 <X size={18} />
               </button>
