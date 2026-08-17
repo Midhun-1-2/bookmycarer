@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
@@ -5,7 +6,7 @@ import { cn } from '../../lib/cn'
 
 export default function Modal({ open, onClose, title, children, className }) {
   const { t } = useTranslation()
-  return (
+  return createPortal(
     <AnimatePresence>
       {open && (
         <motion.div
@@ -45,6 +46,7 @@ export default function Modal({ open, onClose, title, children, className }) {
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   )
 }

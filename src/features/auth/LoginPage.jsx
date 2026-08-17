@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { Phone, ShieldCheck, ArrowLeft } from 'lucide-react'
+import { Phone, ShieldCheck, ArrowLeft, Home } from 'lucide-react'
 import Input from '../../components/ui/Input'
 import Button from '../../components/ui/Button'
 import Card from '../../components/ui/Card'
@@ -89,6 +89,13 @@ export default function LoginPage({ role }) {
   return (
     <div className="flex min-h-svh items-center justify-center bg-brand-50 px-4 py-10">
       <div className="w-full max-w-md">
+        <Link
+          to="/"
+          className="mb-4 flex w-fit items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-brand-700"
+        >
+          <Home size={15} />
+          {t('nav.home')}
+        </Link>
         <Link to="/" className="mb-6 flex items-center justify-center">
           <img src="/brand/wordmark.png" alt="Book My Carer" className="h-14 w-auto" />
         </Link>
