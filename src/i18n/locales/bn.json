@@ -11,7 +11,7 @@
     "badge": "সারা ভারতে পরিবারদের সেবা দিচ্ছি",
     "title1": "সহানুভূতিশীল পরিষেবা,",
     "title2": "পৌঁছে যাবে আপনার দরজায়।",
-    "subtitle": "Book My Carers পরিবারগুলিকে যাচাইকৃত কেয়ারগিভার, নার্স ও সহায়ক স্টাফদের সাথে সংযুক্ত করে — আপনার প্রয়োজন ও সময়সূচি অনুযায়ী মিলিয়ে দেওয়া হয়।",
+    "subtitle": "Book My Carer পরিবারগুলিকে যাচাইকৃত কেয়ারগিভার, নার্স ও সহায়ক স্টাফদের সাথে সংযুক্ত করে — আপনার প্রয়োজন ও সময়সূচি অনুযায়ী মিলিয়ে দেওয়া হয়।",
     "cta1": "কেয়ারগিভার বুক করুন",
     "cta2": "পরিষেবা ব্রাউজ করুন"
   },
@@ -41,7 +41,7 @@
   },
   "servicesListPage": {
     "title": "সমস্ত কেয়ার পরিষেবা",
-    "subtitle": "Book My Carers-এ উপলব্ধ বাড়িতে পরিচর্যার সব ক্যাটাগরি এক্সপ্লোর করুন।"
+    "subtitle": "Book My Carer-এ উপলব্ধ বাড়িতে পরিচর্যার সব ক্যাটাগরি এক্সপ্লোর করুন।"
   },
   "categoryPage": {
     "startingFrom": "শুরু হচ্ছে",
@@ -96,7 +96,7 @@
     "aboutUs": "আমাদের সম্পর্কে",
     "careers": "ক্যারিয়ার",
     "contact": "যোগাযোগ",
-    "copyright": "© {{year}} Book My Carers. সর্বস্বত্ব সংরক্ষিত।"
+    "copyright": "© {{year}} Book My Carer. সর্বস্বত্ব সংরক্ষিত।"
   },
   "roleLabel": {
     "user": "কেয়ার সিকার",
@@ -280,7 +280,7 @@
     "serviceCategories": "পরিষেবা ক্যাটাগরি",
     "pendingBookings": "অপেক্ষমাণ বুকিং",
     "revenueCollected": "সংগৃহীত রাজস্ব",
-    "revenueLast14Days": "রাজস্ব — গত 14 দিন",
+    "revenueLast14Days": "রাজস্ব",
     "bookingsByCategory": "ক্যাটাগরি অনুযায়ী বুকিং",
     "bookingsByStatus": "স্ট্যাটাস অনুযায়ী বুকিং",
     "topStaffByEngagements": "এনগেজমেন্ট অনুযায়ী শীর্ষ স্টাফ"
@@ -303,6 +303,10 @@
     "newModalTitle": "নতুন সার্ভিস পেজ",
     "category": "ক্যাটাগরি",
     "selectCategory": "ক্যাটাগরি নির্বাচন করুন",
+    "selectService": "পরিষেবা নির্বাচন করুন",
+    "pricingTiers": "মূল্য স্তর",
+    "addPriceTier": "মূল্য স্তর যোগ করুন",
+    "removePriceTier": "মূল্য স্তর সরান",
     "serviceId": "সার্ভিস আইডি",
     "pageTitle": "পেজের শিরোনাম",
     "shortDescription": "সংক্ষিপ্ত বিবরণ",
@@ -348,7 +352,7 @@
     "upcoming": "আসন্ন",
     "completed": "সম্পন্ন",
     "rating": "রেটিং",
-    "earningsChartTitle": "আপনার আয় — গত 14 দিন",
+    "earningsChartTitle": "আপনার আয়",
     "statusChartTitle": "স্ট্যাটাস অনুযায়ী এনগেজমেন্ট",
     "upcomingEngagements": "আসন্ন এনগেজমেন্ট",
     "viewAll": "সব দেখুন",
@@ -423,7 +427,7 @@
     "cardRevenueCollected": "সংগৃহীত রাজস্ব",
     "title": "সুপার অ্যাডমিন ওভারভিউ",
     "subtitle": "সম্পূর্ণ প্ল্যাটফর্ম দৃশ্যমানতা ও নিয়ন্ত্রণ।",
-    "headingRevenue": "প্ল্যাটফর্ম রাজস্ব — গত 30 দিন",
+    "headingRevenue": "প্ল্যাটফর্ম রাজস্ব",
     "headingByCategory": "ক্যাটাগরি অনুযায়ী বুকিং",
     "headingByStatus": "স্ট্যাটাস অনুযায়ী বুকিং",
     "headingComposition": "প্ল্যাটফর্মের গঠন"
@@ -514,7 +518,8 @@
     "bookingsCount": "{{count}}টি বুকিং",
     "noData": "এখনও কোনো ডেটা নেই।",
     "revenueLabel": "রাজস্ব: ₹{{value}}",
-    "engagementsCount": "{{count}}টি এনগেজমেন্ট"
+    "engagementsCount": "{{count}}টি এনগেজমেন্ট",
+    "lastNDays": "গত {{days}} দিন"
   },
   "modal": {
     "close": "বন্ধ করুন"

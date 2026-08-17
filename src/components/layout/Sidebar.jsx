@@ -1,20 +1,17 @@
 import { NavLink } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { LogOut, X, HeartHandshake } from 'lucide-react'
+import { LogOut } from 'lucide-react'
 import { cn } from '../../lib/cn'
 import { ROLE_LABEL } from '../../app/roleConfig'
 
-function SidebarContent({ items, session, onLogout, onNavigate }) {
+function SidebarContent({ items, session, onLogout }) {
   const { t } = useTranslation()
   return (
     <div className="flex h-full flex-col">
       <div className="flex items-center gap-2 px-5 py-5">
-        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-600 text-white">
-          <HeartHandshake size={18} />
-        </div>
+        <img src="/brand/icon.png" alt="Book My Carer" className="h-9 w-9 shrink-0 object-contain" />
         <div>
-          <p className="text-sm font-semibold text-slate-900">Book My Carers</p>
+          <p className="text-sm font-semibold text-slate-900">Book My Carer</p>
           <p className="text-xs text-brand-600">{t(ROLE_LABEL[session?.role])}</p>
         </div>
       </div>
@@ -24,7 +21,6 @@ function SidebarContent({ items, session, onLogout, onNavigate }) {
           <NavLink
             key={to}
             to={to}
-            onClick={onNavigate}
             className={({ isActive }) =>
               cn(
                 'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
@@ -58,47 +54,10 @@ function SidebarContent({ items, session, onLogout, onNavigate }) {
   )
 }
 
-export default function Sidebar({ items, session, onLogout, mobileOpen, onCloseMobile }) {
-  const { t } = useTranslation()
+export default function Sidebar({ items, session, onLogout }) {
   return (
-    <>
-      <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 border-r border-brand-100 bg-white lg:block">
-        <SidebarContent items={items} session={session} onLogout={onLogout} />
-      </aside>
-
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            className="fixed inset-0 z-40 lg:hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <div className="absolute inset-0 bg-brand-950/40" onClick={onCloseMobile} />
-            <motion.div
-              className="relative z-10 h-full w-72 max-w-[80vw] bg-white shadow-xl"
-              initial={{ x: '-100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '-100%' }}
-              transition={{ type: 'tween', duration: 0.25 }}
-            >
-              <button
-                onClick={onCloseMobile}
-                className="absolute right-3 top-4 rounded-full p-1.5 text-slate-400 hover:bg-brand-50"
-                aria-label={t('sidebar.closeMenu')}
-              >
-                <X size={18} />
-              </button>
-              <SidebarContent
-                items={items}
-                session={session}
-                onLogout={onLogout}
-                onNavigate={onCloseMobile}
-              />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+    <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 border-r border-brand-100 bg-white lg:block">
+      <SidebarContent items={items} session={session} onLogout={onLogout} />
+    </aside>
   )
 }

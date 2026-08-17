@@ -68,12 +68,12 @@ export default function AdminStaffAccountsPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-slate-900">{t('adminStaff.title')}</h1>
           <p className="mt-1 text-sm text-slate-500">{t('adminStaff.subtitle')}</p>
         </div>
-        <Button onClick={() => setOpen(true)}>
+        <Button className="w-full sm:w-auto" onClick={() => setOpen(true)}>
           <Plus size={17} />
           {t('adminStaff.createStaff')}
         </Button>

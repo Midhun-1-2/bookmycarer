@@ -54,6 +54,11 @@ export const bookingsApi = makeCollection('bookings', bookingsSeed)
 export const notificationsApi = makeCollection('notifications', notificationsSeed)
 export const servicePagesApi = makeCollection('servicePages', servicePagesSeed)
 
+export function getServiceStartingPrice(serviceId) {
+  const page = servicePagesApi.listSync().find((p) => p.serviceId === serviceId)
+  return page?.pricing?.[0]?.price ?? null
+}
+
 function genId(prefix) {
   return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`
 }

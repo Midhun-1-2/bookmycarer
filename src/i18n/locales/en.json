@@ -11,7 +11,7 @@
     "badge": "Now serving families across India",
     "title1": "Compassionate care,",
     "title2": "delivered to your door.",
-    "subtitle": "Book My Carers connects families with verified caregivers, nurses, and support staff — matched to your needs, on your schedule.",
+    "subtitle": "Book My Carer connects families with verified caregivers, nurses, and support staff — matched to your needs, on your schedule.",
     "cta1": "Book a caregiver",
     "cta2": "Browse services"
   },
@@ -41,7 +41,7 @@
   },
   "servicesListPage": {
     "title": "All Care Services",
-    "subtitle": "Explore every category of at-home care available on Book My Carers."
+    "subtitle": "Explore every category of at-home care available on Book My Carer."
   },
   "categoryPage": {
     "startingFrom": "Starting from",
@@ -96,7 +96,7 @@
     "aboutUs": "About Us",
     "careers": "Careers",
     "contact": "Contact",
-    "copyright": "© {{year}} Book My Carers. All rights reserved."
+    "copyright": "© {{year}} Book My Carer. All rights reserved."
   },
   "roleLabel": {
     "user": "Care Seeker",
@@ -280,7 +280,7 @@
     "serviceCategories": "Service categories",
     "pendingBookings": "Pending bookings",
     "revenueCollected": "Revenue collected",
-    "revenueLast14Days": "Revenue — last 14 days",
+    "revenueLast14Days": "Revenue",
     "bookingsByCategory": "Bookings by category",
     "bookingsByStatus": "Bookings by status",
     "topStaffByEngagements": "Top staff by engagements"
@@ -303,6 +303,10 @@
     "newModalTitle": "New service page",
     "category": "Category",
     "selectCategory": "Select category",
+    "selectService": "Select service",
+    "pricingTiers": "Pricing tiers",
+    "addPriceTier": "Add price tier",
+    "removePriceTier": "Remove price tier",
     "serviceId": "Service ID",
     "pageTitle": "Page title",
     "shortDescription": "Short description",
@@ -348,7 +352,7 @@
     "upcoming": "Upcoming",
     "completed": "Completed",
     "rating": "Rating",
-    "earningsChartTitle": "Your earnings — last 14 days",
+    "earningsChartTitle": "Your earnings",
     "statusChartTitle": "Engagements by status",
     "upcomingEngagements": "Upcoming engagements",
     "viewAll": "View all",
@@ -423,7 +427,7 @@
     "cardRevenueCollected": "Revenue collected",
     "title": "Super Admin overview",
     "subtitle": "Full platform visibility and control.",
-    "headingRevenue": "Platform revenue — last 30 days",
+    "headingRevenue": "Platform revenue",
     "headingByCategory": "Bookings by category",
     "headingByStatus": "Bookings by status",
     "headingComposition": "Platform composition"
@@ -514,7 +518,8 @@
     "bookingsCount": "{{count}} bookings",
     "noData": "No data yet.",
     "revenueLabel": "Revenue: ₹{{value}}",
-    "engagementsCount": "{{count}} engagements"
+    "engagementsCount": "{{count}} engagements",
+    "lastNDays": "Last {{days}} days"
   },
   "modal": {
     "close": "Close"

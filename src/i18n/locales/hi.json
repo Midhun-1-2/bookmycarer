@@ -11,7 +11,7 @@
     "badge": "अब पूरे भारत में परिवारों की सेवा कर रहे हैं",
     "title1": "दयालु देखभाल,",
     "title2": "आपके दरवाजे तक पहुंचाई गई।",
-    "subtitle": "Book My Carers परिवारों को सत्यापित केयरगिवर, नर्स और सहायक स्टाफ से जोड़ता है — आपकी जरूरत और समय के अनुसार।",
+    "subtitle": "Book My Carer परिवारों को सत्यापित केयरगिवर, नर्स और सहायक स्टाफ से जोड़ता है — आपकी जरूरत और समय के अनुसार।",
     "cta1": "केयरगिवर बुक करें",
     "cta2": "सेवाएं ब्राउज़ करें"
   },
@@ -41,7 +41,7 @@
   },
   "servicesListPage": {
     "title": "सभी देखभाल सेवाएं",
-    "subtitle": "Book My Carers पर उपलब्ध घर पर देखभाल की हर श्रेणी देखें।"
+    "subtitle": "Book My Carer पर उपलब्ध घर पर देखभाल की हर श्रेणी देखें।"
   },
   "categoryPage": {
     "startingFrom": "शुरुआती कीमत",
@@ -96,7 +96,7 @@
     "aboutUs": "हमारे बारे में",
     "careers": "करियर",
     "contact": "संपर्क करें",
-    "copyright": "© {{year}} Book My Carers. सर्वाधिकार सुरक्षित।"
+    "copyright": "© {{year}} Book My Carer. सर्वाधिकार सुरक्षित।"
   },
   "roleLabel": {
     "user": "देखभाल चाहने वाला",
@@ -280,7 +280,7 @@
     "serviceCategories": "सेवा श्रेणियां",
     "pendingBookings": "लंबित बुकिंग",
     "revenueCollected": "एकत्रित राजस्व",
-    "revenueLast14Days": "राजस्व — पिछले 14 दिन",
+    "revenueLast14Days": "राजस्व",
     "bookingsByCategory": "श्रेणी अनुसार बुकिंग",
     "bookingsByStatus": "स्थिति अनुसार बुकिंग",
     "topStaffByEngagements": "एंगेजमेंट के अनुसार शीर्ष स्टाफ"
@@ -303,6 +303,10 @@
     "newModalTitle": "नया सेवा पेज",
     "category": "श्रेणी",
     "selectCategory": "श्रेणी चुनें",
+    "selectService": "सेवा चुनें",
+    "pricingTiers": "मूल्य स्तर",
+    "addPriceTier": "मूल्य स्तर जोड़ें",
+    "removePriceTier": "मूल्य स्तर हटाएं",
     "serviceId": "सेवा आईडी",
     "pageTitle": "पेज शीर्षक",
     "shortDescription": "संक्षिप्त विवरण",
@@ -348,7 +352,7 @@
     "upcoming": "आगामी",
     "completed": "पूर्ण",
     "rating": "रेटिंग",
-    "earningsChartTitle": "आपकी कमाई — पिछले 14 दिन",
+    "earningsChartTitle": "आपकी कमाई",
     "statusChartTitle": "स्थिति अनुसार एंगेजमेंट",
     "upcomingEngagements": "आगामी एंगेजमेंट",
     "viewAll": "सभी देखें",
@@ -423,7 +427,7 @@
     "cardRevenueCollected": "एकत्रित राजस्व",
     "title": "सुपर एडमिन ओवरव्यू",
     "subtitle": "पूर्ण प्लेटफॉर्म दृश्यता और नियंत्रण।",
-    "headingRevenue": "प्लेटफॉर्म राजस्व — पिछले 30 दिन",
+    "headingRevenue": "प्लेटफॉर्म राजस्व",
     "headingByCategory": "श्रेणी अनुसार बुकिंग",
     "headingByStatus": "स्थिति अनुसार बुकिंग",
     "headingComposition": "प्लेटफॉर्म संरचना"
@@ -514,7 +518,8 @@
     "bookingsCount": "{{count}} बुकिंग",
     "noData": "अभी कोई डेटा नहीं है।",
     "revenueLabel": "राजस्व: ₹{{value}}",
-    "engagementsCount": "{{count}} एंगेजमेंट"
+    "engagementsCount": "{{count}} एंगेजमेंट",
+    "lastNDays": "पिछले {{days}} दिन"
   },
   "modal": {
     "close": "बंद करें"

@@ -3,7 +3,7 @@ import { useNavigate, useParams, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { CalendarClock, MapPin, Phone, ShieldAlert, Tag } from 'lucide-react'
-import { categoriesApi, createBooking } from '../../lib/mockApi'
+import { categoriesApi, createBooking, getServiceStartingPrice } from '../../lib/mockApi'
 import { useSession } from '../../lib/session'
 import Card from '../../components/ui/Card'
 import Input from '../../components/ui/Input'
@@ -71,7 +71,7 @@ export default function BookingFormPage() {
       contactPhone: form.contactPhone,
       emergencyContact: form.emergencyContact,
       careTags: tags,
-      amount: service.priceFrom,
+      amount: service.priceFrom ?? getServiceStartingPrice(service.id) ?? 0,
     })
     setSubmitting(false)
     navigate(`/user/book/${booking.id}/match`)

@@ -43,14 +43,11 @@ export default function AdminCategoriesPage() {
 
   async function handleAddService(cat) {
     const draft = serviceDrafts[cat.id]
-    if (!draft?.name || !draft?.priceFrom) return
+    if (!draft?.name) return
     await categoriesApi.update(cat.id, {
-      services: [
-        ...cat.services,
-        { id: `svc-${Date.now()}`, name: draft.name, priceFrom: Number(draft.priceFrom) },
-      ],
+      services: [...cat.services, { id: `svc-${Date.now()}`, name: draft.name }],
     })
-    setServiceDrafts((d) => ({ ...d, [cat.id]: { name: '', priceFrom: '' } }))
+    setServiceDrafts((d) => ({ ...d, [cat.id]: { name: '' } }))
     load()
   }
 
@@ -65,12 +62,12 @@ export default function AdminCategoriesPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-slate-900">{t('adminCategories.title')}</h1>
           <p className="mt-1 text-sm text-slate-500">{t('adminCategories.subtitle')}</p>
         </div>
-        <Button onClick={() => setOpen(true)}>
+        <Button className="w-full sm:w-auto" onClick={() => setOpen(true)}>
           <Plus size={17} />
           {t('adminCategories.addCategory')}
         </Button>
@@ -79,7 +76,7 @@ export default function AdminCategoriesPage() {
       <div className="mt-6 space-y-4">
         {categories.map((cat) => {
           const Icon = getCategoryIcon(cat.icon)
-          const draft = serviceDrafts[cat.id] ?? { name: '', priceFrom: '' }
+          const draft = serviceDrafts[cat.id] ?? { name: '' }
           return (
             <Card key={cat.id} animate={false}>
               <div className="flex items-center gap-3">
@@ -97,7 +94,6 @@ export default function AdminCategoriesPage() {
                   <li key={s.id} className="flex items-center justify-between py-2 text-sm">
                     <span className="text-slate-700">{s.name}</span>
                     <div className="flex items-center gap-3">
-                      <span className="text-slate-500">₹{s.priceFrom}/hr</span>
                       <button
                         onClick={() => handleRemoveService(cat, s.id)}
                         className="cursor-pointer text-slate-400 hover:text-rose-600"
@@ -110,25 +106,16 @@ export default function AdminCategoriesPage() {
                 ))}
               </ul>
 
-              <div className="mt-3 flex gap-2">
+              <div className="mt-3 flex flex-col gap-2 sm:flex-row">
                 <input
                   placeholder={t('adminCategories.newServiceName')}
                   value={draft.name}
                   onChange={(e) =>
                     setServiceDrafts((d) => ({ ...d, [cat.id]: { ...draft, name: e.target.value } }))
                   }
-                  className="h-9 flex-1 rounded-lg border border-brand-200 px-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
+                  className="h-9 w-full rounded-lg border border-brand-200 px-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 sm:flex-1"
                 />
-                <input
-                  placeholder={t('adminCategories.pricePlaceholder')}
-                  type="number"
-                  value={draft.priceFrom}
-                  onChange={(e) =>
-                    setServiceDrafts((d) => ({ ...d, [cat.id]: { ...draft, priceFrom: e.target.value } }))
-                  }
-                  className="h-9 w-24 rounded-lg border border-brand-200 px-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
-                />
-                <Button size="sm" variant="outline" onClick={() => handleAddService(cat)}>
+                <Button size="sm" variant="outline" className="shrink-0" onClick={() => handleAddService(cat)}>
                   <Plus size={14} /> {t('adminCategories.add')}
                 </Button>
               </div>

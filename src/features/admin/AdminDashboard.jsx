@@ -9,11 +9,12 @@ import RevenueTrendChart from '../../components/charts/RevenueTrendChart'
 import CategoryDonutChart from '../../components/charts/CategoryDonutChart'
 import StatusBarChart from '../../components/charts/StatusBarChart'
 import StaffBarChart from '../../components/charts/StaffBarChart'
+import DayRangeSelect from '../../components/charts/DayRangeSelect'
 
 export default function AdminDashboard() {
   const { t } = useTranslation()
-  const [stats, setStats] = useState(null)
-  const [charts, setCharts] = useState(null)
+  const [data, setData] = useState(null)
+  const [revenueDays, setRevenueDays] = useState(14)
 
   useEffect(() => {
     async function load() {
@@ -22,27 +23,32 @@ export default function AdminDashboard() {
         categoriesApi.list(),
         bookingsApi.list(),
       ])
-      const revenue = bookings
-        .filter((b) => b.payment.status === 'paid')
-        .reduce((sum, b) => sum + b.payment.amount, 0)
-      setStats({
-        staffCount: staff.length,
-        categoryCount: categories.length,
-        pendingBookings: bookings.filter((b) => b.status === 'pending').length,
-        totalBookings: bookings.length,
-        revenue,
-      })
-      setCharts({
-        revenue: revenueByDay(bookings, 14),
-        byCategory: bookingsByCategory(bookings, categories),
-        byStatus: bookingsByStatus(bookings),
-        byStaff: bookingsByStaff(bookings, staff),
-      })
+      setData({ staff, categories, bookings })
     }
     load()
   }, [])
 
-  if (!stats || !charts) return null
+  if (!data) return null
+
+  const { staff, categories, bookings } = data
+  const revenue = bookings
+    .filter((b) => b.payment.status === 'paid')
+    .reduce((sum, b) => sum + b.payment.amount, 0)
+
+  const stats = {
+    staffCount: staff.length,
+    categoryCount: categories.length,
+    pendingBookings: bookings.filter((b) => b.status === 'pending').length,
+    totalBookings: bookings.length,
+    revenue,
+  }
+
+  const charts = {
+    revenue: revenueByDay(bookings, revenueDays),
+    byCategory: bookingsByCategory(bookings, categories),
+    byStatus: bookingsByStatus(bookings, t),
+    byStaff: bookingsByStaff(bookings, staff),
+  }
 
   const cards = [
     { label: t('adminDashboard.staffAccounts'), value: stats.staffCount, icon: Users, to: '/admin/staff' },
@@ -75,7 +81,10 @@ export default function AdminDashboard() {
 
       <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-3">
         <Card className="lg:col-span-2" animate={false}>
-          <h3 className="text-sm font-semibold text-slate-900">{t('adminDashboard.revenueLast14Days')}</h3>
+          <div className="flex items-center justify-between gap-2">
+            <h3 className="text-sm font-semibold text-slate-900">{t('adminDashboard.revenueLast14Days')}</h3>
+            <DayRangeSelect value={revenueDays} onChange={setRevenueDays} />
+          </div>
           <RevenueTrendChart data={charts.revenue} />
         </Card>
         <Card animate={false}>

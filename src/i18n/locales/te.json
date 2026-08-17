@@ -11,7 +11,7 @@
     "badge": "ఇప్పుడు భారతదేశం అంతటా కుటుంబాలకు సేవలందిస్తున్నాము",
     "title1": "ప్రేమతో కూడిన సంరక్షణ,",
     "title2": "మీ ఇంటి వద్దకే.",
-    "subtitle": "Book My Carers మీ అవసరాలకు, మీ సమయానికి సరిపోయే వెరిఫైడ్ కేర్‌గివర్లు, నర్సులు, సహాయక సిబ్బందిని కుటుంబాలతో అనుసంధానిస్తుంది.",
+    "subtitle": "Book My Carer మీ అవసరాలకు, మీ సమయానికి సరిపోయే వెరిఫైడ్ కేర్‌గివర్లు, నర్సులు, సహాయక సిబ్బందిని కుటుంబాలతో అనుసంధానిస్తుంది.",
     "cta1": "కేర్‌గివర్‌ని బుక్ చేయండి",
     "cta2": "సేవలను చూడండి"
   },
@@ -41,7 +41,7 @@
   },
   "servicesListPage": {
     "title": "అన్ని సంరక్షణ సేవలు",
-    "subtitle": "Book My Carers లో అందుబాటులో ఉన్న ప్రతి రకమైన ఇంటి సంరక్షణ సేవను అన్వేషించండి."
+    "subtitle": "Book My Carer లో అందుబాటులో ఉన్న ప్రతి రకమైన ఇంటి సంరక్షణ సేవను అన్వేషించండి."
   },
   "categoryPage": {
     "startingFrom": "నుండి ప్రారంభం",
@@ -96,7 +96,7 @@
     "aboutUs": "మా గురించి",
     "careers": "ఉద్యోగావకాశాలు",
     "contact": "సంప్రదించండి",
-    "copyright": "© {{year}} Book My Carers. అన్ని హక్కులు రిజర్వ్ చేయబడ్డాయి."
+    "copyright": "© {{year}} Book My Carer. అన్ని హక్కులు రిజర్వ్ చేయబడ్డాయి."
   },
   "roleLabel": {
     "user": "సంరక్షణ పొందేవారు",
@@ -280,7 +280,7 @@
     "serviceCategories": "సేవా వర్గాలు",
     "pendingBookings": "పెండింగ్ బుకింగ్‌లు",
     "revenueCollected": "వసూలైన ఆదాయం",
-    "revenueLast14Days": "ఆదాయం — గత 14 రోజులు",
+    "revenueLast14Days": "ఆదాయం",
     "bookingsByCategory": "వర్గం వారీగా బుకింగ్‌లు",
     "bookingsByStatus": "స్థితి వారీగా బుకింగ్‌లు",
     "topStaffByEngagements": "అసైన్‌మెంట్ల వారీగా టాప్ సిబ్బంది"
@@ -303,6 +303,10 @@
     "newModalTitle": "కొత్త సర్వీస్ పేజీ",
     "category": "వర్గం",
     "selectCategory": "వర్గాన్ని ఎంచుకోండి",
+    "selectService": "సేవను ఎంచుకోండి",
+    "pricingTiers": "ధర శ్రేణులు",
+    "addPriceTier": "ధర శ్రేణి జోడించండి",
+    "removePriceTier": "ధర శ్రేణిని తీసివేయండి",
     "serviceId": "సర్వీస్ ID",
     "pageTitle": "పేజీ టైటిల్",
     "shortDescription": "సంక్షిప్త వివరణ",
@@ -348,7 +352,7 @@
     "upcoming": "రాబోయేవి",
     "completed": "పూర్తయింది",
     "rating": "రేటింగ్",
-    "earningsChartTitle": "మీ సంపాదన — గత 14 రోజులు",
+    "earningsChartTitle": "మీ సంపాదన",
     "statusChartTitle": "స్థితి వారీగా అసైన్‌మెంట్‌లు",
     "upcomingEngagements": "రాబోయే అసైన్‌మెంట్‌లు",
     "viewAll": "అన్నీ చూడండి",
@@ -423,7 +427,7 @@
     "cardRevenueCollected": "వసూలైన ఆదాయం",
     "title": "సూపర్ అడ్మిన్ అవలోకనం",
     "subtitle": "పూర్తి ప్లాట్‌ఫారమ్ దృశ్యమానత మరియు నియంత్రణ.",
-    "headingRevenue": "ప్లాట్‌ఫారమ్ ఆదాయం — గత 30 రోజులు",
+    "headingRevenue": "ప్లాట్‌ఫారమ్ ఆదాయం",
     "headingByCategory": "వర్గం వారీగా బుకింగ్‌లు",
     "headingByStatus": "స్థితి వారీగా బుకింగ్‌లు",
     "headingComposition": "ప్లాట్‌ఫారమ్ కూర్పు"
@@ -514,7 +518,8 @@
     "bookingsCount": "{{count}} బుకింగ్‌లు",
     "noData": "ఇంకా డేటా లేదు.",
     "revenueLabel": "ఆదాయం: ₹{{value}}",
-    "engagementsCount": "{{count}} అసైన్‌మెంట్‌లు"
+    "engagementsCount": "{{count}} అసైన్‌మెంట్‌లు",
+    "lastNDays": "గత {{days}} రోజులు"
   },
   "modal": {
     "close": "మూసివేయండి"

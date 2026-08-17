@@ -7,7 +7,7 @@ import Button from '../../components/ui/Button'
 import { readStore, writeStore } from '../../lib/storage'
 
 const DEFAULTS = {
-  platformName: 'Book My Carers',
+  platformName: 'Book My Carer',
   supportPhone: '9000000000',
   supportEmail: 'support@bookmycarers.in',
   escrowProvider: 'To be confirmed by client',

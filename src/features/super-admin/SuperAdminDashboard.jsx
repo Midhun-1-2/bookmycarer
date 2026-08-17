@@ -9,11 +9,12 @@ import RevenueTrendChart from '../../components/charts/RevenueTrendChart'
 import CategoryDonutChart from '../../components/charts/CategoryDonutChart'
 import StatusBarChart from '../../components/charts/StatusBarChart'
 import StaffBarChart from '../../components/charts/StaffBarChart'
+import DayRangeSelect from '../../components/charts/DayRangeSelect'
 
 export default function SuperAdminDashboard() {
   const { t } = useTranslation()
-  const [stats, setStats] = useState(null)
-  const [charts, setCharts] = useState(null)
+  const [data, setData] = useState(null)
+  const [revenueDays, setRevenueDays] = useState(30)
 
   useEffect(() => {
     async function load() {
@@ -24,32 +25,37 @@ export default function SuperAdminDashboard() {
         adminsApi.list(),
         usersApi.list(),
       ])
-      const revenue = bookings
-        .filter((b) => b.payment.status === 'paid')
-        .reduce((sum, b) => sum + b.payment.amount, 0)
-      setStats({
-        staffCount: staff.length,
-        categoryCount: categories.length,
-        adminCount: admins.filter((a) => a.role === 'admin').length,
-        totalBookings: bookings.length,
-        revenue,
-      })
-      setCharts({
-        revenue: revenueByDay(bookings, 30),
-        byCategory: bookingsByCategory(bookings, categories),
-        byStatus: bookingsByStatus(bookings),
-        byRole: [
-          { name: t('superAdminDashboard.chartUsers'), value: users.length },
-          { name: t('superAdminDashboard.chartStaff'), value: staff.length },
-          { name: t('superAdminDashboard.chartAdmins'), value: admins.filter((a) => a.role === 'admin').length },
-          { name: t('superAdminDashboard.chartSuperAdmins'), value: admins.filter((a) => a.role === 'super-admin').length },
-        ],
-      })
+      setData({ staff, categories, bookings, admins, users })
     }
     load()
-  }, [t])
+  }, [])
 
-  if (!stats || !charts) return null
+  if (!data) return null
+
+  const { staff, categories, bookings, admins, users } = data
+  const revenue = bookings
+    .filter((b) => b.payment.status === 'paid')
+    .reduce((sum, b) => sum + b.payment.amount, 0)
+
+  const stats = {
+    staffCount: staff.length,
+    categoryCount: categories.length,
+    adminCount: admins.filter((a) => a.role === 'admin').length,
+    totalBookings: bookings.length,
+    revenue,
+  }
+
+  const charts = {
+    revenue: revenueByDay(bookings, revenueDays),
+    byCategory: bookingsByCategory(bookings, categories),
+    byStatus: bookingsByStatus(bookings, t),
+    byRole: [
+      { name: t('superAdminDashboard.chartUsers'), value: users.length },
+      { name: t('superAdminDashboard.chartStaff'), value: staff.length },
+      { name: t('superAdminDashboard.chartAdmins'), value: admins.filter((a) => a.role === 'admin').length },
+      { name: t('superAdminDashboard.chartSuperAdmins'), value: admins.filter((a) => a.role === 'super-admin').length },
+    ],
+  }
 
   const cards = [
     { label: t('superAdminDashboard.cardAdminAccounts'), value: stats.adminCount, icon: ShieldCheck, to: '/super-admin/admins' },
@@ -83,7 +89,10 @@ export default function SuperAdminDashboard() {
 
       <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-3">
         <Card className="lg:col-span-2" animate={false}>
-          <h3 className="text-sm font-semibold text-slate-900">{t('superAdminDashboard.headingRevenue')}</h3>
+          <div className="flex items-center justify-between gap-2">
+            <h3 className="text-sm font-semibold text-slate-900">{t('superAdminDashboard.headingRevenue')}</h3>
+            <DayRangeSelect value={revenueDays} onChange={setRevenueDays} />
+          </div>
           <RevenueTrendChart data={charts.revenue} />
         </Card>
         <Card animate={false}>

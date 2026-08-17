@@ -11,7 +11,7 @@
     "badge": "आता संपूर्ण भारतातील कुटुंबांना सेवा देत आहोत",
     "title1": "प्रेमळ काळजी,",
     "title2": "तुमच्या दारापर्यंत पोहोचवली.",
-    "subtitle": "Book My Carers कुटुंबांना पडताळणी झालेल्या काळजीवाहू, परिचारिका आणि सहाय्यक कर्मचाऱ्यांशी जोडते — तुमच्या गरजेनुसार, तुमच्या वेळेनुसार.",
+    "subtitle": "Book My Carer कुटुंबांना पडताळणी झालेल्या काळजीवाहू, परिचारिका आणि सहाय्यक कर्मचाऱ्यांशी जोडते — तुमच्या गरजेनुसार, तुमच्या वेळेनुसार.",
     "cta1": "काळजीवाहू बुक करा",
     "cta2": "सेवा पहा"
   },
@@ -41,7 +41,7 @@
   },
   "servicesListPage": {
     "title": "सर्व काळजी सेवा",
-    "subtitle": "Book My Carers वर उपलब्ध असलेल्या घरगुती काळजीच्या प्रत्येक श्रेणीचा शोध घ्या."
+    "subtitle": "Book My Carer वर उपलब्ध असलेल्या घरगुती काळजीच्या प्रत्येक श्रेणीचा शोध घ्या."
   },
   "categoryPage": {
     "startingFrom": "सुरुवात",
@@ -96,7 +96,7 @@
     "aboutUs": "आमच्याबद्दल",
     "careers": "करिअर",
     "contact": "संपर्क",
-    "copyright": "© {{year}} Book My Carers. सर्व हक्क राखीव."
+    "copyright": "© {{year}} Book My Carer. सर्व हक्क राखीव."
   },
   "roleLabel": {
     "user": "काळजी शोधणारा",
@@ -280,7 +280,7 @@
     "serviceCategories": "सेवा श्रेणी",
     "pendingBookings": "प्रलंबित बुकिंग्ज",
     "revenueCollected": "जमा झालेले उत्पन्न",
-    "revenueLast14Days": "उत्पन्न — मागील 14 दिवस",
+    "revenueLast14Days": "उत्पन्न",
     "bookingsByCategory": "श्रेणीनुसार बुकिंग्ज",
     "bookingsByStatus": "स्थितीनुसार बुकिंग्ज",
     "topStaffByEngagements": "कामांनुसार अव्वल कर्मचारी"
@@ -303,6 +303,10 @@
     "newModalTitle": "नवीन सेवा पृष्ठ",
     "category": "श्रेणी",
     "selectCategory": "श्रेणी निवडा",
+    "selectService": "सेवा निवडा",
+    "pricingTiers": "किंमत स्तर",
+    "addPriceTier": "किंमत स्तर जोडा",
+    "removePriceTier": "किंमत स्तर काढा",
     "serviceId": "सेवा ID",
     "pageTitle": "पृष्ठाचे शीर्षक",
     "shortDescription": "संक्षिप्त वर्णन",
@@ -348,7 +352,7 @@
     "upcoming": "आगामी",
     "completed": "पूर्ण झाले",
     "rating": "रेटिंग",
-    "earningsChartTitle": "तुमची कमाई — मागील 14 दिवस",
+    "earningsChartTitle": "तुमची कमाई",
     "statusChartTitle": "स्थितीनुसार कामे",
     "upcomingEngagements": "आगामी कामे",
     "viewAll": "सर्व पहा",
@@ -423,7 +427,7 @@
     "cardRevenueCollected": "जमा झालेले उत्पन्न",
     "title": "सुपर अॅडमिन विहंगावलोकन",
     "subtitle": "संपूर्ण प्लॅटफॉर्म दृश्यमानता आणि नियंत्रण.",
-    "headingRevenue": "प्लॅटफॉर्म उत्पन्न — मागील 30 दिवस",
+    "headingRevenue": "प्लॅटफॉर्म उत्पन्न",
     "headingByCategory": "श्रेणीनुसार बुकिंग्ज",
     "headingByStatus": "स्थितीनुसार बुकिंग्ज",
     "headingComposition": "प्लॅटफॉर्म रचना"
@@ -514,7 +518,8 @@
     "bookingsCount": "{{count}} बुकिंग्ज",
     "noData": "अद्याप डेटा नाही.",
     "revenueLabel": "उत्पन्न: ₹{{value}}",
-    "engagementsCount": "{{count}} कामे"
+    "engagementsCount": "{{count}} कामे",
+    "lastNDays": "मागील {{days}} दिवस"
   },
   "modal": {
     "close": "बंद करा"

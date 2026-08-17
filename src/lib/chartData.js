@@ -1,3 +1,5 @@
+import { STATUS_LABEL } from './bookingStatus'
+
 const DAY_MS = 24 * 60 * 60 * 1000
 
 export function revenueByDay(bookings, days = 14) {
@@ -36,20 +38,13 @@ export function bookingsByCategory(bookings, categories) {
     .filter((c) => c.value > 0)
 }
 
-export function bookingsByStatus(bookings) {
-  const labels = {
-    pending: 'Pending',
-    confirmed: 'Confirmed',
-    'in-progress': 'In progress',
-    completed: 'Completed',
-    cancelled: 'Cancelled',
-  }
+export function bookingsByStatus(bookings, t) {
   const counts = {}
   bookings.forEach((b) => {
     counts[b.status] = (counts[b.status] || 0) + 1
   })
   return Object.entries(counts).map(([status, value]) => ({
-    name: labels[status] ?? status,
+    name: t && STATUS_LABEL[status] ? t(STATUS_LABEL[status]) : status,
     status,
     value,
   }))

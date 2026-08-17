@@ -1,7 +1,7 @@
 import { Link, useParams, Navigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowRight, IndianRupee } from 'lucide-react'
-import { categoriesApi } from '../../lib/mockApi'
+import { categoriesApi, getServiceStartingPrice } from '../../lib/mockApi'
 import { getCategoryIcon } from '../../lib/icons'
 import { getCategoryPhotoUrl } from '../../lib/categoryImages'
 import { useSession } from '../../lib/session'
@@ -40,20 +40,24 @@ export default function CategoryPage() {
       </div>
 
       <div className="mt-8 flex flex-wrap gap-4">
-        {category.services.map((service) => (
+        {category.services.map((service) => {
+          const price = service.priceFrom ?? getServiceStartingPrice(service.id)
+          return (
           <Card
             key={service.id}
             className="flex w-full flex-col justify-between sm:w-[calc(50%_-_0.5rem)] lg:w-[calc(33.333%_-_0.667rem)]"
           >
             <div>
               <h3 className="text-base font-semibold text-slate-900">{service.name}</h3>
-              <p className="mt-1 flex items-center gap-1 text-sm text-slate-500">
-                {t('categoryPage.startingFrom')}
-                <span className="inline-flex items-center font-medium text-brand-700">
-                  <IndianRupee size={13} />
-                  {service.priceFrom}{t('common.perHour')}
-                </span>
-              </p>
+              {price != null && (
+                <p className="mt-1 flex items-center gap-1 text-sm text-slate-500">
+                  {t('categoryPage.startingFrom')}
+                  <span className="inline-flex items-center font-medium text-brand-700">
+                    <IndianRupee size={13} />
+                    {price}{t('common.perHour')}
+                  </span>
+                </p>
+              )}
             </div>
             <div className="mt-4 flex flex-wrap gap-2">
               <Link to={`/services/${category.slug}/${service.id}`}>
@@ -74,7 +78,8 @@ export default function CategoryPage() {
               </Link>
             </div>
           </Card>
-        ))}
+          )
+        })}
       </div>
     </div>
   )

@@ -9,7 +9,7 @@ export default function Modal({ open, onClose, title, children, className }) {
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -20,7 +20,7 @@ export default function Modal({ open, onClose, title, children, className }) {
           />
           <motion.div
             className={cn(
-              'relative z-10 w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl shadow-brand-900/20',
+              'relative z-10 my-8 max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-6 shadow-xl shadow-brand-900/20',
               className
             )}
             initial={{ opacity: 0, scale: 0.95, y: 10 }}

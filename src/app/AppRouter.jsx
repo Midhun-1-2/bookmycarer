@@ -52,7 +52,7 @@ export default function AppRouter() {
       <Route
         path="/user"
         element={
-          <RequireRole allow={['user']}>
+          <RequireRole allow={['user']} fallback="/">
             <UserShellLayout />
           </RequireRole>
         }
@@ -71,7 +71,7 @@ export default function AppRouter() {
         path="/staff"
         element={
           <RequireRole allow={['staff']}>
-            <DashboardLayout navItems={STAFF_NAV} showPanicButton />
+            <DashboardLayout navItems={STAFF_NAV} />
           </RequireRole>
         }
       >

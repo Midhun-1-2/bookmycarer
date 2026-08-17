@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { User, Phone, MapPin, FileText, IndianRupee, CheckCircle2, ShieldCheck, BadgeCheck } from 'lucide-react'
+import { User, Phone, MapPin, FileText, IndianRupee, CheckCircle2, ShieldCheck, BadgeCheck, CalendarClock } from 'lucide-react'
 import { bookingsApi, usersApi } from '../../lib/mockApi'
 import { useSession } from '../../lib/session'
 import Card from '../../components/ui/Card'
@@ -64,15 +64,21 @@ export default function UserProfilePage() {
 
       <div className="mt-6 grid grid-cols-3 gap-3">
         <Card animate={false} className="text-center">
-          <p className="text-xl font-semibold text-brand-700">{bookings.length}</p>
+          <p className="flex items-center justify-center gap-1 text-xl font-semibold text-brand-700">
+            <CalendarClock size={16} /> {bookings.length}
+          </p>
           <p className="text-xs text-slate-500">{t('userProfile.bookingsLabel')}</p>
         </Card>
         <Card animate={false} className="text-center">
-          <p className="text-xl font-semibold text-brand-700">{invoices.length}</p>
+          <p className="flex items-center justify-center gap-1 text-xl font-semibold text-brand-700">
+            <FileText size={16} /> {invoices.length}
+          </p>
           <p className="text-xs text-slate-500">{t('userProfile.invoicesLabel')}</p>
         </Card>
         <Card animate={false} className="text-center">
-          <p className="text-xl font-semibold text-brand-700">₹{totalSpent}</p>
+          <p className="flex items-center justify-center gap-1 text-xl font-semibold text-brand-700">
+            <IndianRupee size={16} /> {totalSpent}
+          </p>
           <p className="text-xs text-slate-500">{t('userProfile.totalSpentLabel')}</p>
         </Card>
       </div>

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { MessageCircle, X, Send, Headset } from 'lucide-react'
+import { cn } from '../../lib/cn'
 
 const FAQS = [
   {
@@ -30,7 +31,7 @@ const FAQS = [
   },
 ]
 
-export default function ChatbotWidget() {
+export default function ChatbotWidget({ raised = false }) {
   const { t } = useTranslation()
 
   const faqAnswers = {
@@ -50,7 +51,7 @@ export default function ChatbotWidget() {
 
   const GREETING = {
     role: 'bot',
-    text: t('chatbot.greeting', { brand: 'Book My Carers' }),
+    text: t('chatbot.greeting', { brand: 'Book My Carer' }),
   }
 
   const [open, setOpen] = useState(false)
@@ -86,7 +87,10 @@ export default function ChatbotWidget() {
         onClick={() => setOpen((o) => !o)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-5 right-5 z-40 flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-brand-600 text-white shadow-lg shadow-brand-600/40"
+        className={cn(
+          'fixed right-5 z-40 flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-brand-600 text-white shadow-lg shadow-brand-600/40',
+          raised ? 'bottom-28 lg:bottom-5' : 'bottom-5'
+        )}
         aria-label={t('chatbot.openChatAriaLabel')}
       >
         {open ? <X size={22} /> : <MessageCircle size={22} />}
@@ -99,12 +103,15 @@ export default function ChatbotWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-24 right-5 z-40 flex h-[28rem] w-[22rem] max-w-[90vw] flex-col overflow-hidden rounded-2xl border border-brand-100 bg-white shadow-2xl shadow-brand-900/20"
+            className={cn(
+              'fixed right-5 z-40 flex h-[28rem] max-h-[70vh] w-[22rem] max-w-[90vw] flex-col overflow-hidden rounded-2xl border border-brand-100 bg-white shadow-2xl shadow-brand-900/20',
+              raised ? 'bottom-[11.5rem] lg:bottom-24' : 'bottom-24'
+            )}
           >
             <div className="flex items-center gap-2 bg-brand-600 px-4 py-3 text-white">
               <MessageCircle size={18} />
               <div>
-                <p className="text-sm font-semibold">{t('chatbot.supportTitle', { brand: 'Book My Carers' })}</p>
+                <p className="text-sm font-semibold">{t('chatbot.supportTitle', { brand: 'Book My Carer' })}</p>
                 <p className="text-xs text-brand-100">{t('chatbot.repliesInstantly')}</p>
               </div>
             </div>

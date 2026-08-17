@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Plus, Pencil, Archive, CheckCircle2, ExternalLink } from 'lucide-react'
+import { Plus, Pencil, Archive, CheckCircle2, ExternalLink, Trash2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { servicePagesApi, categoriesApi } from '../../lib/mockApi'
 import { Table, TableHead, TableBody, Th, Td, Tr } from '../../components/ui/Table'
@@ -14,6 +14,8 @@ const PAGE_STATUS_LABELS = {
   published: 'adminServicePages.statusPublished',
 }
 
+const emptyPricingRow = () => ({ label: 'Hourly', price: '', unit: '/ hr' })
+
 const emptyForm = {
   categoryId: '',
   serviceId: '',
@@ -23,9 +25,7 @@ const emptyForm = {
   description: '',
   features: '',
   requirements: '',
-  priceLabel: 'Hourly',
-  price: '',
-  unit: '/ hr',
+  pricing: [emptyPricingRow()],
 }
 
 export default function AdminServicePagesPage() {
@@ -35,6 +35,8 @@ export default function AdminServicePagesPage() {
   const [open, setOpen] = useState(false)
   const [editingId, setEditingId] = useState(null)
   const [form, setForm] = useState(emptyForm)
+
+  const categoryServices = categories.find((c) => c.id === form.categoryId)?.services ?? []
 
   async function load() {
     setPages(await servicePagesApi.list())
@@ -60,26 +62,52 @@ export default function AdminServicePagesPage() {
       description: page.description,
       features: page.features.join(', '),
       requirements: page.requirements.join(', '),
-      priceLabel: page.pricing[0]?.label ?? 'Hourly',
-      price: page.pricing[0]?.price ?? '',
-      unit: page.pricing[0]?.unit ?? '/ hr',
+      pricing: page.pricing?.length
+        ? page.pricing.map((p) => ({ label: p.label, price: String(p.price), unit: p.unit }))
+        : [emptyPricingRow()],
     })
     setEditingId(page.id)
     setOpen(true)
+  }
+
+  function handleCategoryChange(categoryId) {
+    setForm((f) => ({ ...f, categoryId, serviceId: '', title: '' }))
+  }
+
+  function handleServiceChange(serviceId) {
+    const svc = categoryServices.find((s) => s.id === serviceId)
+    setForm((f) => ({ ...f, serviceId, title: svc?.name ?? '' }))
+  }
+
+  function updatePricingRow(index, field, value) {
+    setForm((f) => ({
+      ...f,
+      pricing: f.pricing.map((row, i) => (i === index ? { ...row, [field]: value } : row)),
+    }))
+  }
+
+  function addPricingRow() {
+    setForm((f) => ({ ...f, pricing: [...f.pricing, emptyPricingRow()] }))
+  }
+
+  function removePricingRow(index) {
+    setForm((f) => ({ ...f, pricing: f.pricing.filter((_, i) => i !== index) }))
   }
 
   async function handleSave(e) {
     e.preventDefault()
     const payload = {
       categoryId: form.categoryId,
-      serviceId: form.serviceId || `svc-${Date.now()}`,
+      serviceId: form.serviceId,
       slug: form.slug || form.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
       title: form.title,
       shortDescription: form.shortDescription,
       description: form.description,
       features: form.features.split(',').map((s) => s.trim()).filter(Boolean),
       requirements: form.requirements.split(',').map((s) => s.trim()).filter(Boolean),
-      pricing: [{ label: form.priceLabel, price: Number(form.price), unit: form.unit }],
+      pricing: form.pricing
+        .filter((p) => p.label && p.price !== '')
+        .map((p) => ({ label: p.label, price: Number(p.price), unit: p.unit || '/ hr' })),
       updatedAt: new Date().toISOString(),
     }
 
@@ -103,14 +131,14 @@ export default function AdminServicePagesPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-slate-900">{t('adminServicePages.title')}</h1>
           <p className="mt-1 text-sm text-slate-500">
             {t('adminServicePages.subtitle')}
           </p>
         </div>
-        <Button onClick={openCreate}>
+        <Button className="w-full sm:w-auto" onClick={openCreate}>
           <Plus size={17} />
           {t('adminServicePages.newPage')}
         </Button>
@@ -159,13 +187,13 @@ export default function AdminServicePagesPage() {
       </div>
 
       <Modal open={open} onClose={() => setOpen(false)} title={editingId ? t('adminServicePages.editModalTitle') : t('adminServicePages.newModalTitle')} className="max-w-xl">
-        <form onSubmit={handleSave} className="max-h-[65vh] space-y-4 overflow-y-auto pr-1">
+        <form onSubmit={handleSave} className="space-y-4">
           <div>
             <p className="mb-1.5 text-sm font-medium text-slate-700">{t('adminServicePages.category')}</p>
             <select
               required
               value={form.categoryId}
-              onChange={(e) => setForm((f) => ({ ...f, categoryId: e.target.value }))}
+              onChange={(e) => handleCategoryChange(e.target.value)}
               className="h-11 w-full rounded-lg border border-brand-200 bg-white px-3.5 text-sm outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-100"
             >
               <option value="">{t('adminServicePages.selectCategory')}</option>
@@ -174,8 +202,21 @@ export default function AdminServicePagesPage() {
               ))}
             </select>
           </div>
-          <Input label={t('adminServicePages.serviceId')} placeholder="svc-example-id" value={form.serviceId} onChange={(e) => setForm((f) => ({ ...f, serviceId: e.target.value }))} />
-          <Input label={t('adminServicePages.pageTitle')} required value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} />
+          <div>
+            <p className="mb-1.5 text-sm font-medium text-slate-700">{t('adminServicePages.pageTitle')}</p>
+            <select
+              required
+              disabled={!form.categoryId}
+              value={form.serviceId}
+              onChange={(e) => handleServiceChange(e.target.value)}
+              className="h-11 w-full rounded-lg border border-brand-200 bg-white px-3.5 text-sm outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-100 disabled:cursor-not-allowed disabled:bg-brand-50 disabled:text-slate-400"
+            >
+              <option value="">{t('adminServicePages.selectService')}</option>
+              {categoryServices.map((s) => (
+                <option key={s.id} value={s.id}>{s.name}</option>
+              ))}
+            </select>
+          </div>
           <Input label={t('adminServicePages.shortDescription')} value={form.shortDescription} onChange={(e) => setForm((f) => ({ ...f, shortDescription: e.target.value }))} />
           <div>
             <p className="mb-1.5 text-sm font-medium text-slate-700">{t('adminServicePages.fullDescription')}</p>
@@ -188,11 +229,57 @@ export default function AdminServicePagesPage() {
           </div>
           <Input label={t('adminServicePages.featuresCommaSeparated')} value={form.features} onChange={(e) => setForm((f) => ({ ...f, features: e.target.value }))} />
           <Input label={t('adminServicePages.requirementsCommaSeparated')} value={form.requirements} onChange={(e) => setForm((f) => ({ ...f, requirements: e.target.value }))} />
-          <div className="grid grid-cols-3 gap-3">
-            <Input label={t('adminServicePages.priceLabel')} value={form.priceLabel} onChange={(e) => setForm((f) => ({ ...f, priceLabel: e.target.value }))} />
-            <Input label={t('adminServicePages.priceInr')} type="number" required value={form.price} onChange={(e) => setForm((f) => ({ ...f, price: e.target.value }))} />
-            <Input label={t('adminServicePages.unit')} value={form.unit} onChange={(e) => setForm((f) => ({ ...f, unit: e.target.value }))} />
+
+          <div>
+            <div className="mb-1.5 flex items-center justify-between">
+              <p className="text-sm font-medium text-slate-700">{t('adminServicePages.pricingTiers')}</p>
+              <button
+                type="button"
+                onClick={addPricingRow}
+                className="flex cursor-pointer items-center gap-1 text-xs font-medium text-brand-700 hover:underline"
+              >
+                <Plus size={13} /> {t('adminServicePages.addPriceTier')}
+              </button>
+            </div>
+            <div className="space-y-2">
+              {form.pricing.map((row, i) => (
+                <div key={i} className="flex flex-col gap-2 sm:flex-row">
+                  <input
+                    placeholder={t('adminServicePages.priceLabel')}
+                    value={row.label}
+                    onChange={(e) => updatePricingRow(i, 'label', e.target.value)}
+                    className="h-9 w-full rounded-lg border border-brand-200 px-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 sm:flex-1"
+                  />
+                  <div className="flex gap-2">
+                    <input
+                      placeholder={t('adminServicePages.priceInr')}
+                      type="number"
+                      value={row.price}
+                      onChange={(e) => updatePricingRow(i, 'price', e.target.value)}
+                      className="h-9 w-full min-w-0 flex-1 rounded-lg border border-brand-200 px-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 sm:w-20 sm:flex-none"
+                    />
+                    <input
+                      placeholder={t('adminServicePages.unit')}
+                      value={row.unit}
+                      onChange={(e) => updatePricingRow(i, 'unit', e.target.value)}
+                      className="h-9 w-full min-w-0 flex-1 rounded-lg border border-brand-200 px-3 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 sm:w-20 sm:flex-none"
+                    />
+                    {form.pricing.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => removePricingRow(i)}
+                        className="shrink-0 cursor-pointer text-slate-400 hover:text-rose-600"
+                        aria-label={t('adminServicePages.removePriceTier')}
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
+
           <Button type="submit" className="w-full">
             {editingId ? t('adminServicePages.saveChanges') : t('adminServicePages.createPageDraft')}
           </Button>

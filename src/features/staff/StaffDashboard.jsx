@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { CalendarClock, MapPin, Star, ArrowRight } from 'lucide-react'
+import { CalendarClock, MapPin, Star, ArrowRight, CheckCircle2 } from 'lucide-react'
 import { bookingsApi, staffApi, getStaffAverageRating } from '../../lib/mockApi'
 import { useSession } from '../../lib/session'
 import { STATUS_TONE, STATUS_LABEL } from '../../lib/bookingStatus'
@@ -10,12 +10,14 @@ import Card from '../../components/ui/Card'
 import Badge from '../../components/ui/Badge'
 import RevenueTrendChart from '../../components/charts/RevenueTrendChart'
 import StatusBarChart from '../../components/charts/StatusBarChart'
+import DayRangeSelect from '../../components/charts/DayRangeSelect'
 
 export default function StaffDashboard() {
   const { t } = useTranslation()
   const { session } = useSession()
   const [bookings, setBookings] = useState(null)
   const [seedRating, setSeedRating] = useState(0)
+  const [revenueDays, setRevenueDays] = useState(14)
 
   useEffect(() => {
     async function load() {
@@ -39,11 +41,15 @@ export default function StaffDashboard() {
 
       <div className="mt-6 grid grid-cols-3 gap-3">
         <Card animate={false} className="text-center">
-          <p className="text-xl font-semibold text-brand-700">{upcoming.length}</p>
+          <p className="flex items-center justify-center gap-1 text-xl font-semibold text-brand-700">
+            <CalendarClock size={16} /> {upcoming.length}
+          </p>
           <p className="text-xs text-slate-500">{t('staffDashboard.upcoming')}</p>
         </Card>
         <Card animate={false} className="text-center">
-          <p className="text-xl font-semibold text-brand-700">{completed.length}</p>
+          <p className="flex items-center justify-center gap-1 text-xl font-semibold text-brand-700">
+            <CheckCircle2 size={16} /> {completed.length}
+          </p>
           <p className="text-xs text-slate-500">{t('staffDashboard.completed')}</p>
         </Card>
         <Card animate={false} className="flex flex-col items-center justify-center text-center">
@@ -56,12 +62,15 @@ export default function StaffDashboard() {
 
       <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-3">
         <Card className="lg:col-span-2" animate={false}>
-          <h3 className="text-sm font-semibold text-slate-900">{t('staffDashboard.earningsChartTitle')}</h3>
-          <RevenueTrendChart data={revenueByDay(bookings, 14)} />
+          <div className="flex items-center justify-between gap-2">
+            <h3 className="text-sm font-semibold text-slate-900">{t('staffDashboard.earningsChartTitle')}</h3>
+            <DayRangeSelect value={revenueDays} onChange={setRevenueDays} />
+          </div>
+          <RevenueTrendChart data={revenueByDay(bookings, revenueDays)} />
         </Card>
         <Card animate={false}>
           <h3 className="text-sm font-semibold text-slate-900">{t('staffDashboard.statusChartTitle')}</h3>
-          <StatusBarChart data={bookingsByStatus(bookings)} />
+          <StatusBarChart data={bookingsByStatus(bookings, t)} />
         </Card>
       </div>
 

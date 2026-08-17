@@ -25,7 +25,7 @@ export default function ServiceDetailPage() {
   const description = page?.description ?? t('serviceDetail.defaultDescription', { serviceName: service.name, categoryName: category.name })
   const features = page?.features ?? [t('serviceDetail.defaultFeature1'), t('serviceDetail.defaultFeature2'), t('serviceDetail.defaultFeature3')]
   const requirements = page?.requirements ?? [t('serviceDetail.defaultRequirement')]
-  const pricing = page?.pricing ?? [{ label: t('serviceDetail.hourly'), price: service.priceFrom, unit: t('common.perHourUnit') }]
+  const pricing = page?.pricing ?? (service.priceFrom != null ? [{ label: t('serviceDetail.hourly'), price: service.priceFrom, unit: t('common.perHourUnit') }] : [])
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">

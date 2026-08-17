@@ -1,21 +1,20 @@
-import { useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Sidebar from '../../components/layout/Sidebar'
 import Topbar from '../../components/layout/Topbar'
+import BottomNav from '../../components/layout/BottomNav'
 import { useSession } from '../../lib/session'
-import PanicButton from '../../features/panic/PanicButton'
 
-export default function DashboardLayout({ navItems, showPanicButton = false }) {
+export default function DashboardLayout({ navItems }) {
   const { t } = useTranslation()
   const { session, logout } = useSession()
-  const [mobileOpen, setMobileOpen] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
 
   function handleLogout() {
+    const role = session?.role
+    navigate(role ? `/login/${role}` : '/')
     logout()
-    navigate('/')
   }
 
   const activeItem = [...navItems]
@@ -25,20 +24,14 @@ export default function DashboardLayout({ navItems, showPanicButton = false }) {
 
   return (
     <div className="flex min-h-svh bg-brand-50">
-      <Sidebar
-        items={navItems}
-        session={session}
-        onLogout={handleLogout}
-        mobileOpen={mobileOpen}
-        onCloseMobile={() => setMobileOpen(false)}
-      />
+      <Sidebar items={navItems} session={session} onLogout={handleLogout} />
       <div className="flex min-w-0 flex-1 flex-col lg:pl-64">
-        <Topbar title={title} onOpenMenu={() => setMobileOpen(true)} />
-        <main className="flex-1 p-4 sm:p-6 lg:p-8">
+        <Topbar title={title} onLogout={handleLogout} />
+        <main className="flex-1 p-4 pb-28 sm:p-6 lg:p-8 lg:pb-8">
           <Outlet />
         </main>
       </div>
-      {showPanicButton && <PanicButton />}
+      <BottomNav items={navItems} />
     </div>
   )
 }

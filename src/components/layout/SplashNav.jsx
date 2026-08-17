@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { ChevronDown, Menu, X, HeartHandshake, MapPin, LogIn } from 'lucide-react'
+import { ChevronDown, Menu, X, MapPin, LogIn } from 'lucide-react'
 import { categoriesApi } from '../../lib/mockApi'
 import { getCategoryIcon } from '../../lib/icons'
 import { useSession } from '../../lib/session'
@@ -25,11 +25,8 @@ export default function SplashNav() {
     <>
     <header className="sticky top-0 z-40 border-b border-brand-100 bg-white/85 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-600 text-white">
-            <HeartHandshake size={18} />
-          </div>
-          <span className="text-base font-semibold text-slate-900">Book My Carers</span>
+        <Link to="/" className="flex shrink-0 items-center">
+          <img src="/brand/wordmark.png" alt="Book My Carer" className="h-11 w-auto sm:h-12" />
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { Phone, ShieldCheck, ArrowLeft, HeartHandshake } from 'lucide-react'
+import { Phone, ShieldCheck, ArrowLeft } from 'lucide-react'
 import Input from '../../components/ui/Input'
 import Button from '../../components/ui/Button'
 import Card from '../../components/ui/Card'
@@ -89,11 +89,8 @@ export default function LoginPage({ role }) {
   return (
     <div className="flex min-h-svh items-center justify-center bg-brand-50 px-4 py-10">
       <div className="w-full max-w-md">
-        <Link to="/" className="mb-6 flex items-center justify-center gap-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-600 text-white">
-            <HeartHandshake size={20} />
-          </div>
-          <span className="text-lg font-semibold text-slate-900">Book My Carers</span>
+        <Link to="/" className="mb-6 flex items-center justify-center">
+          <img src="/brand/wordmark.png" alt="Book My Carer" className="h-14 w-auto" />
         </Link>
 
         <Card className="p-6 sm:p-8" animate={false}>
