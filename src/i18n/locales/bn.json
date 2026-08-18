@@ -50,14 +50,16 @@
   },
   "common": {
     "perHour": "/ঘণ্টা",
-    "perHourUnit": "/ ঘণ্টা"
+    "perHourUnit": "/ ঘণ্টা",
+    "cancel": "বাতিল",
+    "confirm": "নিশ্চিত করুন"
   },
   "serviceDetail": {
     "defaultDescription": "আমাদের {{categoryName}} পরিষেবার অংশ হিসেবে যাচাইকৃত ও প্রশিক্ষিত কেয়ারগিভারদের মাধ্যমে {{serviceName}} প্রদান করা হয়।",
     "defaultFeature1": "যাচাইকৃত ও ব্যাকগ্রাউন্ড-চেক করা কেয়ারগিভার",
     "defaultFeature2": "ফ্লেক্সিবল সময়সূচি",
     "defaultFeature3": "আমাদের কেয়ার টিমের সরাসরি সহায়তা",
-    "defaultRequirement": "বুকিংয়ের সময় ঠিকানা ও জরুরি যোগাযোগের নম্বর প্রয়োজন",
+    "defaultRequirement": "বুকিংয়ের সময় ঠিকানা প্রয়োজন; জরুরি যোগাযোগের নম্বর ঐচ্ছিক",
     "hourly": "ঘণ্টাভিত্তিক",
     "featuresAndBenefits": "বৈশিষ্ট্য ও সুবিধা",
     "requirements": "প্রয়োজনীয়তা",
@@ -107,7 +109,8 @@
   "staffNav": {
     "dashboard": "ড্যাশবোর্ড",
     "engagements": "এনগেজমেন্ট",
-    "profile": "প্রোফাইল"
+    "profile": "প্রোফাইল",
+    "messages": "বার্তা"
   },
   "adminNav": {
     "dashboard": "ড্যাশবোর্ড",
@@ -126,7 +129,8 @@
     "confirmed": "নিশ্চিত",
     "inProgress": "চলমান",
     "completed": "সম্পন্ন",
-    "cancelled": "বাতিল"
+    "cancelled": "বাতিল",
+    "unattended": "অনুপস্থিত"
   },
   "auth": {
     "user": {
@@ -164,9 +168,9 @@
     "demoNumbersSingular": "ডেমো {{role}} নম্বর: {{numbers}}"
   },
   "booking": {
-    "scheduleHourly": "ঘণ্টাভিত্তিক",
+    "scheduleHourly": "একবার",
     "scheduleDaily": "দৈনিক",
-    "scheduleWeekly": "সাপ্তাহিক পুনরাবৃত্তি",
+    "scheduleWeekly": "সাপ্তাহিক",
     "tagMedicationManagement": "ওষুধ ব্যবস্থাপনা",
     "tagMobilityAssistance": "চলাফেরায় সহায়তা",
     "tagDementiaSupport": "ডিমেনশিয়া সহায়তা",
@@ -196,7 +200,30 @@
     "yrsExperience": "বছরের অভিজ্ঞতা",
     "upToPrefix": "সর্বোচ্চ",
     "confirming": "নিশ্চিত করা হচ্ছে…",
-    "selectCaregiver": "কেয়ারগিভার নির্বাচন করুন"
+    "selectCaregiver": "কেয়ারগিভার নির্বাচন করুন",
+    "scheduleOneTimeCaption": "শুধু একবারের ভিজিট",
+    "scheduleDailyCaption": "প্রতিদিন একই সময়ে",
+    "scheduleWeeklyCaption": "প্রতি সপ্তাহে একই দিনে",
+    "available": "উপলব্ধ",
+    "notAvailable": "অনুপলব্ধ",
+    "remarksTitle": "অতিরিক্ত মন্তব্য",
+    "remarksPlaceholder": "আপনার কেয়ারগিভারের আর কিছু জানা দরকার?",
+    "chat": "চ্যাট",
+    "call": "কল",
+    "chatWithCaregiver": "{{name}} এর সাথে চ্যাট করুন",
+    "chatGreeting": "নমস্কার, আমি {{name}}! বুকিং করার আগে যা খুশি জিজ্ঞাসা করতে পারেন।",
+    "chatPlaceholder": "একটি বার্তা লিখুন…",
+    "chatSend": "পাঠান",
+    "chatDisclaimer": "আপনার বার্তা সরাসরি আপনার কেয়ারগিভারের কাছে পাঠানো হয় — তারা তাদের ড্যাশবোর্ড থেকে উত্তর দেবেন।",
+    "chatReply1": "অবশ্যই, আমি সাহায্য করতে পারি। আপনার পছন্দের সময় জানান!",
+    "chatReply2": "হ্যাঁ, আমার এই ধরনের যত্নের অভিজ্ঞতা আছে — আরও আলোচনা করতে পেরে খুশি হব।",
+    "chatReply3": "এটা ঠিক আছে, আমি ওই সময় উপলব্ধ।",
+    "chatReply4": "যোগাযোগ করার জন্য ধন্যবাদ! আরও প্রশ্ন থাকলে নির্দ্বিধায় জিজ্ঞাসা করুন।",
+    "calling": "কল হচ্ছে…",
+    "endCall": "কল শেষ করুন",
+    "callDisclaimer": "এটি প্রোটোটাইপের জন্য সিমুলেটেড কল।",
+    "chatLoading": "কথোপকথন লোড হচ্ছে…",
+    "chatEmptyState": "{{name}}-কে হ্যালো বলুন — বুকিংয়ের আগে তাদের অভিজ্ঞতা, প্রাপ্যতা বা অন্য কিছু সম্পর্কে জিজ্ঞাসা করুন।"
   },
   "checkout": {
     "methodUpi": "UPI",
@@ -258,7 +285,8 @@
     "unmatched": "অমিলিত",
     "paymentPending": "অপেক্ষমাণ",
     "paymentPaid": "পরিশোধিত",
-    "emptyState": "এই স্ট্যাটাসে কোনো বুকিং নেই।"
+    "emptyState": "এই স্ট্যাটাসে কোনো বুকিং নেই।",
+    "filterUnattended": "অনুপস্থিত"
   },
   "adminCategories": {
     "title": "পরিষেবা ক্যাটাগরি",
@@ -344,7 +372,19 @@
     "hourlyRateInr": "ঘণ্টাভিত্তিক রেট (₹)",
     "serviceRadiusKm": "পরিষেবার ব্যাসার্ধ (কিমি)",
     "serviceCategories": "পরিষেবা ক্যাটাগরি",
-    "creating": "তৈরি করা হচ্ছে…"
+    "creating": "তৈরি করা হচ্ছে…",
+    "colActions": "অ্যাকশন",
+    "edit": "সম্পাদনা",
+    "toggleStatus": "স্ট্যাটাস পরিবর্তন করুন",
+    "editModalTitle": "স্টাফ অ্যাকাউন্ট সম্পাদনা করুন",
+    "saveChanges": "পরিবর্তন সংরক্ষণ করুন",
+    "saving": "সংরক্ষণ হচ্ছে…",
+    "experienceYears": "অভিজ্ঞতা (বছর)",
+    "availableLabel": "নতুন বুকিংয়ের জন্য উপলব্ধ",
+    "availableHint": "কেয়ারগিভার মেলানোর সময় কেয়ার সিকারদের দেখানো হয়।",
+    "confirmStatusTitle": "অ্যাকাউন্ট স্ট্যাটাস পরিবর্তন করুন",
+    "confirmStatusMessage": "{{name}}-এর অ্যাকাউন্ট {{status}} করা হবে?",
+    "ratingLabel": "রেটিং (0–5)"
   },
   "staffDashboard": {
     "welcome": "আবার স্বাগতম, {{name}}",
@@ -398,7 +438,20 @@
     "areaLabel": "এলাকা",
     "saveChanges": "পরিবর্তন সংরক্ষণ করুন",
     "reviewsTitle": "কেয়ার সিকারদের রিভিউ",
-    "noReviews": "এখনও কোনো রিভিউ নেই।"
+    "noReviews": "এখনও কোনো রিভিউ নেই।",
+    "skillsLabel": "দক্ষতা (কমা দিয়ে আলাদা করুন)",
+    "skillsPlaceholder": "ক্ষত পরিচর্যা, ওষুধ ব্যবস্থাপনা",
+    "experienceYearsLabel": "অভিজ্ঞতা (বছর)",
+    "serviceCategoriesLabel": "সেবার বিভাগ",
+    "documentsTitle": "নথিপত্র",
+    "documentsDesc": "যাচাইয়ের জন্য সার্টিফিকেট, পরিচয়পত্র বা অন্যান্য নথি আপলোড করুন।",
+    "documentTypeLabel": "নথির ধরন",
+    "documentTypePlaceholder": "যেমন আধার কার্ড, নার্সিং সার্টিফিকেট",
+    "documentFileLabel": "ফাইল",
+    "addDocument": "নথি যোগ করুন",
+    "removeDocument": "নথি সরান",
+    "noDocuments": "এখনও কোনো নথি যোগ করা হয়নি।",
+    "saveDocuments": "নথি সংরক্ষণ করুন"
   },
   "superAdminAdmins": {
     "title": "অ্যাডমিন অ্যাকাউন্ট",
@@ -413,7 +466,18 @@
     "fullName": "পুরো নাম",
     "phoneNumber": "ফোন নম্বর",
     "creating": "তৈরি করা হচ্ছে…",
-    "submitButton": "অ্যাডমিন অ্যাকাউন্ট তৈরি করুন"
+    "submitButton": "অ্যাডমিন অ্যাকাউন্ট তৈরি করুন",
+    "colStatus": "স্ট্যাটাস",
+    "colActions": "অ্যাকশন",
+    "statusActive": "সক্রিয়",
+    "statusInactive": "নিষ্ক্রিয়",
+    "edit": "সম্পাদনা",
+    "toggleStatus": "স্ট্যাটাস পরিবর্তন করুন",
+    "editModalTitle": "অ্যাডমিন অ্যাকাউন্ট সম্পাদনা করুন",
+    "saveChanges": "পরিবর্তন সংরক্ষণ করুন",
+    "saving": "সংরক্ষণ হচ্ছে…",
+    "confirmStatusTitle": "অ্যাকাউন্ট স্ট্যাটাস পরিবর্তন করুন",
+    "confirmStatusMessage": "{{name}}-এর অ্যাকাউন্ট {{status}} করা হবে?"
   },
   "superAdminDashboard": {
     "chartUsers": "ব্যবহারকারী",
@@ -473,7 +537,13 @@
     "rateYourCaregiver": "আপনার কেয়ারগিভারকে রেট করুন",
     "reviewPlaceholder": "আপনার অভিজ্ঞতা কেমন ছিল? (ঐচ্ছিক)",
     "submittingReview": "জমা দেওয়া হচ্ছে…",
-    "submitReviewButton": "রিভিউ জমা দিন"
+    "submitReviewButton": "রিভিউ জমা দিন",
+    "generateCheckoutPasscode": "চেকআউট পাসকোড তৈরি করুন",
+    "cancelBookingTitle": "বুকিং বাতিল করুন",
+    "cancelWindowNote": "আপনি নির্ধারিত সময়ের ১ ঘণ্টা আগে পর্যন্ত বিনামূল্যে বাতিল করতে পারেন।",
+    "cancelBooking": "বুকিং বাতিল করুন",
+    "cancelling": "বাতিল হচ্ছে…",
+    "cancelWindowClosed": "বাতিলের সময়সীমা শেষ হয়ে গেছে — এই বুকিং ১ ঘণ্টার কম সময়ে শুরু হবে।"
   },
   "userMyBookings": {
     "title": "আমার বুকিং",
@@ -527,5 +597,15 @@
   "starRating": {
     "rateStars_one": "{{count}} স্টার রেট করুন",
     "rateStars_other": "{{count}} স্টার রেট করুন"
+  },
+  "staffMessages": {
+    "title": "বার্তা",
+    "subtitle": "বুকিংয়ের আগে যোগাযোগ করা কেয়ার সিকারদের সাথে কথোপকথন।",
+    "loading": "লোড হচ্ছে…",
+    "empty": "এখনও কোনো বার্তা নেই।",
+    "careSeeker": "কেয়ার সিকার",
+    "emptyThread": "এই কথোপকথনে এখনও কোনো বার্তা নেই।",
+    "replyPlaceholder": "উত্তর লিখুন…",
+    "send": "পাঠান"
   }
 }

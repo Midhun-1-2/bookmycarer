@@ -22,6 +22,8 @@ import UserProfilePage from '../features/user/UserProfilePage'
 import StaffDashboard from '../features/staff/StaffDashboard'
 import StaffEngagementsPage from '../features/staff/StaffEngagementsPage'
 import StaffEngagementDetailPage from '../features/staff/StaffEngagementDetailPage'
+import StaffMessagesPage from '../features/staff/StaffMessagesPage'
+import StaffMessageThreadPage from '../features/staff/StaffMessageThreadPage'
 import StaffProfilePage from '../features/staff/StaffProfilePage'
 
 import AdminDashboard from '../features/admin/AdminDashboard'
@@ -79,6 +81,8 @@ export default function AppRouter() {
         <Route path="dashboard" element={<StaffDashboard />} />
         <Route path="engagements" element={<StaffEngagementsPage />} />
         <Route path="engagements/:bookingId" element={<StaffEngagementDetailPage />} />
+        <Route path="messages" element={<StaffMessagesPage />} />
+        <Route path="messages/:userId" element={<StaffMessageThreadPage />} />
         <Route path="profile" element={<StaffProfilePage />} />
       </Route>
 
@@ -109,6 +113,10 @@ export default function AppRouter() {
         <Route index element={<Navigate to="dashboard" replace />} />
         <Route path="dashboard" element={<SuperAdminDashboard />} />
         <Route path="admins" element={<SuperAdminAdminsPage />} />
+        <Route path="staff" element={<AdminStaffAccountsPage />} />
+        <Route path="categories" element={<AdminCategoriesPage />} />
+        <Route path="service-pages" element={<AdminServicePagesPage />} />
+        <Route path="bookings" element={<AdminBookingsPage />} />
         <Route path="settings" element={<SuperAdminSettingsPage />} />
       </Route>
 

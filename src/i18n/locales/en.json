@@ -50,14 +50,16 @@
   },
   "common": {
     "perHour": "/hr",
-    "perHourUnit": "/ hr"
+    "perHourUnit": "/ hr",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
   },
   "serviceDetail": {
     "defaultDescription": "{{serviceName}} delivered by verified, trained caregivers as part of our {{categoryName}} offering.",
     "defaultFeature1": "Verified & background-checked caregiver",
     "defaultFeature2": "Flexible scheduling",
     "defaultFeature3": "Direct support from our care team",
-    "defaultRequirement": "Address and emergency contact required at booking",
+    "defaultRequirement": "Address required at booking; emergency contact optional",
     "hourly": "Hourly",
     "featuresAndBenefits": "Features & benefits",
     "requirements": "Requirements",
@@ -107,7 +109,8 @@
   "staffNav": {
     "dashboard": "Dashboard",
     "engagements": "Engagements",
-    "profile": "Profile"
+    "profile": "Profile",
+    "messages": "Messages"
   },
   "adminNav": {
     "dashboard": "Dashboard",
@@ -126,7 +129,8 @@
     "confirmed": "Confirmed",
     "inProgress": "In progress",
     "completed": "Completed",
-    "cancelled": "Cancelled"
+    "cancelled": "Cancelled",
+    "unattended": "Unattended"
   },
   "auth": {
     "user": {
@@ -164,9 +168,9 @@
     "demoNumbersSingular": "Demo {{role}} number: {{numbers}}"
   },
   "booking": {
-    "scheduleHourly": "Hourly",
+    "scheduleHourly": "One-Time",
     "scheduleDaily": "Daily",
-    "scheduleWeekly": "Weekly recurring",
+    "scheduleWeekly": "Weekly",
     "tagMedicationManagement": "Medication Management",
     "tagMobilityAssistance": "Mobility Assistance",
     "tagDementiaSupport": "Dementia Support",
@@ -196,7 +200,30 @@
     "yrsExperience": "yrs experience",
     "upToPrefix": "Up to",
     "confirming": "Confirming…",
-    "selectCaregiver": "Select caregiver"
+    "selectCaregiver": "Select caregiver",
+    "scheduleOneTimeCaption": "A single visit, just once",
+    "scheduleDailyCaption": "Same time, every day",
+    "scheduleWeeklyCaption": "Same day, every week",
+    "available": "Available",
+    "notAvailable": "Not available",
+    "remarksTitle": "Additional remarks",
+    "remarksPlaceholder": "Anything else your caregiver should know?",
+    "chat": "Chat",
+    "call": "Call",
+    "chatWithCaregiver": "Chat with {{name}}",
+    "chatGreeting": "Hi, I'm {{name}}! Feel free to ask me anything before you book.",
+    "chatPlaceholder": "Type a message…",
+    "chatSend": "Send",
+    "chatDisclaimer": "Your message is sent directly to your caregiver — they'll reply from their dashboard.",
+    "chatReply1": "Sure, I can help with that. Let me know your preferred schedule!",
+    "chatReply2": "Yes, I have experience with similar care needs — happy to discuss further.",
+    "chatReply3": "That works for me, I'm available around that time.",
+    "chatReply4": "Thanks for reaching out! Feel free to ask if you have any other questions.",
+    "calling": "Calling…",
+    "endCall": "End call",
+    "callDisclaimer": "Simulated call for this prototype.",
+    "chatLoading": "Loading conversation…",
+    "chatEmptyState": "Say hello to {{name}} — ask about their experience, availability, or anything else before you book."
   },
   "checkout": {
     "methodUpi": "UPI",
@@ -258,7 +285,8 @@
     "unmatched": "Unmatched",
     "paymentPending": "Pending",
     "paymentPaid": "Paid",
-    "emptyState": "No bookings in this status."
+    "emptyState": "No bookings in this status.",
+    "filterUnattended": "Unattended"
   },
   "adminCategories": {
     "title": "Service Categories",
@@ -344,7 +372,19 @@
     "hourlyRateInr": "Hourly rate (₹)",
     "serviceRadiusKm": "Service radius (km)",
     "serviceCategories": "Service categories",
-    "creating": "Creating…"
+    "creating": "Creating…",
+    "colActions": "Actions",
+    "edit": "Edit",
+    "toggleStatus": "Toggle status",
+    "editModalTitle": "Edit staff account",
+    "saveChanges": "Save changes",
+    "saving": "Saving…",
+    "experienceYears": "Experience (years)",
+    "availableLabel": "Available for new bookings",
+    "availableHint": "Shown to care seekers when matching caregivers.",
+    "confirmStatusTitle": "Change account status",
+    "confirmStatusMessage": "Set {{name}}'s account to {{status}}?",
+    "ratingLabel": "Rating (0–5)"
   },
   "staffDashboard": {
     "welcome": "Welcome back, {{name}}",
@@ -398,7 +438,20 @@
     "areaLabel": "Area",
     "saveChanges": "Save changes",
     "reviewsTitle": "Reviews from care seekers",
-    "noReviews": "No reviews yet."
+    "noReviews": "No reviews yet.",
+    "skillsLabel": "Skills (comma-separated)",
+    "skillsPlaceholder": "Wound Care, Medication Management",
+    "experienceYearsLabel": "Experience (years)",
+    "serviceCategoriesLabel": "Service categories",
+    "documentsTitle": "Documents",
+    "documentsDesc": "Upload certificates, ID proof, or other documents for verification.",
+    "documentTypeLabel": "Document type",
+    "documentTypePlaceholder": "e.g. Aadhaar Card, Nursing Certificate",
+    "documentFileLabel": "File",
+    "addDocument": "Add document",
+    "removeDocument": "Remove document",
+    "noDocuments": "No documents added yet.",
+    "saveDocuments": "Save documents"
   },
   "superAdminAdmins": {
     "title": "Admin Accounts",
@@ -413,7 +466,18 @@
     "fullName": "Full name",
     "phoneNumber": "Phone number",
     "creating": "Creating…",
-    "submitButton": "Create admin account"
+    "submitButton": "Create admin account",
+    "colStatus": "Status",
+    "colActions": "Actions",
+    "statusActive": "Active",
+    "statusInactive": "Inactive",
+    "edit": "Edit",
+    "toggleStatus": "Toggle status",
+    "editModalTitle": "Edit admin account",
+    "saveChanges": "Save changes",
+    "saving": "Saving…",
+    "confirmStatusTitle": "Change account status",
+    "confirmStatusMessage": "Set {{name}}'s account to {{status}}?"
   },
   "superAdminDashboard": {
     "chartUsers": "Users",
@@ -473,7 +537,13 @@
     "rateYourCaregiver": "Rate your caregiver",
     "reviewPlaceholder": "How was your experience? (optional)",
     "submittingReview": "Submitting…",
-    "submitReviewButton": "Submit review"
+    "submitReviewButton": "Submit review",
+    "generateCheckoutPasscode": "Generate checkout passcode",
+    "cancelBookingTitle": "Cancel booking",
+    "cancelWindowNote": "You can cancel free of charge up to 1 hour before your scheduled time.",
+    "cancelBooking": "Cancel booking",
+    "cancelling": "Cancelling…",
+    "cancelWindowClosed": "Cancellation window has closed — this booking starts in less than 1 hour."
   },
   "userMyBookings": {
     "title": "My Bookings",
@@ -527,5 +597,15 @@
   "starRating": {
     "rateStars_one": "Rate {{count}} star",
     "rateStars_other": "Rate {{count}} stars"
+  },
+  "staffMessages": {
+    "title": "Messages",
+    "subtitle": "Conversations with care seekers who reached out before booking.",
+    "loading": "Loading…",
+    "empty": "No messages yet.",
+    "careSeeker": "Care seeker",
+    "emptyThread": "No messages in this conversation yet.",
+    "replyPlaceholder": "Type a reply…",
+    "send": "Send"
   }
 }

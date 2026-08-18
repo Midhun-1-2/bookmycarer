@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { CalendarClock, MapPin, Phone, ShieldAlert, IndianRupee, ArrowLeft, KeyRound, MessageSquareText } from 'lucide-react'
-import { bookingsApi, staffApi, requestCheckInOtp, submitReview } from '../../lib/mockApi'
+import { CalendarClock, MapPin, Phone, ShieldAlert, IndianRupee, ArrowLeft, KeyRound, MessageSquareText, XCircle } from 'lucide-react'
+import { bookingsApi, staffApi, requestCheckInOtp, submitReview, cancelBooking } from '../../lib/mockApi'
 import { STATUS_TONE, STATUS_LABEL } from '../../lib/bookingStatus'
 import Card from '../../components/ui/Card'
 import Badge from '../../components/ui/Badge'
@@ -20,20 +20,27 @@ const SCHEDULE_TYPE_LABEL = {
   weekly: 'userBookingDetail.scheduleType.weekly',
 }
 
+const CANCELLABLE_STATUSES = ['pending', 'confirmed']
+const CANCEL_CUTOFF_MS = 60 * 60 * 1000
+
 export default function BookingDetailPage() {
   const { t } = useTranslation()
   const { bookingId } = useParams()
   const [booking, setBooking] = useState(null)
   const [staff, setStaff] = useState(null)
   const [otp, setOtp] = useState(null)
+  const [otpPhase, setOtpPhase] = useState('checkin')
   const [generatingOtp, setGeneratingOtp] = useState(false)
   const [reviewRating, setReviewRating] = useState(0)
   const [reviewComment, setReviewComment] = useState('')
   const [submittingReview, setSubmittingReview] = useState(false)
+  const [cancelling, setCancelling] = useState(false)
+  const otpTimerRef = useRef(null)
 
   async function load() {
     const b = await bookingsApi.get(bookingId)
     setBooking(b)
+    if (b?.checkIn) setOtpPhase('checkout')
     if (b?.staffId) setStaff(await staffApi.get(b.staffId))
   }
 
@@ -41,11 +48,18 @@ export default function BookingDetailPage() {
     load()
   }, [bookingId])
 
+  useEffect(() => () => clearTimeout(otpTimerRef.current), [])
+
   async function handleGenerateOtp() {
     setGeneratingOtp(true)
     const code = await requestCheckInOtp(bookingId)
     setOtp(code)
     setGeneratingOtp(false)
+    clearTimeout(otpTimerRef.current)
+    otpTimerRef.current = setTimeout(() => {
+      setOtp(null)
+      setOtpPhase('checkout')
+    }, 5000)
   }
 
   async function handleSubmitReview(e) {
@@ -57,7 +71,21 @@ export default function BookingDetailPage() {
     await load()
   }
 
+  async function handleCancel() {
+    setCancelling(true)
+    await cancelBooking(bookingId)
+    setCancelling(false)
+    await load()
+  }
+
   if (!booking) return null
+
+  const isCancellableStatus = CANCELLABLE_STATUSES.includes(booking.status)
+  const scheduledAt = new Date(`${booking.startDate}T${booking.time}`)
+  const canCancel =
+    isCancellableStatus &&
+    !Number.isNaN(scheduledAt.getTime()) &&
+    scheduledAt.getTime() - Date.now() > CANCEL_CUTOFF_MS
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:px-8">
@@ -94,6 +122,9 @@ export default function BookingDetailPage() {
               <Badge key={t} tone="neutral">{t}</Badge>
             ))}
           </div>
+        )}
+        {booking.notes && (
+          <p className="rounded-lg bg-brand-50 px-3 py-2 text-sm text-slate-600">{booking.notes}</p>
         )}
       </Card>
 
@@ -133,11 +164,34 @@ export default function BookingDetailPage() {
         )}
       </Card>
 
+      {isCancellableStatus && (
+        <Card className="mt-4" animate={false}>
+          <p className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-slate-400">
+            <XCircle size={13} />
+            {t('userBookingDetail.cancelBookingTitle')}
+          </p>
+          <p className="mt-1 text-xs text-slate-500">
+            {t('userBookingDetail.cancelWindowNote')}
+          </p>
+          <Button
+            className="mt-3"
+            variant="danger"
+            onClick={handleCancel}
+            disabled={!canCancel || cancelling}
+          >
+            {cancelling ? t('userBookingDetail.cancelling') : t('userBookingDetail.cancelBooking')}
+          </Button>
+          {!canCancel && (
+            <p className="mt-2 text-xs text-rose-500">{t('userBookingDetail.cancelWindowClosed')}</p>
+          )}
+        </Card>
+      )}
+
       {(booking.status === 'confirmed' || booking.status === 'in-progress') && (
         <Card className="mt-4" animate={false}>
           <p className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-slate-400">
             <KeyRound size={13} />
-            {booking.status === 'confirmed' ? t('userBookingDetail.checkInPasscode') : t('userBookingDetail.checkOutPasscode')}
+            {otpPhase === 'checkin' ? t('userBookingDetail.checkInPasscode') : t('userBookingDetail.checkOutPasscode')}
           </p>
           <p className="mt-1 text-xs text-slate-500">
             {t('userBookingDetail.passcodeDescription')}
@@ -146,7 +200,11 @@ export default function BookingDetailPage() {
             <p className="mt-3 text-3xl font-bold tracking-[0.3em] text-brand-700">{otp}</p>
           ) : (
             <Button className="mt-3" variant="outline" onClick={handleGenerateOtp} disabled={generatingOtp}>
-              {generatingOtp ? t('userBookingDetail.generating') : t('userBookingDetail.generatePasscode')}
+              {generatingOtp
+                ? t('userBookingDetail.generating')
+                : otpPhase === 'checkin'
+                  ? t('userBookingDetail.generatePasscode')
+                  : t('userBookingDetail.generateCheckoutPasscode')}
             </Button>
           )}
         </Card>

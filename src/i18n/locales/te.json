@@ -50,14 +50,16 @@
   },
   "common": {
     "perHour": "/గం",
-    "perHourUnit": "/ గం"
+    "perHourUnit": "/ గం",
+    "cancel": "రద్దు చేయి",
+    "confirm": "నిర్ధారించండి"
   },
   "serviceDetail": {
     "defaultDescription": "{{serviceName}} మా {{categoryName}} సేవలో భాగంగా వెరిఫైడ్, శిక్షణ పొందిన కేర్‌గివర్ల ద్వారా అందించబడుతుంది.",
     "defaultFeature1": "వెరిఫైడ్ & బ్యాక్‌గ్రౌండ్ చెక్ చేసిన కేర్‌గివర్",
     "defaultFeature2": "సౌకర్యవంతమైన షెడ్యూలింగ్",
     "defaultFeature3": "మా సంరక్షణ బృందం నుండి ప్రత్యక్ష మద్దతు",
-    "defaultRequirement": "బుకింగ్ సమయంలో చిరునామా మరియు ఎమర్జెన్సీ కాంటాక్ట్ అవసరం",
+    "defaultRequirement": "బుకింగ్ సమయంలో చిరునామా అవసరం; ఎమర్జెన్సీ కాంటాక్ట్ ఐచ్ఛికం",
     "hourly": "గంటవారీ",
     "featuresAndBenefits": "ఫీచర్లు & ప్రయోజనాలు",
     "requirements": "అవసరాలు",
@@ -107,7 +109,8 @@
   "staffNav": {
     "dashboard": "డాష్‌బోర్డ్",
     "engagements": "అసైన్‌మెంట్‌లు",
-    "profile": "ప్రొఫైల్"
+    "profile": "ప్రొఫైల్",
+    "messages": "మెసేజీలు"
   },
   "adminNav": {
     "dashboard": "డాష్‌బోర్డ్",
@@ -126,7 +129,8 @@
     "confirmed": "నిర్ధారించబడింది",
     "inProgress": "పురోగతిలో ఉంది",
     "completed": "పూర్తయింది",
-    "cancelled": "రద్దు చేయబడింది"
+    "cancelled": "రద్దు చేయబడింది",
+    "unattended": "గైర్హాజరు"
   },
   "auth": {
     "user": {
@@ -164,9 +168,9 @@
     "demoNumbersSingular": "డెమో {{role}} నంబర్: {{numbers}}"
   },
   "booking": {
-    "scheduleHourly": "గంటవారీ",
+    "scheduleHourly": "ఒకసారి",
     "scheduleDaily": "రోజువారీ",
-    "scheduleWeekly": "వారానికోసారి పునరావృతం",
+    "scheduleWeekly": "వారానికోసారి",
     "tagMedicationManagement": "మందుల నిర్వహణ",
     "tagMobilityAssistance": "చలనశీలత సహాయం",
     "tagDementiaSupport": "డిమెన్షియా సహాయం",
@@ -196,7 +200,30 @@
     "yrsExperience": "సంవత్సరాల అనుభవం",
     "upToPrefix": "వరకు",
     "confirming": "నిర్ధారిస్తోంది…",
-    "selectCaregiver": "కేర్‌గివర్‌ని ఎంచుకోండి"
+    "selectCaregiver": "కేర్‌గివర్‌ని ఎంచుకోండి",
+    "scheduleOneTimeCaption": "ఒకేసారి సందర్శన",
+    "scheduleDailyCaption": "ప్రతిరోజూ అదే సమయంలో",
+    "scheduleWeeklyCaption": "ప్రతివారం అదే రోజున",
+    "available": "అందుబాటులో ఉంది",
+    "notAvailable": "అందుబాటులో లేదు",
+    "remarksTitle": "అదనపు వ్యాఖ్యలు",
+    "remarksPlaceholder": "మీ కేర్‌గివర్ తెలుసుకోవలసిన మరేదైనా ఉందా?",
+    "chat": "చాట్",
+    "call": "కాల్",
+    "chatWithCaregiver": "{{name}} తో చాట్ చేయండి",
+    "chatGreeting": "నమస్తే, నేను {{name}}! బుక్ చేసే ముందు మీకు కావలసినది అడగవచ్చు.",
+    "chatPlaceholder": "సందేశం టైప్ చేయండి…",
+    "chatSend": "పంపండి",
+    "chatDisclaimer": "మీ సందేశం నేరుగా మీ కేర్‌గివర్‌కు పంపబడుతుంది — వారు తమ డాష్‌బోర్డ్ నుండి రిప్లై ఇస్తారు.",
+    "chatReply1": "ఖచ్చితంగా, నేను సహాయం చేయగలను. మీకు నచ్చిన సమయం తెలియజేయండి!",
+    "chatReply2": "అవును, ఇలాంటి సంరక్షణలో నాకు అనుభవం ఉంది — మరింత చర్చించడానికి సంతోషం.",
+    "chatReply3": "అది బాగుంటుంది, నేను ఆ సమయంలో అందుబాటులో ఉంటాను.",
+    "chatReply4": "సంప్రదించినందుకు ధన్యవాదాలు! మరిన్ని ప్రశ్నలు ఉంటే నిస్సందేహంగా అడగండి.",
+    "calling": "కాల్ చేస్తోంది…",
+    "endCall": "కాల్ ముగించండి",
+    "callDisclaimer": "ఇది ఈ ప్రోటోటైప్ కోసం అనుకరణ కాల్.",
+    "chatLoading": "సంభాషణ లోడ్ అవుతోంది…",
+    "chatEmptyState": "{{name}} కి హలో చెప్పండి — బుక్ చేయడానికి ముందు వారి అనుభవం, లభ్యత లేదా మరేదైనా గురించి అడగండి."
   },
   "checkout": {
     "methodUpi": "UPI",
@@ -258,7 +285,8 @@
     "unmatched": "సరిపోలలేదు",
     "paymentPending": "పెండింగ్",
     "paymentPaid": "చెల్లించబడింది",
-    "emptyState": "ఈ స్థితిలో బుకింగ్‌లు లేవు."
+    "emptyState": "ఈ స్థితిలో బుకింగ్‌లు లేవు.",
+    "filterUnattended": "గైర్హాజరు"
   },
   "adminCategories": {
     "title": "సేవా వర్గాలు",
@@ -344,7 +372,19 @@
     "hourlyRateInr": "గంట రేటు (₹)",
     "serviceRadiusKm": "సేవా వ్యాసార్థం (కి.మీ)",
     "serviceCategories": "సేవా వర్గాలు",
-    "creating": "సృష్టిస్తోంది…"
+    "creating": "సృష్టిస్తోంది…",
+    "colActions": "చర్యలు",
+    "edit": "ఎడిట్",
+    "toggleStatus": "స్థితిని మార్చండి",
+    "editModalTitle": "స్టాఫ్ ఖాతాను ఎడిట్ చేయండి",
+    "saveChanges": "మార్పులను సేవ్ చేయండి",
+    "saving": "సేవ్ అవుతోంది…",
+    "experienceYears": "అనుభవం (సంవత్సరాలు)",
+    "availableLabel": "కొత్త బుకింగ్‌లకు అందుబాటులో ఉంది",
+    "availableHint": "కేర్‌గివర్‌లను మ్యాచ్ చేసేటప్పుడు కేర్ సీకర్లకు చూపబడుతుంది.",
+    "confirmStatusTitle": "ఖాతా స్థితిని మార్చండి",
+    "confirmStatusMessage": "{{name}} ఖాతాను {{status}}కు మార్చాలా?",
+    "ratingLabel": "రేటింగ్ (0–5)"
   },
   "staffDashboard": {
     "welcome": "తిరిగి స్వాగతం, {{name}}",
@@ -398,7 +438,20 @@
     "areaLabel": "ప్రాంతం",
     "saveChanges": "మార్పులను సేవ్ చేయండి",
     "reviewsTitle": "సంరక్షణ పొందేవారి నుండి రివ్యూలు",
-    "noReviews": "ఇంకా రివ్యూలు లేవు."
+    "noReviews": "ఇంకా రివ్యూలు లేవు.",
+    "skillsLabel": "నైపుణ్యాలు (కామాతో వేరు చేయండి)",
+    "skillsPlaceholder": "గాయాల సంరక్షణ, మందుల నిర్వహణ",
+    "experienceYearsLabel": "అనుభవం (సంవత్సరాలు)",
+    "serviceCategoriesLabel": "సేవా వర్గాలు",
+    "documentsTitle": "పత్రాలు",
+    "documentsDesc": "ధృవీకరణ కోసం సర్టిఫికేట్లు, గుర్తింపు రుజువు లేదా ఇతర పత్రాలను అప్‌లోడ్ చేయండి.",
+    "documentTypeLabel": "పత్రం రకం",
+    "documentTypePlaceholder": "ఉదా. ఆధార్ కార్డ్, నర్సింగ్ సర్టిఫికేట్",
+    "documentFileLabel": "ఫైల్",
+    "addDocument": "పత్రాన్ని జోడించండి",
+    "removeDocument": "పత్రాన్ని తీసివేయండి",
+    "noDocuments": "ఇంకా పత్రాలు జోడించలేదు.",
+    "saveDocuments": "పత్రాలను సేవ్ చేయండి"
   },
   "superAdminAdmins": {
     "title": "అడ్మిన్ ఖాతాలు",
@@ -413,7 +466,18 @@
     "fullName": "పూర్తి పేరు",
     "phoneNumber": "ఫోన్ నంబర్",
     "creating": "సృష్టిస్తోంది…",
-    "submitButton": "అడ్మిన్ ఖాతాను సృష్టించండి"
+    "submitButton": "అడ్మిన్ ఖాతాను సృష్టించండి",
+    "colStatus": "స్థితి",
+    "colActions": "చర్యలు",
+    "statusActive": "యాక్టివ్",
+    "statusInactive": "ఇన్‌యాక్టివ్",
+    "edit": "ఎడిట్",
+    "toggleStatus": "స్థితిని మార్చండి",
+    "editModalTitle": "అడ్మిన్ ఖాతాను ఎడిట్ చేయండి",
+    "saveChanges": "మార్పులను సేవ్ చేయండి",
+    "saving": "సేవ్ అవుతోంది…",
+    "confirmStatusTitle": "ఖాతా స్థితిని మార్చండి",
+    "confirmStatusMessage": "{{name}} ఖాతాను {{status}}కు మార్చాలా?"
   },
   "superAdminDashboard": {
     "chartUsers": "యూజర్లు",
@@ -473,7 +537,13 @@
     "rateYourCaregiver": "మీ కేర్‌గివర్‌ని రేట్ చేయండి",
     "reviewPlaceholder": "మీ అనుభవం ఎలా ఉంది? (ఐచ్ఛికం)",
     "submittingReview": "సమర్పిస్తోంది…",
-    "submitReviewButton": "రివ్యూని సమర్పించండి"
+    "submitReviewButton": "రివ్యూని సమర్పించండి",
+    "generateCheckoutPasscode": "చెక్‌అవుట్ పాస్‌కోడ్ జనరేట్ చేయండి",
+    "cancelBookingTitle": "బుకింగ్ రద్దు చేయండి",
+    "cancelWindowNote": "మీ నిర్ణీత సమయానికి 1 గంట ముందు వరకు ఉచితంగా రద్దు చేసుకోవచ్చు.",
+    "cancelBooking": "బుకింగ్ రద్దు చేయండి",
+    "cancelling": "రద్దు అవుతోంది…",
+    "cancelWindowClosed": "రద్దు చేసే గడువు ముగిసింది — ఈ బుకింగ్ 1 గంట కంటే తక్కువ సమయంలో ప్రారంభమవుతుంది."
   },
   "userMyBookings": {
     "title": "నా బుకింగ్‌లు",
@@ -527,5 +597,15 @@
   "starRating": {
     "rateStars_one": "{{count}} స్టార్ రేట్ చేయండి",
     "rateStars_other": "{{count}} స్టార్లు రేట్ చేయండి"
+  },
+  "staffMessages": {
+    "title": "మెసేజీలు",
+    "subtitle": "బుక్ చేయడానికి ముందు సంప్రదించిన కేర్ సీకర్లతో సంభాషణలు.",
+    "loading": "లోడ్ అవుతోంది…",
+    "empty": "ఇంకా సందేశాలు లేవు.",
+    "careSeeker": "కేర్ సీకర్",
+    "emptyThread": "ఈ సంభాషణలో ఇంకా సందేశాలు లేవు.",
+    "replyPlaceholder": "రిప్లై టైప్ చేయండి…",
+    "send": "పంపండి"
   }
 }

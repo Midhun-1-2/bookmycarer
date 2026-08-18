@@ -12,6 +12,7 @@
     "hourlyRate": 380,
     "serviceRadiusKm": 12,
     "status": "active",
+    "available": true,
     "createdBy": "admin-1"
   },
   {
@@ -27,6 +28,7 @@
     "hourlyRate": 450,
     "serviceRadiusKm": 8,
     "status": "active",
+    "available": true,
     "createdBy": "admin-1"
   },
   {
@@ -42,6 +44,7 @@
     "hourlyRate": 260,
     "serviceRadiusKm": 15,
     "status": "active",
+    "available": false,
     "createdBy": "admin-1"
   },
   {
@@ -57,6 +60,7 @@
     "hourlyRate": 340,
     "serviceRadiusKm": 20,
     "status": "active",
+    "available": true,
     "createdBy": "admin-1"
   },
   {
@@ -72,6 +76,7 @@
     "hourlyRate": 400,
     "serviceRadiusKm": 10,
     "status": "active",
+    "available": false,
     "createdBy": "admin-1"
   }
 ]

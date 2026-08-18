@@ -372,5 +372,28 @@
     "checkIn": null,
     "checkOut": null,
     "createdAt": "2026-08-13T09:00:00Z"
+  },
+  {
+    "id": "booking-h16",
+    "userId": "user-1",
+    "categoryId": "cat-aged-care",
+    "serviceId": "svc-dementia-care",
+    "serviceName": "Dementia & Alzheimer's Care",
+    "staffId": "staff-1",
+    "scheduleType": "daily",
+    "startDate": "2026-08-18",
+    "time": "10:00",
+    "address": "12 Marine Drive, Kakkanad, Kochi",
+    "contactName": "Priya Varma",
+    "contactPhone": "9700000001",
+    "emergencyContact": "9700000009",
+    "careTags": ["Dementia Support"],
+    "notes": "Please ring the doorbell twice, the main bell is faulty.",
+    "status": "confirmed",
+    "payment": { "status": "paid", "amount": 380 },
+    "checkInOtp": null,
+    "checkIn": null,
+    "checkOut": null,
+    "createdAt": "2026-08-17T09:00:00Z"
   }
 ]

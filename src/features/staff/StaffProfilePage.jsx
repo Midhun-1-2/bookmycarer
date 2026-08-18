@@ -1,6 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { User, CheckCircle2, Star, IndianRupee, MapPinned, MessageSquareText } from 'lucide-react'
+import {
+  User,
+  CheckCircle2,
+  Star,
+  IndianRupee,
+  MapPinned,
+  MessageSquareText,
+  FileText,
+  Plus,
+  Trash2,
+} from 'lucide-react'
 import { staffApi, bookingsApi, categoriesApi, getStaffAverageRating } from '../../lib/mockApi'
 import { useSession } from '../../lib/session'
 import Card from '../../components/ui/Card'
@@ -12,22 +22,41 @@ export default function StaffProfilePage() {
   const { t } = useTranslation()
   const { session } = useSession()
   const [profile, setProfile] = useState(null)
+  const [skillsText, setSkillsText] = useState('')
   const [bookings, setBookings] = useState([])
   const [saved, setSaved] = useState(false)
   const [ratesSaved, setRatesSaved] = useState(false)
+  const [docsSaved, setDocsSaved] = useState(false)
   const categories = categoriesApi.listSync()
 
   useEffect(() => {
     async function load() {
-      setProfile(await staffApi.get(session.id))
+      const p = await staffApi.get(session.id)
+      setProfile({ ...p, documents: p.documents || [] })
+      setSkillsText((p.skills || []).join(', '))
       setBookings(await bookingsApi.list())
     }
     load()
   }, [session.id])
 
+  function toggleCategory(catId) {
+    setProfile((p) => ({
+      ...p,
+      categories: p.categories.includes(catId)
+        ? p.categories.filter((c) => c !== catId)
+        : [...p.categories, catId],
+    }))
+  }
+
   async function handleSave(e) {
     e.preventDefault()
-    await staffApi.update(session.id, profile)
+    const payload = {
+      ...profile,
+      skills: skillsText.split(',').map((s) => s.trim()).filter(Boolean),
+      experienceYears: Number(profile.experienceYears) || 0,
+    }
+    await staffApi.update(session.id, payload)
+    setProfile(payload)
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
   }
@@ -40,6 +69,34 @@ export default function StaffProfilePage() {
     })
     setRatesSaved(true)
     setTimeout(() => setRatesSaved(false), 2000)
+  }
+
+  function addDocument() {
+    setProfile((p) => ({
+      ...p,
+      documents: [
+        ...(p.documents || []),
+        { id: `doc-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, type: '', fileName: '' },
+      ],
+    }))
+  }
+
+  function updateDocument(id, patch) {
+    setProfile((p) => ({
+      ...p,
+      documents: p.documents.map((d) => (d.id === id ? { ...d, ...patch } : d)),
+    }))
+  }
+
+  function removeDocument(id) {
+    setProfile((p) => ({ ...p, documents: p.documents.filter((d) => d.id !== id) }))
+  }
+
+  async function handleSaveDocuments(e) {
+    e.preventDefault()
+    await staffApi.update(session.id, { documents: profile.documents || [] })
+    setDocsSaved(true)
+    setTimeout(() => setDocsSaved(false), 2000)
   }
 
   if (!profile) return null
@@ -122,7 +179,13 @@ export default function StaffProfilePage() {
             value={profile.name}
             onChange={(e) => setProfile((p) => ({ ...p, name: e.target.value }))}
           />
-          <Input label={t('staffProfile.phoneNumberLabel')} value={profile.phone} disabled />
+          <Input
+            label={t('staffProfile.phoneNumberLabel')}
+            inputMode="numeric"
+            maxLength={10}
+            value={profile.phone}
+            onChange={(e) => setProfile((p) => ({ ...p, phone: e.target.value.replace(/\D/g, '') }))}
+          />
           <div className="grid grid-cols-2 gap-4">
             <Input
               label={t('staffProfile.cityLabel')}
@@ -135,7 +198,86 @@ export default function StaffProfilePage() {
               onChange={(e) => setProfile((p) => ({ ...p, area: e.target.value }))}
             />
           </div>
+          <Input
+            label={t('staffProfile.skillsLabel')}
+            placeholder={t('staffProfile.skillsPlaceholder')}
+            value={skillsText}
+            onChange={(e) => setSkillsText(e.target.value)}
+          />
+          <Input
+            label={t('staffProfile.experienceYearsLabel')}
+            type="number"
+            value={profile.experienceYears ?? ''}
+            onChange={(e) => setProfile((p) => ({ ...p, experienceYears: e.target.value }))}
+          />
+          <div>
+            <p className="mb-1.5 text-sm font-medium text-slate-700">{t('staffProfile.serviceCategoriesLabel')}</p>
+            <div className="flex flex-wrap gap-2">
+              {categories.map((cat) => (
+                <button
+                  type="button"
+                  key={cat.id}
+                  onClick={() => toggleCategory(cat.id)}
+                  className={`cursor-pointer rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
+                    profile.categories.includes(cat.id)
+                      ? 'border-brand-600 bg-brand-600 text-white'
+                      : 'border-brand-200 bg-white text-brand-700 hover:bg-brand-50'
+                  }`}
+                >
+                  {cat.name}
+                </button>
+              ))}
+            </div>
+          </div>
           <Button type="submit">{saved ? <><CheckCircle2 size={16} /> {t('staffProfile.saved')}</> : t('staffProfile.saveChanges')}</Button>
+        </form>
+      </Card>
+
+      <Card className="mt-4" animate={false}>
+        <h3 className="flex items-center gap-2 text-sm font-semibold text-slate-900">
+          <FileText size={16} className="text-brand-600" />
+          {t('staffProfile.documentsTitle')}
+        </h3>
+        <p className="mt-1 text-xs text-slate-500">{t('staffProfile.documentsDesc')}</p>
+        <form onSubmit={handleSaveDocuments} className="mt-4 space-y-3">
+          {profile.documents.length === 0 && (
+            <p className="text-sm text-slate-400">{t('staffProfile.noDocuments')}</p>
+          )}
+          {profile.documents.map((doc) => (
+            <div key={doc.id} className="flex flex-col gap-2 rounded-lg border border-brand-100 p-3 sm:flex-row sm:items-end">
+              <Input
+                label={t('staffProfile.documentTypeLabel')}
+                placeholder={t('staffProfile.documentTypePlaceholder')}
+                className="sm:flex-1"
+                value={doc.type}
+                onChange={(e) => updateDocument(doc.id, { type: e.target.value })}
+              />
+              <Input
+                label={t('staffProfile.documentFileLabel')}
+                type="file"
+                className="sm:flex-1"
+                onChange={(e) => updateDocument(doc.id, { fileName: e.target.files[0]?.name || '' })}
+              />
+              <button
+                type="button"
+                onClick={() => removeDocument(doc.id)}
+                className="cursor-pointer self-end rounded-lg p-2.5 text-slate-400 hover:bg-rose-50 hover:text-rose-600 sm:self-center"
+                aria-label={t('staffProfile.removeDocument')}
+              >
+                <Trash2 size={16} />
+              </button>
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={addDocument}
+            className="flex cursor-pointer items-center gap-1.5 text-sm font-medium text-brand-700 hover:underline"
+          >
+            <Plus size={16} /> {t('staffProfile.addDocument')}
+          </button>
+          <div>
+            <Button type="submit">{docsSaved ? <><CheckCircle2 size={16} /> {t('staffProfile.saved')}</> : t('staffProfile.saveDocuments')}</Button>
+          </div>
         </form>
       </Card>
 

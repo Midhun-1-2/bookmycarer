@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate, useParams, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { CalendarClock, MapPin, Phone, ShieldAlert, Tag } from 'lucide-react'
+import { CalendarClock, MapPin, Phone, ShieldAlert, Tag, FileText } from 'lucide-react'
 import { categoriesApi, createBooking, getServiceStartingPrice } from '../../lib/mockApi'
 import { useSession } from '../../lib/session'
 import Card from '../../components/ui/Card'
@@ -16,9 +16,9 @@ export default function BookingFormPage() {
   const navigate = useNavigate()
 
   const SCHEDULE_TYPES = [
-    { value: 'hourly', label: t('booking.scheduleHourly') },
-    { value: 'daily', label: t('booking.scheduleDaily') },
-    { value: 'weekly', label: t('booking.scheduleWeekly') },
+    { value: 'hourly', label: t('booking.scheduleHourly'), caption: t('booking.scheduleOneTimeCaption') },
+    { value: 'daily', label: t('booking.scheduleDaily'), caption: t('booking.scheduleDailyCaption') },
+    { value: 'weekly', label: t('booking.scheduleWeekly'), caption: t('booking.scheduleWeeklyCaption') },
   ]
 
   const CARE_TAGS = [
@@ -41,6 +41,7 @@ export default function BookingFormPage() {
     contactName: session?.name ?? '',
     contactPhone: session?.phone ?? '',
     emergencyContact: '',
+    notes: '',
   })
   const [tags, setTags] = useState([])
   const [submitting, setSubmitting] = useState(false)
@@ -70,6 +71,7 @@ export default function BookingFormPage() {
       contactName: form.contactName,
       contactPhone: form.contactPhone,
       emergencyContact: form.emergencyContact,
+      notes: form.notes.trim(),
       careTags: tags,
       amount: service.priceFrom ?? getServiceStartingPrice(service.id) ?? 0,
     })
@@ -92,19 +94,26 @@ export default function BookingFormPage() {
               <CalendarClock size={16} className="text-brand-600" />
               {t('booking.scheduleSectionTitle')}
             </h3>
-            <div className="mb-4 flex gap-2">
+            <div className="mb-4 grid grid-cols-3 gap-2">
               {SCHEDULE_TYPES.map((s) => (
                 <button
                   type="button"
                   key={s.value}
                   onClick={() => update('scheduleType', s.value)}
-                  className={`cursor-pointer rounded-lg px-3.5 py-2 text-sm font-medium transition-colors ${
+                  className={`cursor-pointer rounded-lg px-3 py-2.5 text-left transition-colors ${
                     form.scheduleType === s.value
                       ? 'bg-brand-600 text-white'
                       : 'bg-brand-50 text-brand-700 hover:bg-brand-100'
                   }`}
                 >
-                  {s.label}
+                  <span className="block text-sm font-medium">{s.label}</span>
+                  <span
+                    className={`mt-0.5 block text-[11px] leading-tight ${
+                      form.scheduleType === s.value ? 'text-brand-100' : 'text-brand-500'
+                    }`}
+                  >
+                    {s.caption}
+                  </span>
                 </button>
               ))}
             </div>
@@ -157,7 +166,6 @@ export default function BookingFormPage() {
               </div>
               <Input
                 label={t('booking.emergencyContactLabel')}
-                required
                 inputMode="numeric"
                 maxLength={10}
                 placeholder={t('booking.emergencyContactPlaceholder')}
@@ -189,6 +197,21 @@ export default function BookingFormPage() {
                 </button>
               ))}
             </div>
+          </Card>
+
+          <Card>
+            <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold text-slate-900">
+              <FileText size={16} className="text-brand-600" />
+              {t('booking.remarksTitle')}
+              <span className="font-normal text-slate-400">{t('booking.optional')}</span>
+            </h3>
+            <textarea
+              rows={3}
+              placeholder={t('booking.remarksPlaceholder')}
+              value={form.notes}
+              onChange={(e) => update('notes', e.target.value)}
+              className="w-full rounded-lg border border-brand-200 bg-white p-3 text-sm outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-100"
+            />
           </Card>
 
           <div className="flex items-start gap-2 rounded-lg bg-amber-50 px-3.5 py-2.5 text-xs text-amber-700">

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Users, FolderKanban, ClipboardList, IndianRupee, ArrowRight } from 'lucide-react'
 import { staffApi, categoriesApi, bookingsApi } from '../../lib/mockApi'
+import { getDisplayStatus } from '../../lib/bookingStatus'
 import { revenueByDay, bookingsByCategory, bookingsByStatus, bookingsByStaff } from '../../lib/chartData'
 import Card from '../../components/ui/Card'
 import RevenueTrendChart from '../../components/charts/RevenueTrendChart'
@@ -46,7 +47,7 @@ export default function AdminDashboard() {
   const charts = {
     revenue: revenueByDay(bookings, revenueDays),
     byCategory: bookingsByCategory(bookings, categories),
-    byStatus: bookingsByStatus(bookings, t),
+    byStatus: bookingsByStatus(bookings.map((b) => ({ ...b, status: getDisplayStatus(b) })), t),
     byStaff: bookingsByStaff(bookings, staff),
   }
 

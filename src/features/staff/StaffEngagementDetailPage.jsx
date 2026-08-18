@@ -84,6 +84,9 @@ export default function StaffEngagementDetailPage() {
             ))}
           </div>
         )}
+        {booking.notes && (
+          <p className="rounded-lg bg-brand-50 px-3 py-2 text-sm text-slate-600">{booking.notes}</p>
+        )}
       </Card>
 
       {canVerify && (

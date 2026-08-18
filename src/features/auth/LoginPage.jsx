@@ -87,15 +87,15 @@ export default function LoginPage({ role }) {
   }
 
   return (
-    <div className="flex min-h-svh items-center justify-center bg-brand-50 px-4 py-10">
+    <div className="relative flex min-h-svh items-center justify-center bg-brand-50 px-4 py-10">
+      <Link
+        to="/"
+        className="absolute left-4 top-4 flex items-center gap-1.5 rounded-full bg-white px-3.5 py-2 text-sm font-medium text-slate-500 shadow-sm shadow-brand-900/5 hover:text-brand-700 sm:left-6 sm:top-6"
+      >
+        <Home size={15} />
+        {t('nav.home')}
+      </Link>
       <div className="w-full max-w-md">
-        <Link
-          to="/"
-          className="mb-4 flex w-fit items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-brand-700"
-        >
-          <Home size={15} />
-          {t('nav.home')}
-        </Link>
         <Link to="/" className="mb-6 flex items-center justify-center">
           <img src="/brand/wordmark.png" alt="Book My Carer" className="h-14 w-auto" />
         </Link>

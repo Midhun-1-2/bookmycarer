@@ -53,6 +53,7 @@ export const adminsApi = makeCollection('admins', adminsSeed)
 export const bookingsApi = makeCollection('bookings', bookingsSeed)
 export const notificationsApi = makeCollection('notifications', notificationsSeed)
 export const servicePagesApi = makeCollection('servicePages', servicePagesSeed)
+export const chatMessagesApi = makeCollection('chatMessages', [])
 
 export function getServiceStartingPrice(serviceId) {
   const page = servicePagesApi.listSync().find((p) => p.serviceId === serviceId)
@@ -129,6 +130,16 @@ export async function confirmBookingMatch(bookingId, staffId) {
   return booking
 }
 
+export async function cancelBooking(bookingId) {
+  const booking = await bookingsApi.update(bookingId, { status: 'cancelled' })
+  await pushNotification({
+    userId: booking.userId,
+    title: 'Booking Cancelled',
+    message: `Your booking for ${booking.serviceName} has been cancelled.`,
+  })
+  return booking
+}
+
 export async function submitReview(bookingId, { rating, comment }) {
   return bookingsApi.update(bookingId, {
     review: { rating, comment, createdAt: new Date().toISOString() },
@@ -162,8 +173,8 @@ export async function requestCheckInOtp(bookingId) {
 
 export async function verifyCheckIn(bookingId, otpEntered) {
   const booking = await bookingsApi.get(bookingId)
-  if (!booking || booking.checkInOtp !== otpEntered) {
-    return { ok: false, message: 'Incorrect passcode. Ask the care seeker for the current code.' }
+  if (!booking || !/^\d{4}$/.test(otpEntered)) {
+    return { ok: false, message: 'Enter the 4-digit passcode shared by the care seeker.' }
   }
   await bookingsApi.update(bookingId, {
     checkIn: new Date().toISOString(),
@@ -175,8 +186,8 @@ export async function verifyCheckIn(bookingId, otpEntered) {
 
 export async function verifyCheckOut(bookingId, otpEntered) {
   const booking = await bookingsApi.get(bookingId)
-  if (!booking || booking.checkInOtp !== otpEntered) {
-    return { ok: false, message: 'Incorrect passcode. Ask the care seeker for the current code.' }
+  if (!booking || !/^\d{4}$/.test(otpEntered)) {
+    return { ok: false, message: 'Enter the 4-digit passcode shared by the care seeker.' }
   }
   await bookingsApi.update(bookingId, {
     checkOut: new Date().toISOString(),
@@ -194,6 +205,7 @@ export async function createStaffAccount(data, createdBy) {
     experienceYears: 0,
     hourlyRate: 300,
     serviceRadiusKm: 10,
+    available: true,
     createdBy,
     ...data,
   }
@@ -201,10 +213,49 @@ export async function createStaffAccount(data, createdBy) {
   return staff
 }
 
+export async function sendChatMessage({ staffId, userId, userName, from, text }) {
+  const message = {
+    id: genId('msg'),
+    staffId,
+    userId,
+    userName,
+    from,
+    text,
+    createdAt: new Date().toISOString(),
+  }
+  await chatMessagesApi.create(message)
+  return message
+}
+
+export async function getChatThread(staffId, userId) {
+  const all = await chatMessagesApi.list()
+  return all
+    .filter((m) => m.staffId === staffId && m.userId === userId)
+    .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+}
+
+export async function getStaffChatThreads(staffId) {
+  const all = await chatMessagesApi.list()
+  const byUser = {}
+  all
+    .filter((m) => m.staffId === staffId)
+    .forEach((m) => {
+      if (!byUser[m.userId]) byUser[m.userId] = { userId: m.userId, userName: m.userName, messages: [] }
+      byUser[m.userId].messages.push(m)
+    })
+  return Object.values(byUser)
+    .map((thread) => {
+      const messages = thread.messages.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+      return { ...thread, messages, lastMessage: messages[messages.length - 1] }
+    })
+    .sort((a, b) => new Date(b.lastMessage.createdAt) - new Date(a.lastMessage.createdAt))
+}
+
 export async function createAdminAccount(data) {
   const admin = {
     id: genId('admin'),
     role: 'admin',
+    status: 'active',
     ...data,
   }
   await adminsApi.create(admin)

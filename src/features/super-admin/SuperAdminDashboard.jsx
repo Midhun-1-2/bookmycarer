@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Users, FolderKanban, ClipboardList, IndianRupee, ShieldCheck, ArrowRight } from 'lucide-react'
 import { staffApi, categoriesApi, bookingsApi, adminsApi, usersApi } from '../../lib/mockApi'
+import { getDisplayStatus } from '../../lib/bookingStatus'
 import { revenueByDay, bookingsByCategory, bookingsByStatus } from '../../lib/chartData'
 import Card from '../../components/ui/Card'
 import RevenueTrendChart from '../../components/charts/RevenueTrendChart'
@@ -48,7 +49,7 @@ export default function SuperAdminDashboard() {
   const charts = {
     revenue: revenueByDay(bookings, revenueDays),
     byCategory: bookingsByCategory(bookings, categories),
-    byStatus: bookingsByStatus(bookings, t),
+    byStatus: bookingsByStatus(bookings.map((b) => ({ ...b, status: getDisplayStatus(b) })), t),
     byRole: [
       { name: t('superAdminDashboard.chartUsers'), value: users.length },
       { name: t('superAdminDashboard.chartStaff'), value: staff.length },
@@ -59,10 +60,10 @@ export default function SuperAdminDashboard() {
 
   const cards = [
     { label: t('superAdminDashboard.cardAdminAccounts'), value: stats.adminCount, icon: ShieldCheck, to: '/super-admin/admins' },
-    { label: t('superAdminDashboard.cardStaffAccounts'), value: stats.staffCount, icon: Users, to: '/admin/staff' },
-    { label: t('superAdminDashboard.cardServiceCategories'), value: stats.categoryCount, icon: FolderKanban, to: '/admin/categories' },
-    { label: t('superAdminDashboard.cardTotalBookings'), value: stats.totalBookings, icon: ClipboardList, to: '/admin/bookings' },
-    { label: t('superAdminDashboard.cardRevenueCollected'), value: `₹${stats.revenue}`, icon: IndianRupee, to: '/admin/bookings' },
+    { label: t('superAdminDashboard.cardStaffAccounts'), value: stats.staffCount, icon: Users, to: '/super-admin/staff' },
+    { label: t('superAdminDashboard.cardServiceCategories'), value: stats.categoryCount, icon: FolderKanban, to: '/super-admin/categories' },
+    { label: t('superAdminDashboard.cardTotalBookings'), value: stats.totalBookings, icon: ClipboardList, to: '/super-admin/bookings' },
+    { label: t('superAdminDashboard.cardRevenueCollected'), value: `₹${stats.revenue}`, icon: IndianRupee, to: '/super-admin/bookings' },
   ]
 
   return (

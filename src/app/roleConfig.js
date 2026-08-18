@@ -8,6 +8,7 @@ import {
   UserCog,
   Settings,
   ClipboardList,
+  MessageCircle,
 } from 'lucide-react'
 
 export const ROLES = {
@@ -37,6 +38,7 @@ export const ROLE_HOME = {
 export const STAFF_NAV = [
   { to: '/staff/dashboard', label: 'staffNav.dashboard', icon: LayoutDashboard },
   { to: '/staff/engagements', label: 'staffNav.engagements', icon: CalendarClock },
+  { to: '/staff/messages', label: 'staffNav.messages', icon: MessageCircle },
   { to: '/staff/profile', label: 'staffNav.profile', icon: UserCog },
 ]
 
@@ -51,10 +53,10 @@ export const ADMIN_NAV = [
 export const SUPER_ADMIN_NAV = [
   { to: '/super-admin/dashboard', label: 'superAdminNav.dashboard', icon: LayoutDashboard },
   { to: '/super-admin/admins', label: 'superAdminNav.adminAccounts', icon: ShieldCheck },
-  { to: '/admin/staff', label: 'adminNav.staffAccounts', icon: Users },
-  { to: '/admin/categories', label: 'adminNav.serviceCategories', icon: FolderKanban },
-  { to: '/admin/service-pages', label: 'adminNav.servicePagesCms', icon: FileText },
-  { to: '/admin/bookings', label: 'adminNav.bookingsOversight', icon: ClipboardList },
+  { to: '/super-admin/staff', label: 'adminNav.staffAccounts', icon: Users },
+  { to: '/super-admin/categories', label: 'adminNav.serviceCategories', icon: FolderKanban },
+  { to: '/super-admin/service-pages', label: 'adminNav.servicePagesCms', icon: FileText },
+  { to: '/super-admin/bookings', label: 'adminNav.bookingsOversight', icon: ClipboardList },
   { to: '/super-admin/settings', label: 'superAdminNav.systemSettings', icon: Settings },
 ]
 

@@ -7,6 +7,7 @@ const STATUS_COLORS = {
   'in-progress': '#33408f',
   completed: '#48bd69',
   cancelled: '#ec2828',
+  unattended: '#f97316',
 }
 
 function CustomTooltip({ active, payload, label, t }) {

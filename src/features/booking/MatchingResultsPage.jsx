@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { Star, MapPin, BadgeCheck, IndianRupee, MapPinned } from 'lucide-react'
+import { Star, MapPin, BadgeCheck, IndianRupee, MapPinned, MessageCircle, Phone } from 'lucide-react'
 import {
   bookingsApi,
   matchStaffForBooking,
@@ -12,6 +12,8 @@ import {
 import Card from '../../components/ui/Card'
 import Button from '../../components/ui/Button'
 import Badge from '../../components/ui/Badge'
+import CaregiverChatModal from './CaregiverChatModal'
+import CaregiverCallModal from './CaregiverCallModal'
 
 export default function MatchingResultsPage() {
   const { t } = useTranslation()
@@ -21,6 +23,8 @@ export default function MatchingResultsPage() {
   const [matches, setMatches] = useState(null)
   const [allBookings, setAllBookings] = useState([])
   const [selecting, setSelecting] = useState(null)
+  const [chatStaff, setChatStaff] = useState(null)
+  const [callStaff, setCallStaff] = useState(null)
 
   useEffect(() => {
     let active = true
@@ -103,12 +107,28 @@ export default function MatchingResultsPage() {
                     </div>
                   </div>
                 </div>
-                <div className="flex w-full flex-col items-end gap-2 sm:w-auto">
-                  <span className="flex items-center gap-1 text-sm font-medium text-gold-500">
-                    <Star size={14} fill="currentColor" /> {getStaffAverageRating(staff.id, allBookings, staff.rating)}
-                  </span>
+                <div className="flex w-full flex-col gap-3 sm:w-52">
+                  <div className="flex items-center justify-between gap-3 sm:justify-end">
+                    <span className="flex items-center gap-1 text-sm font-medium text-gold-500">
+                      <Star size={14} fill="currentColor" /> {getStaffAverageRating(staff.id, allBookings, staff.rating)}
+                    </span>
+                    <Badge tone={staff.available !== false ? 'success' : 'danger'}>
+                      {staff.available !== false ? t('booking.available') : t('booking.notAvailable')}
+                    </Badge>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button variant="outline" size="sm" onClick={() => setChatStaff(staff)}>
+                      <MessageCircle size={14} />
+                      {t('booking.chat')}
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={() => setCallStaff(staff)}>
+                      <Phone size={14} />
+                      {t('booking.call')}
+                    </Button>
+                  </div>
                   <Button
                     size="sm"
+                    className="w-full"
                     onClick={() => handleSelect(staff.id)}
                     disabled={selecting !== null}
                   >
@@ -120,6 +140,15 @@ export default function MatchingResultsPage() {
           ))}
         </div>
       )}
+
+      <CaregiverChatModal
+        staff={chatStaff}
+        userId={booking.userId}
+        userName={booking.contactName}
+        open={!!chatStaff}
+        onClose={() => setChatStaff(null)}
+      />
+      <CaregiverCallModal staff={callStaff} open={!!callStaff} onClose={() => setCallStaff(null)} />
     </div>
   )
 }

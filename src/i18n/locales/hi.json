@@ -50,14 +50,16 @@
   },
   "common": {
     "perHour": "/घंटा",
-    "perHourUnit": "/ घंटा"
+    "perHourUnit": "/ घंटा",
+    "cancel": "रद्द करें",
+    "confirm": "पुष्टि करें"
   },
   "serviceDetail": {
     "defaultDescription": "हमारी {{categoryName}} सेवा के तहत सत्यापित, प्रशिक्षित केयरगिवर द्वारा दी जाने वाली {{serviceName}}।",
     "defaultFeature1": "सत्यापित और पृष्ठभूमि-जांचा गया केयरगिवर",
     "defaultFeature2": "लचीला शेड्यूल",
     "defaultFeature3": "हमारी केयर टीम से सीधा सहयोग",
-    "defaultRequirement": "बुकिंग के समय पता और आपातकालीन संपर्क आवश्यक है",
+    "defaultRequirement": "बुकिंग के समय पता आवश्यक है; आपातकालीन संपर्क वैकल्पिक है",
     "hourly": "प्रति घंटा",
     "featuresAndBenefits": "विशेषताएं और लाभ",
     "requirements": "आवश्यकताएं",
@@ -107,7 +109,8 @@
   "staffNav": {
     "dashboard": "डैशबोर्ड",
     "engagements": "एंगेजमेंट",
-    "profile": "प्रोफाइल"
+    "profile": "प्रोफाइल",
+    "messages": "संदेश"
   },
   "adminNav": {
     "dashboard": "डैशबोर्ड",
@@ -126,7 +129,8 @@
     "confirmed": "कन्फर्म",
     "inProgress": "जारी है",
     "completed": "पूर्ण",
-    "cancelled": "रद्द"
+    "cancelled": "रद्द",
+    "unattended": "अनुपस्थित"
   },
   "auth": {
     "user": {
@@ -164,9 +168,9 @@
     "demoNumbersSingular": "डेमो {{role}} नंबर: {{numbers}}"
   },
   "booking": {
-    "scheduleHourly": "प्रति घंटा",
+    "scheduleHourly": "एक बार",
     "scheduleDaily": "दैनिक",
-    "scheduleWeekly": "साप्ताहिक (आवर्ती)",
+    "scheduleWeekly": "साप्ताहिक",
     "tagMedicationManagement": "दवा प्रबंधन",
     "tagMobilityAssistance": "गतिशीलता सहायता",
     "tagDementiaSupport": "डिमेंशिया सहायता",
@@ -196,7 +200,30 @@
     "yrsExperience": "वर्षों का अनुभव",
     "upToPrefix": "तक",
     "confirming": "कन्फर्म किया जा रहा है…",
-    "selectCaregiver": "केयरगिवर चुनें"
+    "selectCaregiver": "केयरगिवर चुनें",
+    "scheduleOneTimeCaption": "सिर्फ एक बार की विजिट",
+    "scheduleDailyCaption": "हर दिन उसी समय",
+    "scheduleWeeklyCaption": "हर हफ्ते उसी दिन",
+    "available": "उपलब्ध",
+    "notAvailable": "अनुपलब्ध",
+    "remarksTitle": "अतिरिक्त टिप्पणी",
+    "remarksPlaceholder": "क्या आपकी देखभालकर्ता को कुछ और पता होना चाहिए?",
+    "chat": "चैट",
+    "call": "कॉल",
+    "chatWithCaregiver": "{{name}} से चैट करें",
+    "chatGreeting": "नमस्ते, मैं {{name}} हूँ! बुकिंग से पहले जो चाहें पूछ सकते हैं।",
+    "chatPlaceholder": "संदेश लिखें…",
+    "chatSend": "भेजें",
+    "chatDisclaimer": "आपका संदेश सीधे आपके केयरगिवर को भेजा जाता है — वे अपने डैशबोर्ड से जवाब देंगे।",
+    "chatReply1": "ज़रूर, मैं इसमें मदद कर सकती हूँ। अपना पसंदीदा समय बताएं!",
+    "chatReply2": "हां, मुझे ऐसी देखभाल का अनुभव है — आगे बात करने में खुशी होगी।",
+    "chatReply3": "यह ठीक रहेगा, मैं उस समय उपलब्ध हूँ।",
+    "chatReply4": "संपर्क करने के लिए धन्यवाद! कोई और सवाल हो तो बेझिझक पूछें।",
+    "calling": "कॉल हो रही है…",
+    "endCall": "कॉल समाप्त करें",
+    "callDisclaimer": "यह प्रोटोटाइप के लिए सिम्युलेटेड कॉल है।",
+    "chatLoading": "बातचीत लोड हो रही है…",
+    "chatEmptyState": "{{name}} को नमस्ते कहें — बुकिंग से पहले उनके अनुभव, उपलब्धता या किसी और चीज़ के बारे में पूछें।"
   },
   "checkout": {
     "methodUpi": "UPI",
@@ -258,7 +285,8 @@
     "unmatched": "मैच नहीं हुआ",
     "paymentPending": "लंबित",
     "paymentPaid": "भुगतान हुआ",
-    "emptyState": "इस स्थिति में कोई बुकिंग नहीं है।"
+    "emptyState": "इस स्थिति में कोई बुकिंग नहीं है।",
+    "filterUnattended": "अनुपस्थित"
   },
   "adminCategories": {
     "title": "सेवा श्रेणियां",
@@ -344,7 +372,19 @@
     "hourlyRateInr": "प्रति घंटा दर (₹)",
     "serviceRadiusKm": "सेवा दायरा (किमी)",
     "serviceCategories": "सेवा श्रेणियां",
-    "creating": "बनाया जा रहा है…"
+    "creating": "बनाया जा रहा है…",
+    "colActions": "कार्रवाई",
+    "edit": "संपादित करें",
+    "toggleStatus": "स्थिति बदलें",
+    "editModalTitle": "स्टाफ खाता संपादित करें",
+    "saveChanges": "बदलाव सेव करें",
+    "saving": "सेव हो रहा है…",
+    "experienceYears": "अनुभव (वर्ष)",
+    "availableLabel": "नई बुकिंग के लिए उपलब्ध",
+    "availableHint": "केयरगिवर मिलान करते समय केयर सीकर को दिखाया जाता है।",
+    "confirmStatusTitle": "खाता स्थिति बदलें",
+    "confirmStatusMessage": "क्या {{name}} का खाता {{status}} किया जाए?",
+    "ratingLabel": "रेटिंग (0–5)"
   },
   "staffDashboard": {
     "welcome": "वापसी पर स्वागत है, {{name}}",
@@ -398,7 +438,20 @@
     "areaLabel": "क्षेत्र",
     "saveChanges": "बदलाव सेव करें",
     "reviewsTitle": "देखभाल चाहने वालों की समीक्षाएं",
-    "noReviews": "अभी तक कोई समीक्षा नहीं है।"
+    "noReviews": "अभी तक कोई समीक्षा नहीं है।",
+    "skillsLabel": "कौशल (कॉमा से अलग करें)",
+    "skillsPlaceholder": "घाव की देखभाल, दवा प्रबंधन",
+    "experienceYearsLabel": "अनुभव (वर्ष)",
+    "serviceCategoriesLabel": "सेवा श्रेणियाँ",
+    "documentsTitle": "दस्तावेज़",
+    "documentsDesc": "सत्यापन के लिए प्रमाणपत्र, पहचान प्रमाण या अन्य दस्तावेज़ अपलोड करें।",
+    "documentTypeLabel": "दस्तावेज़ का प्रकार",
+    "documentTypePlaceholder": "जैसे आधार कार्ड, नर्सिंग प्रमाणपत्र",
+    "documentFileLabel": "फ़ाइल",
+    "addDocument": "दस्तावेज़ जोड़ें",
+    "removeDocument": "दस्तावेज़ हटाएं",
+    "noDocuments": "अभी तक कोई दस्तावेज़ नहीं जोड़ा गया।",
+    "saveDocuments": "दस्तावेज़ सहेजें"
   },
   "superAdminAdmins": {
     "title": "एडमिन खाते",
@@ -413,7 +466,18 @@
     "fullName": "पूरा नाम",
     "phoneNumber": "फोन नंबर",
     "creating": "बनाया जा रहा है…",
-    "submitButton": "एडमिन खाता बनाएं"
+    "submitButton": "एडमिन खाता बनाएं",
+    "colStatus": "स्थिति",
+    "colActions": "कार्रवाई",
+    "statusActive": "सक्रिय",
+    "statusInactive": "निष्क्रिय",
+    "edit": "संपादित करें",
+    "toggleStatus": "स्थिति बदलें",
+    "editModalTitle": "एडमिन खाता संपादित करें",
+    "saveChanges": "बदलाव सेव करें",
+    "saving": "सेव हो रहा है…",
+    "confirmStatusTitle": "खाता स्थिति बदलें",
+    "confirmStatusMessage": "क्या {{name}} का खाता {{status}} किया जाए?"
   },
   "superAdminDashboard": {
     "chartUsers": "उपयोगकर्ता",
@@ -473,7 +537,13 @@
     "rateYourCaregiver": "अपने केयरगिवर को रेट करें",
     "reviewPlaceholder": "आपका अनुभव कैसा रहा? (वैकल्पिक)",
     "submittingReview": "सबमिट हो रहा है…",
-    "submitReviewButton": "समीक्षा सबमिट करें"
+    "submitReviewButton": "समीक्षा सबमिट करें",
+    "generateCheckoutPasscode": "चेकआउट पासकोड जनरेट करें",
+    "cancelBookingTitle": "बुकिंग रद्द करें",
+    "cancelWindowNote": "आप अपने निर्धारित समय से 1 घंटे पहले तक मुफ्त में रद्द कर सकते हैं।",
+    "cancelBooking": "बुकिंग रद्द करें",
+    "cancelling": "रद्द हो रहा है…",
+    "cancelWindowClosed": "रद्द करने की समय-सीमा समाप्त हो चुकी है — यह बुकिंग 1 घंटे से कम समय में शुरू होगी।"
   },
   "userMyBookings": {
     "title": "मेरी बुकिंग",
@@ -527,5 +597,15 @@
   "starRating": {
     "rateStars_one": "{{count}} स्टार दें",
     "rateStars_other": "{{count}} स्टार दें"
+  },
+  "staffMessages": {
+    "title": "संदेश",
+    "subtitle": "बुकिंग से पहले संपर्क करने वाले केयर सीकर के साथ बातचीत।",
+    "loading": "लोड हो रहा है…",
+    "empty": "अभी तक कोई संदेश नहीं।",
+    "careSeeker": "केयर सीकर",
+    "emptyThread": "इस बातचीत में अभी तक कोई संदेश नहीं है।",
+    "replyPlaceholder": "जवाब लिखें…",
+    "send": "भेजें"
   }
 }

@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { bookingsApi, usersApi, staffApi } from '../../lib/mockApi'
-import { STATUS_TONE, STATUS_LABEL } from '../../lib/bookingStatus'
+import { STATUS_TONE, STATUS_LABEL, getDisplayStatus } from '../../lib/bookingStatus'
 import { Table, TableHead, TableBody, Th, Td, Tr } from '../../components/ui/Table'
 import Badge from '../../components/ui/Badge'
 
-const FILTERS = ['all', 'pending', 'confirmed', 'in-progress', 'completed', 'cancelled']
+const FILTERS = ['all', 'pending', 'confirmed', 'in-progress', 'unattended', 'completed', 'cancelled']
 
 const FILTER_LABELS = {
   all: 'adminBookings.filterAll',
   pending: 'adminBookings.filterPending',
   confirmed: 'adminBookings.filterConfirmed',
   'in-progress': 'adminBookings.filterInProgress',
+  unattended: 'adminBookings.filterUnattended',
   completed: 'adminBookings.filterCompleted',
   cancelled: 'adminBookings.filterCancelled',
 }
@@ -40,7 +41,7 @@ export default function AdminBookingsPage() {
 
   if (!bookings) return null
 
-  const filtered = filter === 'all' ? bookings : bookings.filter((b) => b.status === filter)
+  const filtered = filter === 'all' ? bookings : bookings.filter((b) => getDisplayStatus(b) === filter)
 
   return (
     <div>
@@ -83,7 +84,7 @@ export default function AdminBookingsPage() {
                   <Td>{b.startDate}</Td>
                   <Td>₹{b.payment.amount} <span className="text-xs text-slate-400 capitalize">({t(PAYMENT_STATUS_LABELS[b.payment.status])})</span></Td>
                   <Td>
-                    <Badge tone={STATUS_TONE[b.status]}>{t(STATUS_LABEL[b.status])}</Badge>
+                    <Badge tone={STATUS_TONE[getDisplayStatus(b)]}>{t(STATUS_LABEL[getDisplayStatus(b)])}</Badge>
                   </Td>
                 </Tr>
               )
