@@ -98,7 +98,8 @@
     "aboutUs": "आमच्याबद्दल",
     "careers": "करिअर",
     "contact": "संपर्क",
-    "copyright": "© {{year}} Book My Carer. सर्व हक्क राखीव."
+    "copyright": "© {{year}} Book My Carer. सर्व हक्क राखीव.",
+    "poweredBy": "Powered by Geosys IT Solution Pvt Ltd"
   },
   "roleLabel": {
     "user": "काळजी शोधणारा",

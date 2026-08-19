@@ -98,7 +98,8 @@
     "aboutUs": "About Us",
     "careers": "Careers",
     "contact": "Contact",
-    "copyright": "© {{year}} Book My Carer. All rights reserved."
+    "copyright": "© {{year}} Book My Carer. All rights reserved.",
+    "poweredBy": "Powered by Geosys IT Solution Pvt Ltd"
   },
   "roleLabel": {
     "user": "Care Seeker",

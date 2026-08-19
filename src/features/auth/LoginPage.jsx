@@ -6,6 +6,7 @@ import { Phone, ShieldCheck, ArrowLeft, Home } from 'lucide-react'
 import Input from '../../components/ui/Input'
 import Button from '../../components/ui/Button'
 import Card from '../../components/ui/Card'
+import MinimalFooter from '../../components/layout/MinimalFooter'
 import { useSession } from '../../lib/session'
 import { generateOtp } from '../../lib/mockApi'
 import { ROLE_HOME, ROLE_LABEL } from '../../app/roleConfig'
@@ -87,18 +88,19 @@ export default function LoginPage({ role }) {
   }
 
   return (
-    <div className="relative flex min-h-svh items-center justify-center bg-brand-50 px-4 py-10">
-      <Link
-        to="/"
-        className="absolute left-4 top-4 flex items-center gap-1.5 rounded-full bg-white px-3.5 py-2 text-sm font-medium text-slate-500 shadow-sm shadow-brand-900/5 hover:text-brand-700 sm:left-6 sm:top-6"
-      >
-        <Home size={15} />
-        {t('nav.home')}
-      </Link>
-      <div className="w-full max-w-md">
-        <Link to="/" className="mb-6 flex items-center justify-center">
-          <img src="/brand/wordmark.png" alt="Book My Carer" className="h-14 w-auto" />
+    <div className="flex min-h-svh flex-col bg-brand-50">
+      <div className="relative flex flex-1 items-center justify-center px-4 py-10">
+        <Link
+          to="/"
+          className="absolute left-4 top-4 flex items-center gap-1.5 rounded-full bg-white px-3.5 py-2 text-sm font-medium text-slate-500 shadow-sm shadow-brand-900/5 hover:text-brand-700 sm:left-6 sm:top-6"
+        >
+          <Home size={15} />
+          {t('nav.home')}
         </Link>
+        <div className="w-full max-w-md">
+          <Link to="/" className="mb-6 flex items-center justify-center">
+            <img src="/brand/wordmark.png" alt="Book My Carer" className="h-14 w-auto" />
+          </Link>
 
         <Card className="p-6 sm:p-8" animate={false}>
           <span className="mb-3 inline-flex items-center rounded-full bg-brand-100 px-3 py-1 text-xs font-medium text-brand-700">
@@ -185,8 +187,10 @@ export default function LoginPage({ role }) {
                 : t('auth.demoNumbersSingular', { role: t(ROLE_LABEL[role]), numbers: copy.demoPhones.join(', ') })}
             </p>
           )}
-        </Card>
+          </Card>
+        </div>
       </div>
+      <MinimalFooter />
     </div>
   )
 }

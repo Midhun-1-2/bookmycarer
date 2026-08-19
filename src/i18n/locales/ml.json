@@ -98,7 +98,8 @@
     "aboutUs": "ഞങ്ങളെക്കുറിച്ച്",
     "careers": "കരിയർ",
     "contact": "ബന്ധപ്പെടുക",
-    "copyright": "© {{year}} Book My Carer. എല്ലാ അവകാശങ്ങളും നിക്ഷിപ്തം."
+    "copyright": "© {{year}} Book My Carer. എല്ലാ അവകാശങ്ങളും നിക്ഷിപ്തം.",
+    "poweredBy": "Powered by Geosys IT Solution Pvt Ltd"
   },
   "roleLabel": {
     "user": "കെയർ സീക്കർ",

@@ -41,7 +41,8 @@ export default function Footer() {
         </div>
       </div>
       <div className="border-t border-brand-100 px-4 py-4 text-center text-xs text-slate-400 sm:px-6 lg:px-8">
-        {t('footer.copyright', { year: new Date().getFullYear() })}
+        <p>{t('footer.copyright', { year: new Date().getFullYear() })}</p>
+        <p className="mt-0.5">{t('footer.poweredBy')}</p>
       </div>
     </footer>
   )

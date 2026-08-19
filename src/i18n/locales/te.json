@@ -98,7 +98,8 @@
     "aboutUs": "మా గురించి",
     "careers": "ఉద్యోగావకాశాలు",
     "contact": "సంప్రదించండి",
-    "copyright": "© {{year}} Book My Carer. అన్ని హక్కులు రిజర్వ్ చేయబడ్డాయి."
+    "copyright": "© {{year}} Book My Carer. అన్ని హక్కులు రిజర్వ్ చేయబడ్డాయి.",
+    "poweredBy": "Powered by Geosys IT Solution Pvt Ltd"
   },
   "roleLabel": {
     "user": "సంరక్షణ పొందేవారు",

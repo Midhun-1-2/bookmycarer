@@ -98,7 +98,8 @@
     "aboutUs": "हमारे बारे में",
     "careers": "करियर",
     "contact": "संपर्क करें",
-    "copyright": "© {{year}} Book My Carer. सर्वाधिकार सुरक्षित।"
+    "copyright": "© {{year}} Book My Carer. सर्वाधिकार सुरक्षित।",
+    "poweredBy": "Powered by Geosys IT Solution Pvt Ltd"
   },
   "roleLabel": {
     "user": "देखभाल चाहने वाला",

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Sidebar from '../../components/layout/Sidebar'
 import Topbar from '../../components/layout/Topbar'
 import BottomNav from '../../components/layout/BottomNav'
+import MinimalFooter from '../../components/layout/MinimalFooter'
 import { useSession } from '../../lib/session'
 
 export default function DashboardLayout({ navItems }) {
@@ -23,13 +24,14 @@ export default function DashboardLayout({ navItems }) {
   const title = activeItem ? t(activeItem.label) : t('dashboardLayout.title')
 
   return (
-    <div className="flex min-h-svh bg-brand-50">
+    <div className="flex min-h-svh bg-brand-50 pb-28 lg:pb-0">
       <Sidebar items={navItems} session={session} onLogout={handleLogout} />
       <div className="flex min-w-0 flex-1 flex-col lg:pl-64">
         <Topbar title={title} onLogout={handleLogout} />
-        <main className="flex-1 p-4 pb-28 sm:p-6 lg:p-8 lg:pb-8">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8">
           <Outlet />
         </main>
+        <MinimalFooter />
       </div>
       <BottomNav items={navItems} />
     </div>

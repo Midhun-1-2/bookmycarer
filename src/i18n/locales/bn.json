@@ -98,7 +98,8 @@
     "aboutUs": "আমাদের সম্পর্কে",
     "careers": "ক্যারিয়ার",
     "contact": "যোগাযোগ",
-    "copyright": "© {{year}} Book My Carer. সর্বস্বত্ব সংরক্ষিত।"
+    "copyright": "© {{year}} Book My Carer. সর্বস্বত্ব সংরক্ষিত।",
+    "poweredBy": "Powered by Geosys IT Solution Pvt Ltd"
   },
   "roleLabel": {
     "user": "কেয়ার সিকার",
