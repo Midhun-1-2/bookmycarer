@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Plus, Star, IndianRupee, Pencil } from 'lucide-react'
+import { Plus, Star, IndianRupee, Pencil, UserCheck, FileText, MapPin, Check, X } from 'lucide-react'
 import { staffApi, bookingsApi, categoriesApi, createStaffAccount, getStaffAverageRating } from '../../lib/mockApi'
 import { useSession } from '../../lib/session'
 import { Table, TableHead, TableBody, Th, Td, Tr } from '../../components/ui/Table'
 import Button from '../../components/ui/Button'
+import Card from '../../components/ui/Card'
 import Modal from '../../components/ui/Modal'
 import ConfirmDialog from '../../components/ui/ConfirmDialog'
 import Input from '../../components/ui/Input'
@@ -26,6 +27,19 @@ const emptyForm = {
 const STAFF_STATUS_LABELS = {
   active: 'adminStaff.statusActive',
   inactive: 'adminStaff.statusInactive',
+  pending: 'adminStaff.statusPending',
+}
+
+const STAFF_STATUS_TONES = {
+  active: 'success',
+  inactive: 'neutral',
+  pending: 'warning',
+}
+
+// Self-registered caregivers are approved into 'active'; everyone else toggles.
+function nextStatus(status) {
+  if (status === 'pending') return 'active'
+  return status === 'active' ? 'inactive' : 'active'
 }
 
 export default function AdminStaffAccountsPage() {
@@ -38,8 +52,12 @@ export default function AdminStaffAccountsPage() {
   const [form, setForm] = useState(emptyForm)
   const [saving, setSaving] = useState(false)
   const [editingId, setEditingId] = useState(null)
+  const [editingDocs, setEditingDocs] = useState([])
   const [confirmStaff, setConfirmStaff] = useState(null)
   const [togglingStatus, setTogglingStatus] = useState(false)
+  const [reviewing, setReviewing] = useState(null)
+  const [rejectStaff, setRejectStaff] = useState(null)
+  const [rejecting, setRejecting] = useState(false)
 
   async function load() {
     setStaff(await staffApi.list())
@@ -61,6 +79,7 @@ export default function AdminStaffAccountsPage() {
 
   function openCreate() {
     setForm(emptyForm)
+    setEditingDocs([])
     setEditingId(null)
     setOpen(true)
   }
@@ -78,6 +97,7 @@ export default function AdminStaffAccountsPage() {
       experienceYears: String(s.experienceYears ?? '0'),
       rating: String(s.rating ?? '0'),
     })
+    setEditingDocs(s.documents || [])
     setEditingId(s.id)
     setOpen(true)
   }
@@ -113,13 +133,30 @@ export default function AdminStaffAccountsPage() {
     load()
   }
 
+  async function approvePending(s) {
+    setReviewing(s.id)
+    await staffApi.update(s.id, { status: 'active' })
+    setReviewing(null)
+    load()
+  }
+
+  async function confirmReject() {
+    setRejecting(true)
+    await staffApi.update(rejectStaff.id, { status: 'inactive' })
+    setRejecting(false)
+    setRejectStaff(null)
+    load()
+  }
+
   async function confirmToggleStatus() {
     setTogglingStatus(true)
-    await staffApi.update(confirmStaff.id, { status: confirmStaff.status === 'active' ? 'inactive' : 'active' })
+    await staffApi.update(confirmStaff.id, { status: nextStatus(confirmStaff.status) })
     setTogglingStatus(false)
     setConfirmStaff(null)
     load()
   }
+
+  const pending = (staff ?? []).filter((s) => s.status === 'pending')
 
   return (
     <div>
@@ -133,6 +170,80 @@ export default function AdminStaffAccountsPage() {
           {t('adminStaff.createStaff')}
         </Button>
       </div>
+
+      {pending.length > 0 && (
+        <Card className="mt-6 border-amber-200 bg-amber-50/60" animate={false}>
+          <div className="flex items-center gap-2">
+            <UserCheck size={17} className="shrink-0 text-amber-600" />
+            <h2 className="text-sm font-semibold text-slate-900">
+              {t('adminStaff.pendingApprovalsTitle', { count: pending.length })}
+            </h2>
+          </div>
+          <p className="mt-1 text-xs text-slate-500">{t('adminStaff.pendingApprovalsSubtitle')}</p>
+
+          <ul className="mt-4 space-y-3">
+            {pending.map((s) => (
+              <li key={s.id} className="rounded-xl border border-amber-200 bg-white p-4">
+                <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                  <div className="min-w-0">
+                    <p className="font-semibold text-slate-900">{s.name}</p>
+                    <p className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500">
+                      <span>{s.phone}</span>
+                      {s.email && <span className="truncate">{s.email}</span>}
+                      <span className="flex items-center gap-1">
+                        <MapPin size={12} />
+                        {s.area}, {s.city}
+                      </span>
+                      <span>{t('staffProfile.experienceYears', { count: s.experienceYears ?? 0 })}</span>
+                    </p>
+
+                    <div className="mt-2 flex flex-wrap gap-1">
+                      {(s.categories ?? []).map((catId) => {
+                        const cat = categories.find((c) => c.id === catId)
+                        return cat ? <Badge key={catId} tone="brand">{cat.name}</Badge> : null
+                      })}
+                    </div>
+
+                    <div className="mt-3">
+                      <p className="text-xs font-medium text-slate-700">{t('adminStaff.documentsTitle')}</p>
+                      {(s.documents ?? []).length === 0 ? (
+                        <p className="mt-1 text-xs text-rose-600">{t('adminStaff.documentsEmptyWarning')}</p>
+                      ) : (
+                        <ul className="mt-1 flex flex-wrap gap-1.5">
+                          {s.documents.map((doc) => (
+                            <li
+                              key={doc.id}
+                              className="flex items-center gap-1 rounded-full border border-brand-100 bg-brand-50 px-2.5 py-1 text-[11px] text-slate-600"
+                            >
+                              <FileText size={11} className="shrink-0 text-brand-600" />
+                              {doc.type || t('adminStaff.documentUntyped')}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex shrink-0 gap-2">
+                    <Button
+                      size="sm"
+                      onClick={() => approvePending(s)}
+                      disabled={reviewing === s.id}
+                    >
+                      <Check size={15} />
+                      {t('adminStaff.approve')}
+                    </Button>
+                    <Button size="sm" variant="outline" onClick={() => setRejectStaff(s)}>
+                      <X size={15} />
+                      {t('adminStaff.reject')}
+                    </Button>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </Card>
+      )}
 
       {staff && (
         <div className="mt-6">
@@ -181,7 +292,7 @@ export default function AdminStaffAccountsPage() {
                       className="cursor-pointer"
                       aria-label={t('adminStaff.toggleStatus')}
                     >
-                      <Badge tone={s.status === 'active' ? 'success' : 'neutral'}>{t(STAFF_STATUS_LABELS[s.status] ?? s.status)}</Badge>
+                      <Badge tone={STAFF_STATUS_TONES[s.status] ?? 'neutral'}>{t(STAFF_STATUS_LABELS[s.status] ?? s.status)}</Badge>
                     </button>
                   </Td>
                   <Td>
@@ -285,6 +396,31 @@ export default function AdminStaffAccountsPage() {
               ))}
             </div>
           </div>
+          {editingId && (
+            <div>
+              <p className="mb-1.5 text-sm font-medium text-slate-700">{t('adminStaff.documentsTitle')}</p>
+              {editingDocs.length === 0 ? (
+                <p className="text-xs text-slate-400">{t('adminStaff.documentsEmpty')}</p>
+              ) : (
+                <ul className="space-y-1.5">
+                  {editingDocs.map((doc) => (
+                    <li
+                      key={doc.id}
+                      className="flex items-center justify-between gap-2 rounded-lg border border-brand-100 px-3 py-2 text-xs"
+                    >
+                      <span className="font-medium text-slate-700">
+                        {doc.type || t('adminStaff.documentUntyped')}
+                      </span>
+                      <span className="truncate text-slate-400">
+                        {doc.fileName || t('adminStaff.documentNoFile')}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
+
           <Button type="submit" className="w-full" disabled={saving}>
             {saving
               ? (editingId ? t('adminStaff.saving') : t('adminStaff.creating'))
@@ -295,19 +431,35 @@ export default function AdminStaffAccountsPage() {
 
       <ConfirmDialog
         open={!!confirmStaff}
-        title={t('adminStaff.confirmStatusTitle')}
+        title={
+          confirmStaff?.status === 'pending'
+            ? t('adminStaff.confirmApproveTitle')
+            : t('adminStaff.confirmStatusTitle')
+        }
         message={
-          confirmStaff
-            ? t('adminStaff.confirmStatusMessage', {
-                name: confirmStaff.name,
-                status: t(STAFF_STATUS_LABELS[confirmStaff.status === 'active' ? 'inactive' : 'active']),
-              })
-            : ''
+          !confirmStaff
+            ? ''
+            : confirmStaff.status === 'pending'
+              ? t('adminStaff.confirmApproveMessage', { name: confirmStaff.name })
+              : t('adminStaff.confirmStatusMessage', {
+                  name: confirmStaff.name,
+                  status: t(STAFF_STATUS_LABELS[nextStatus(confirmStaff.status)]),
+                })
         }
         tone={confirmStaff?.status === 'active' ? 'danger' : 'primary'}
         loading={togglingStatus}
         onConfirm={confirmToggleStatus}
         onClose={() => setConfirmStaff(null)}
+      />
+
+      <ConfirmDialog
+        open={!!rejectStaff}
+        title={t('adminStaff.confirmRejectTitle')}
+        message={rejectStaff ? t('adminStaff.confirmRejectMessage', { name: rejectStaff.name }) : ''}
+        tone="danger"
+        loading={rejecting}
+        onConfirm={confirmReject}
+        onClose={() => setRejectStaff(null)}
       />
     </div>
   )

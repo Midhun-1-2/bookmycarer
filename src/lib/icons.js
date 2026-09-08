@@ -1,17 +1,23 @@
 import {
+  Stethoscope,
+  Activity,
   HeartHandshake,
   HandHeart,
-  Stethoscope,
-  Sparkles,
-  Car,
+  Baby,
+  Brain,
+  Leaf,
+  PawPrint,
 } from 'lucide-react'
 
 export const CATEGORY_ICONS = {
+  Stethoscope,
+  Activity,
   HeartHandshake,
   HandHeart,
-  Stethoscope,
-  Sparkles,
-  Car,
+  Baby,
+  Brain,
+  Leaf,
+  PawPrint,
 }
 
 export function getCategoryIcon(name) {

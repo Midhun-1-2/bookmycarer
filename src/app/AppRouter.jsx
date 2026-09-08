@@ -10,6 +10,7 @@ import ServicesListPage from '../features/services/ServicesListPage'
 import CategoryPage from '../features/services/CategoryPage'
 import ServiceDetailPage from '../features/services/ServiceDetailPage'
 import LoginPage from '../features/auth/LoginPage'
+import CaregiverRegisterPage from '../features/auth/CaregiverRegisterPage'
 
 import UserDashboard from '../features/user/UserDashboard'
 import BookingFormPage from '../features/booking/BookingFormPage'
@@ -50,6 +51,8 @@ export default function AppRouter() {
       <Route path="/login/staff" element={<LoginPage role="staff" />} />
       <Route path="/login/admin" element={<LoginPage role="admin" />} />
       <Route path="/login/super-admin" element={<LoginPage role="super-admin" />} />
+
+      <Route path="/become-a-caregiver" element={<CaregiverRegisterPage />} />
 
       <Route
         path="/user"

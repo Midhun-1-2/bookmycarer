@@ -3,9 +3,12 @@ import { useTranslation } from 'react-i18next'
 import { LogOut } from 'lucide-react'
 import { cn } from '../../lib/cn'
 import { ROLE_LABEL } from '../../app/roleConfig'
+import { usePendingCaregivers } from '../../lib/usePendingCaregivers'
 
 function SidebarContent({ items, session, onLogout }) {
   const { t } = useTranslation()
+  const pendingCaregivers = usePendingCaregivers()
+  const badgeCounts = { pendingCaregivers: pendingCaregivers.length }
   return (
     <div className="flex h-full flex-col">
       <div className="flex items-center gap-2 px-5 py-5">
@@ -17,24 +20,42 @@ function SidebarContent({ items, session, onLogout }) {
       </div>
 
       <nav className="min-h-0 flex-1 space-y-1 overflow-y-auto px-3">
-        {items.map(({ to, label, icon: Icon }) => (
-          <NavLink
-            key={to}
-            to={to}
-            className={({ isActive }) =>
-              cn(
-                'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
-                isActive
-                  ? 'bg-brand-600 text-white shadow-sm shadow-brand-600/30'
-                  : 'text-slate-600 hover:bg-brand-50 hover:text-brand-700'
-              )
-            }
-            end
-          >
-            <Icon size={18} />
-            {t(label)}
-          </NavLink>
-        ))}
+        {items.map(({ to, label, icon: Icon, badge }) => {
+          const count = badge ? badgeCounts[badge] ?? 0 : 0
+          return (
+            <NavLink
+              key={to}
+              to={to}
+              className={({ isActive }) =>
+                cn(
+                  'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                  isActive
+                    ? 'bg-brand-600 text-white shadow-sm shadow-brand-600/30'
+                    : 'text-slate-600 hover:bg-brand-50 hover:text-brand-700'
+                )
+              }
+              end
+            >
+              {({ isActive }) => (
+                <>
+                  <Icon size={18} />
+                  <span className="min-w-0 flex-1 truncate">{t(label)}</span>
+                  {count > 0 && (
+                    <span
+                      className={cn(
+                        'inline-flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full px-1.5 text-xs font-semibold',
+                        isActive ? 'bg-white text-brand-700' : 'bg-amber-100 text-amber-800'
+                      )}
+                      title={t('adminStaff.pendingBadgeTitle', { count })}
+                    >
+                      {count}
+                    </span>
+                  )}
+                </>
+              )}
+            </NavLink>
+          )
+        })}
       </nav>
 
       <div className="border-t border-brand-100 p-3">

@@ -1,7 +1,6 @@
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts'
 import { useTranslation } from 'react-i18next'
-
-const COLORS = ['#33408f', '#2fb0b5', '#6270c2', '#ffc046', '#8f9bd8', '#1e1b51']
+import { CATEGORICAL as COLORS } from './chartColors'
 
 function CustomTooltip({ active, payload, t }) {
   if (!active || !payload?.length) return null

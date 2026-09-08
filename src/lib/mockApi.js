@@ -213,6 +213,24 @@ export async function createStaffAccount(data, createdBy) {
   return staff
 }
 
+// Caregivers are independent contractors who sign themselves up. They land as
+// 'pending' and stay out of booking matches until an Admin approves them.
+export async function registerCaregiver(data) {
+  const existing = await staffApi.list()
+  if (existing.some((s) => s.phone === data.phone)) {
+    return { ok: false, message: 'A caregiver account already exists for this mobile number.' }
+  }
+  const caregiver = await createStaffAccount(
+    { ...data, status: 'pending', documents: [], registeredAt: new Date().toISOString() },
+    'self-registered'
+  )
+  return { ok: true, caregiver }
+}
+
+export async function approveCaregiver(staffId) {
+  return staffApi.update(staffId, { status: 'active' })
+}
+
 export async function sendChatMessage({ staffId, userId, userName, from, text }) {
   const message = {
     id: genId('msg'),

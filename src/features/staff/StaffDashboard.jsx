@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { CalendarClock, MapPin, Star, ArrowRight, CheckCircle2 } from 'lucide-react'
+import { CalendarClock, MapPin, Star, ArrowRight, CheckCircle2, ShieldAlert } from 'lucide-react'
 import { bookingsApi, staffApi, getStaffAverageRating } from '../../lib/mockApi'
 import { useSession } from '../../lib/session'
 import { STATUS_TONE, STATUS_LABEL } from '../../lib/bookingStatus'
 import { revenueByDay, bookingsByStatus } from '../../lib/chartData'
 import Card from '../../components/ui/Card'
 import Badge from '../../components/ui/Badge'
+import RewardPointsCard from '../../components/RewardPointsCard'
+import { getCaregiverPointsHistory } from '../../lib/rewardPoints'
 import RevenueTrendChart from '../../components/charts/RevenueTrendChart'
 import StatusBarChart from '../../components/charts/StatusBarChart'
 import DayRangeSelect from '../../components/charts/DayRangeSelect'
@@ -17,6 +19,7 @@ export default function StaffDashboard() {
   const { session } = useSession()
   const [bookings, setBookings] = useState(null)
   const [seedRating, setSeedRating] = useState(0)
+  const [status, setStatus] = useState(null)
   const [revenueDays, setRevenueDays] = useState(14)
 
   useEffect(() => {
@@ -25,6 +28,7 @@ export default function StaffDashboard() {
       setBookings(all.filter((b) => b.staffId === session.id))
       const profile = await staffApi.get(session.id)
       setSeedRating(profile?.rating ?? 0)
+      setStatus(profile?.status ?? null)
     }
     load()
   }, [session.id])
@@ -38,6 +42,24 @@ export default function StaffDashboard() {
     <div className="mx-auto max-w-5xl">
       <h1 className="text-2xl font-semibold text-slate-900">{t('staffDashboard.welcome', { name: session.name.split(' ')[0] })}</h1>
       <p className="mt-1 text-sm text-slate-500">{t('staffDashboard.subtitle')}</p>
+
+      {status === 'pending' && (
+        <Card className="mt-5 border-amber-200 bg-amber-50" animate={false}>
+          <div className="flex items-start gap-3">
+            <ShieldAlert size={18} className="mt-0.5 shrink-0 text-amber-600" />
+            <div>
+              <p className="text-sm font-semibold text-amber-900">{t('staffDashboard.pendingTitle')}</p>
+              <p className="mt-1 text-sm text-amber-800">{t('staffDashboard.pendingMessage')}</p>
+              <Link
+                to="/staff/profile"
+                className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-amber-900 hover:underline"
+              >
+                {t('staffDashboard.pendingUploadCta')} <ArrowRight size={14} />
+              </Link>
+            </div>
+          </div>
+        </Card>
+      )}
 
       <div className="mt-6 grid grid-cols-3 gap-3">
         <Card animate={false} className="text-center">
@@ -73,6 +95,12 @@ export default function StaffDashboard() {
           <StatusBarChart data={bookingsByStatus(bookings, t)} />
         </Card>
       </div>
+
+      <RewardPointsCard
+        className="mt-5"
+        variant="caregiver"
+        history={getCaregiverPointsHistory(bookings, session.id)}
+      />
 
       <div className="mt-6 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-slate-900">{t('staffDashboard.upcomingEngagements')}</h2>

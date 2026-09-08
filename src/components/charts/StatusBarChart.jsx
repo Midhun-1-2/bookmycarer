@@ -1,14 +1,6 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts'
 import { useTranslation } from 'react-i18next'
-
-const STATUS_COLORS = {
-  pending: '#ffc046',
-  confirmed: '#2fb0b5',
-  'in-progress': '#33408f',
-  completed: '#48bd69',
-  cancelled: '#ec2828',
-  unattended: '#f97316',
-}
+import { AXIS, BRAND, STATUS_COLORS } from './chartColors'
 
 function CustomTooltip({ active, payload, label, t }) {
   if (!active || !payload?.length) return null
@@ -25,13 +17,13 @@ export default function StatusBarChart({ data }) {
   return (
     <ResponsiveContainer width="100%" height={220}>
       <BarChart data={data} margin={{ top: 8, right: 8, left: -20, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#eef0fa" vertical={false} />
-        <XAxis dataKey="name" tick={{ fontSize: 11, fill: '#94a3b8' }} axisLine={{ stroke: '#dde1f5' }} tickLine={false} />
-        <YAxis tick={{ fontSize: 11, fill: '#94a3b8' }} axisLine={false} tickLine={false} width={30} allowDecimals={false} />
-        <Tooltip content={<CustomTooltip t={t} />} cursor={{ fill: '#eef0fa' }} />
+        <CartesianGrid strokeDasharray="3 3" stroke={AXIS.grid} vertical={false} />
+        <XAxis dataKey="name" tick={{ fontSize: 11, fill: AXIS.tick }} axisLine={{ stroke: AXIS.line }} tickLine={false} />
+        <YAxis tick={{ fontSize: 11, fill: AXIS.tick }} axisLine={false} tickLine={false} width={30} allowDecimals={false} />
+        <Tooltip content={<CustomTooltip t={t} />} cursor={{ fill: AXIS.cursor }} />
         <Bar dataKey="value" radius={[6, 6, 0, 0]} maxBarSize={48}>
           {data.map((entry) => (
-            <Cell key={entry.status} fill={STATUS_COLORS[entry.status] ?? '#3699f5'} />
+            <Cell key={entry.status} fill={STATUS_COLORS[entry.status] ?? BRAND} />
           ))}
         </Bar>
       </BarChart>

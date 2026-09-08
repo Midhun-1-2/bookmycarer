@@ -8,7 +8,16 @@ import Button from '../../components/ui/Button'
 import Modal from '../../components/ui/Modal'
 import Input from '../../components/ui/Input'
 
-const ICONS = ['HeartHandshake', 'HandHeart', 'Stethoscope', 'Sparkles', 'Car']
+const ICONS = [
+  'Stethoscope',
+  'Activity',
+  'HeartHandshake',
+  'HandHeart',
+  'Baby',
+  'Brain',
+  'Leaf',
+  'PawPrint',
+]
 const emptyCategory = { name: '', description: '', icon: 'HeartHandshake' }
 
 export default function AdminCategoriesPage() {

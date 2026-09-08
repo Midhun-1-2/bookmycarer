@@ -1,5 +1,6 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { useTranslation } from 'react-i18next'
+import { AXIS, BRAND } from './chartColors'
 
 function CustomTooltip({ active, payload, label, t }) {
   if (!active || !payload?.length) return null
@@ -16,18 +17,18 @@ export default function StaffBarChart({ data }) {
   return (
     <ResponsiveContainer width="100%" height={220}>
       <BarChart data={data} layout="vertical" margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#eef0fa" horizontal={false} />
-        <XAxis type="number" tick={{ fontSize: 11, fill: '#94a3b8' }} axisLine={false} tickLine={false} allowDecimals={false} />
+        <CartesianGrid strokeDasharray="3 3" stroke={AXIS.grid} horizontal={false} />
+        <XAxis type="number" tick={{ fontSize: 11, fill: AXIS.tick }} axisLine={false} tickLine={false} allowDecimals={false} />
         <YAxis
           type="category"
           dataKey="name"
-          tick={{ fontSize: 12, fill: '#475569' }}
+          tick={{ fontSize: 12, fill: AXIS.tickStrong }}
           axisLine={false}
           tickLine={false}
           width={70}
         />
-        <Tooltip content={<CustomTooltip t={t} />} cursor={{ fill: '#eef0fa' }} />
-        <Bar dataKey="value" radius={[0, 6, 6, 0]} fill="#33408f" maxBarSize={22} />
+        <Tooltip content={<CustomTooltip t={t} />} cursor={{ fill: AXIS.cursor }} />
+        <Bar dataKey="value" radius={[0, 6, 6, 0]} fill={BRAND} maxBarSize={22} />
       </BarChart>
     </ResponsiveContainer>
   )

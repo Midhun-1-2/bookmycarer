@@ -8,6 +8,7 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 import { useTranslation } from 'react-i18next'
+import { AXIS, BRAND } from './chartColors'
 
 function CustomTooltip({ active, payload, label, t }) {
   if (!active || !payload?.length) return null
@@ -26,24 +27,24 @@ export default function RevenueTrendChart({ data }) {
       <AreaChart data={data} margin={{ top: 8, right: 8, left: -20, bottom: 0 }}>
         <defs>
           <linearGradient id="revenueFill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#2fb0b5" stopOpacity={0.4} />
-            <stop offset="100%" stopColor="#2fb0b5" stopOpacity={0} />
+            <stop offset="0%" stopColor={BRAND} stopOpacity={0.28} />
+            <stop offset="100%" stopColor={BRAND} stopOpacity={0} />
           </linearGradient>
         </defs>
-        <CartesianGrid strokeDasharray="3 3" stroke="#eef0fa" vertical={false} />
+        <CartesianGrid strokeDasharray="3 3" stroke={AXIS.grid} vertical={false} />
         <XAxis
           dataKey="label"
-          tick={{ fontSize: 11, fill: '#94a3b8' }}
-          axisLine={{ stroke: '#dde1f5' }}
+          tick={{ fontSize: 11, fill: AXIS.tick }}
+          axisLine={{ stroke: AXIS.line }}
           tickLine={false}
           interval="preserveStartEnd"
         />
-        <YAxis tick={{ fontSize: 11, fill: '#94a3b8' }} axisLine={false} tickLine={false} width={40} />
+        <YAxis tick={{ fontSize: 11, fill: AXIS.tick }} axisLine={false} tickLine={false} width={40} />
         <Tooltip content={<CustomTooltip t={t} />} />
         <Area
           type="monotone"
           dataKey="revenue"
-          stroke="#229397"
+          stroke={BRAND}
           strokeWidth={2.5}
           fill="url(#revenueFill)"
         />

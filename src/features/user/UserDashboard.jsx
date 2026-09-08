@@ -8,6 +8,8 @@ import { STATUS_TONE, STATUS_LABEL } from '../../lib/bookingStatus'
 import Card from '../../components/ui/Card'
 import Badge from '../../components/ui/Badge'
 import CategoryCard from '../../components/CategoryCard'
+import RewardPointsCard from '../../components/RewardPointsCard'
+import { getSeekerPointsHistory } from '../../lib/rewardPoints'
 
 export default function UserDashboard() {
   const { t } = useTranslation()
@@ -58,6 +60,12 @@ export default function UserDashboard() {
           <p className="text-xs text-slate-500">{t('userProfile.totalSpentLabel')}</p>
         </Card>
       </div>
+
+      <RewardPointsCard
+        className="mt-4"
+        variant="seeker"
+        history={getSeekerPointsHistory(bookings, session.id)}
+      />
 
       <div className="mt-8 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-slate-900">{t('userMyBookings.title')}</h2>

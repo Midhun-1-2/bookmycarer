@@ -1,7 +1,13 @@
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import { categoriesApi } from '../../lib/mockApi'
 
 export default function Footer() {
   const { t } = useTranslation()
+  // Driven off the live category list so the footer can't drift from the taxonomy.
+  const categories = categoriesApi.listSync()
+  const half = Math.ceil(categories.length / 2)
+  const columns = [categories.slice(0, half), categories.slice(half)]
   return (
     <footer className="mt-auto border-t border-brand-100 bg-white">
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-8 px-4 py-10 text-center sm:px-6 md:flex-row md:items-start md:justify-between md:text-left lg:px-8">
@@ -14,22 +20,22 @@ export default function Footer() {
         </div>
 
         <div className="grid w-full grid-cols-2 gap-x-6 gap-y-8 text-sm sm:w-auto sm:grid-cols-3 sm:gap-x-10">
-          <div>
-            <p className="mb-2 font-medium text-slate-800">{t('footer.careType')}</p>
-            <ul className="space-y-1.5 text-slate-500">
-              <li>{t('footer.agedCare')}</li>
-              <li>{t('footer.personalCare')}</li>
-              <li>{t('footer.nursingServices')}</li>
-            </ul>
-          </div>
-          <div>
-            <p className="mb-2 font-medium text-slate-800">{t('footer.services')}</p>
-            <ul className="space-y-1.5 text-slate-500">
-              <li>{t('footer.domesticAssistance')}</li>
-              <li>{t('footer.socialCompanionship')}</li>
-              <li>{t('footer.transportAssistance')}</li>
-            </ul>
-          </div>
+          {columns.map((column, i) => (
+            <div key={i}>
+              <p className="mb-2 font-medium text-slate-800">
+                {i === 0 ? t('footer.careType') : t('footer.services')}
+              </p>
+              <ul className="space-y-1.5 text-slate-500">
+                {column.map((cat) => (
+                  <li key={cat.id}>
+                    <Link to={`/services/${cat.slug}`} className="hover:text-brand-700">
+                      {cat.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
           <div className="col-span-2 sm:col-span-1">
             <p className="mb-2 font-medium text-slate-800">{t('footer.company')}</p>
             <ul className="space-y-1.5 text-slate-500">

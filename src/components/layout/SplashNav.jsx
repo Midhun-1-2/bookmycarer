@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
@@ -21,6 +21,28 @@ export default function SplashNav() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileSection, setMobileSection] = useState(null)
 
+  // Closing on mouseleave immediately makes the menu vanish while the cursor is
+  // still crossing the gap between the trigger and the dropdown. A short delay
+  // (cancelled if the cursor re-enters either element) fixes that without
+  // changing anything for a deliberate move away.
+  const servicesCloseTimer = useRef(null)
+  const locationCloseTimer = useRef(null)
+
+  function openServices() {
+    clearTimeout(servicesCloseTimer.current)
+    setServicesOpen(true)
+  }
+  function scheduleCloseServices() {
+    servicesCloseTimer.current = setTimeout(() => setServicesOpen(false), 250)
+  }
+  function openLocation() {
+    clearTimeout(locationCloseTimer.current)
+    setLocationOpen(true)
+  }
+  function scheduleCloseLocation() {
+    locationCloseTimer.current = setTimeout(() => setLocationOpen(false), 250)
+  }
+
   return (
     <>
     <header className="sticky top-0 z-40 border-b border-brand-100 bg-white/85 backdrop-blur">
@@ -42,8 +64,8 @@ export default function SplashNav() {
 
           <div
             className="relative"
-            onMouseEnter={() => setServicesOpen(true)}
-            onMouseLeave={() => setServicesOpen(false)}
+            onMouseEnter={openServices}
+            onMouseLeave={scheduleCloseServices}
           >
             <button className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:text-brand-700">
               {t('nav.careTypeServices')}
@@ -55,7 +77,7 @@ export default function SplashNav() {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 8 }}
-                  transition={{ duration: 0.15 }}
+                  transition={{ duration: 0.25, ease: 'easeOut' }}
                   className="absolute left-1/2 top-full z-50 mt-2 w-[640px] -translate-x-1/2 rounded-2xl border border-brand-100 bg-white p-5 shadow-xl shadow-brand-900/10"
                 >
                   <div className="grid grid-cols-3 gap-4">
@@ -95,8 +117,8 @@ export default function SplashNav() {
 
           <div
             className="relative"
-            onMouseEnter={() => setLocationOpen(true)}
-            onMouseLeave={() => setLocationOpen(false)}
+            onMouseEnter={openLocation}
+            onMouseLeave={scheduleCloseLocation}
           >
             <button className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:text-brand-700">
               <MapPin size={14} />
@@ -109,7 +131,7 @@ export default function SplashNav() {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 8 }}
-                  transition={{ duration: 0.15 }}
+                  transition={{ duration: 0.25, ease: 'easeOut' }}
                   className="absolute left-0 top-full z-50 mt-2 w-56 rounded-2xl border border-brand-100 bg-white p-2 shadow-xl shadow-brand-900/10"
                 >
                   {LOCATIONS.map((loc) => (
@@ -136,6 +158,11 @@ export default function SplashNav() {
             </Link>
           ) : (
             <>
+              <Link to="/become-a-caregiver" className="hidden xl:block">
+                <Button size="sm" variant="ghost">
+                  {t('nav.becomeACaregiver')}
+                </Button>
+              </Link>
               <Link to="/login/staff">
                 <Button size="sm" variant="outline">
                   {t('nav.caregiverLogin')}
@@ -270,6 +297,11 @@ export default function SplashNav() {
                     <Link to="/login/staff" onClick={() => setMobileOpen(false)}>
                       <Button className="w-full" variant="outline">
                         {t('nav.caregiverLogin')}
+                      </Button>
+                    </Link>
+                    <Link to="/become-a-caregiver" onClick={() => setMobileOpen(false)}>
+                      <Button className="w-full" variant="ghost">
+                        {t('nav.becomeACaregiver')}
                       </Button>
                     </Link>
                   </>

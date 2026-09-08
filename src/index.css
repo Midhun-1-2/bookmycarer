@@ -1,30 +1,61 @@
 @import "tailwindcss";
 
 @theme {
-  /* Navy — extracted from the client's original USS SRS app mockups (#1E1B51) */
-  --color-brand-50: #eef0fa;
-  --color-brand-100: #dde1f5;
-  --color-brand-200: #b8c0e8;
-  --color-brand-300: #8f9bd8;
-  --color-brand-400: #6270c2;
-  --color-brand-500: #4450a8;
-  --color-brand-600: #33408f;
-  --color-brand-700: #262f72;
-  --color-brand-800: #1e1b51;
-  --color-brand-900: #16123d;
-  --color-brand-950: #0d0a26;
+  /* Brand red — the logo red (#DD222B) at 600, darkening into the logo black
+     (#231F20) at 950. The light end stays a near-white blush so the site reads
+     light and airy: red is for action and emphasis, never for large fields. */
+  --color-brand-50: #fcf8f7;
+  --color-brand-100: #fbe3e4;
+  --color-brand-200: #f6c6c8;
+  --color-brand-300: #ef9ba0;
+  --color-brand-400: #e86e75;
+  --color-brand-500: #e2454d;
+  --color-brand-600: #dd222b;
+  --color-brand-700: #b21a22;
+  --color-brand-800: #7f1b20;
+  --color-brand-900: #4a1e20;
+  --color-brand-950: #231f20;
 
-  /* Teal — accent extracted from the same mockups (#5BC5C9) */
-  --color-accent-50: #eafbfb;
-  --color-accent-100: #d0f5f5;
-  --color-accent-200: #a3ebec;
-  --color-accent-300: #6fdbde;
-  --color-accent-400: #46c8cc;
-  --color-accent-500: #2fb0b5;
-  --color-accent-600: #229397;
-  --color-accent-700: #1c757a;
+  /* Ink — warm charcoal supporting scale, also anchored on the logo black.
+     Carries the second colour in charts and chips so nothing stray creeps in. */
+  --color-accent-50: #f7f5f5;
+  --color-accent-100: #ebe8e8;
+  --color-accent-200: #d5d0d0;
+  --color-accent-300: #b0a9a9;
+  --color-accent-400: #877f80;
+  --color-accent-500: #665e5f;
+  --color-accent-600: #4d4546;
+  --color-accent-700: #383132;
 
-  /* Gold — small emphasis accent extracted from the same mockups (#FFC046) */
+  /* Neutrals — Tailwind's cool slate replaced with a warm grey that resolves to
+     the logo black at 900, so every heading and label is the client's #231F20. */
+  --color-slate-50: #faf9f9;
+  --color-slate-100: #f3f1f1;
+  --color-slate-200: #e6e3e3;
+  --color-slate-300: #d0cbcb;
+  --color-slate-400: #a49e9e;
+  --color-slate-500: #7c7576;
+  --color-slate-600: #5a5354;
+  --color-slate-700: #443e3f;
+  --color-slate-800: #2f2a2b;
+  --color-slate-900: #231f20;
+  --color-slate-950: #171314;
+
+  /* Danger — deeper, heavier red than the brand red so destructive actions and
+     the emergency alert stay distinguishable from ordinary primary buttons. */
+  --color-rose-50: #fdf3f3;
+  --color-rose-100: #fae2e2;
+  --color-rose-200: #f4c4c4;
+  --color-rose-300: #e59a9a;
+  --color-rose-400: #cf6a6c;
+  --color-rose-500: #bb3a3d;
+  --color-rose-600: #a5111b;
+  --color-rose-700: #860f16;
+  --color-rose-800: #6b0f14;
+  --color-rose-900: #551015;
+  --color-rose-950: #2e0709;
+
+  /* Gold — star ratings only. */
   --color-gold-400: #ffc046;
   --color-gold-500: #f2a91f;
   --color-gold-600: #d68f0f;
@@ -70,7 +101,7 @@ body {
   margin: 0;
   font-family: var(--font-sans);
   background: var(--color-brand-50);
-  color: #1e293b;
+  color: #2f2a2b;
   overflow-x: hidden;
 }
 
@@ -83,5 +114,5 @@ body {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-brand-300) transparent;
+  scrollbar-color: var(--color-slate-300) transparent;
 }

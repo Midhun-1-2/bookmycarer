@@ -180,6 +180,15 @@ export default function LoginPage({ role }) {
             )}
           </AnimatePresence>
 
+          {role === 'staff' && (
+            <p className="mt-5 text-center text-sm text-slate-500">
+              {t('caregiverRegister.notRegistered')}{' '}
+              <Link to="/become-a-caregiver" className="font-medium text-brand-700 hover:underline">
+                {t('caregiverRegister.registerHere')}
+              </Link>
+            </p>
+          )}
+
           {copy.demoPhones && role !== 'user' && (
             <p className="mt-5 rounded-lg bg-slate-50 px-3 py-2 text-xs text-slate-400">
               {copy.demoPhones.length > 1

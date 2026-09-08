@@ -5,13 +5,14 @@
     "location": "Location",
     "caregiverLogin": "Caregiver Login",
     "loginBookNow": "Login / Book Now",
-    "dashboard": "Go to dashboard"
+    "dashboard": "Go to dashboard",
+    "becomeACaregiver": "Become a Caregiver"
   },
   "hero": {
     "badge": "Now serving families across India",
     "title1": "Compassionate care,",
     "title2": "delivered to your door.",
-    "subtitle": "Book My Carer connects families with verified caregivers, nurses, and support staff — matched to your needs, on your schedule.",
+    "subtitle": "Book My Carer connects families with verified caregivers, nurses, and support workers — matched to your needs, on your schedule.",
     "cta1": "Book a caregiver",
     "cta2": "Browse services"
   },
@@ -35,7 +36,7 @@
   },
   "home": {
     "ctaTitle": "Ready to find the right caregiver?",
-    "ctaSubtitle": "Tell us what you need and we'll match you with qualified, verified staff near you.",
+    "ctaSubtitle": "Tell us what you need and we'll match you with qualified, verified caregivers near you.",
     "ctaButton": "Get started",
     "heroImageAlt": "Caregiver supporting a senior at home"
   },
@@ -103,7 +104,7 @@
   },
   "roleLabel": {
     "user": "Care Seeker",
-    "staff": "Caregiver Staff",
+    "staff": "Caregiver",
     "admin": "Admin",
     "superAdmin": "Super Admin"
   },
@@ -115,7 +116,7 @@
   },
   "adminNav": {
     "dashboard": "Dashboard",
-    "staffAccounts": "Staff Accounts",
+    "staffAccounts": "Caregiver Accounts",
     "serviceCategories": "Service Categories",
     "servicePagesCms": "Service Pages CMS",
     "bookingsOversight": "Bookings Oversight"
@@ -139,16 +140,16 @@
       "sub": "Log in as a Care Seeker to browse services and manage bookings."
     },
     "staff": {
-      "heading": "Caregiver Staff Login",
+      "heading": "Caregiver Login",
       "sub": "Log in to view your engagements and manage check-in/out."
     },
     "admin": {
       "heading": "Admin Portal",
-      "sub": "Manage staff accounts, service categories, and bookings."
+      "sub": "Manage caregiver accounts, service categories, and bookings."
     },
     "superAdmin": {
       "heading": "Super Admin Portal",
-      "sub": "Full system access — manage admins, staff, and platform settings."
+      "sub": "Full system access — manage admins, caregivers, and platform settings."
     },
     "errors": {
       "invalidPhone": "Enter a valid 10-digit mobile number.",
@@ -304,15 +305,15 @@
   },
   "adminDashboard": {
     "title": "Admin overview",
-    "subtitle": "Manage staff, service categories, and bookings.",
-    "staffAccounts": "Staff accounts",
+    "subtitle": "Manage caregivers, service categories, and bookings.",
+    "staffAccounts": "Caregiver accounts",
     "serviceCategories": "Service categories",
     "pendingBookings": "Pending bookings",
     "revenueCollected": "Revenue collected",
     "revenueLast14Days": "Revenue",
     "bookingsByCategory": "Bookings by category",
     "bookingsByStatus": "Bookings by status",
-    "topStaffByEngagements": "Top staff by engagements"
+    "topStaffByEngagements": "Top caregivers by engagements"
   },
   "adminServicePages": {
     "title": "Service Pages CMS",
@@ -349,9 +350,9 @@
     "createPageDraft": "Create page (draft)"
   },
   "adminStaff": {
-    "title": "Staff Accounts",
-    "subtitle": "Create and manage caregiver staff accounts.",
-    "createStaff": "Create staff",
+    "title": "Caregiver Accounts",
+    "subtitle": "Create and manage independent caregiver accounts.",
+    "createStaff": "Add caregiver",
     "colName": "Name",
     "colPhone": "Phone",
     "colLocation": "Location",
@@ -363,7 +364,7 @@
     "radiusKm": "{{radius}} km",
     "statusActive": "Active",
     "statusInactive": "Inactive",
-    "createStaffAccount": "Create staff account",
+    "createStaffAccount": "Add caregiver account",
     "fullName": "Full name",
     "phoneNumber": "Phone number",
     "city": "City",
@@ -377,7 +378,7 @@
     "colActions": "Actions",
     "edit": "Edit",
     "toggleStatus": "Toggle status",
-    "editModalTitle": "Edit staff account",
+    "editModalTitle": "Edit caregiver account",
     "saveChanges": "Save changes",
     "saving": "Saving…",
     "experienceYears": "Experience (years)",
@@ -385,7 +386,22 @@
     "availableHint": "Shown to care seekers when matching caregivers.",
     "confirmStatusTitle": "Change account status",
     "confirmStatusMessage": "Set {{name}}'s account to {{status}}?",
-    "ratingLabel": "Rating (0–5)"
+    "ratingLabel": "Rating (0–5)",
+    "statusPending": "Pending",
+    "confirmApproveTitle": "Approve caregiver",
+    "confirmApproveMessage": "Approve {{name}}? They will start appearing in booking matches.",
+    "documentsTitle": "Uploaded documents",
+    "documentsEmpty": "No documents uploaded yet.",
+    "documentUntyped": "Untitled document",
+    "documentNoFile": "No file",
+    "pendingApprovalsTitle": "Pending approvals ({{count}})",
+    "pendingApprovalsSubtitle": "Caregivers who registered themselves and are waiting to be verified. Approved caregivers start appearing in booking matches.",
+    "approve": "Approve",
+    "reject": "Reject",
+    "documentsEmptyWarning": "No documents uploaded yet — ask them to upload before approving.",
+    "confirmRejectTitle": "Reject caregiver",
+    "confirmRejectMessage": "Reject {{name}}? Their account will be set to Inactive and they won't appear in booking matches.",
+    "pendingBadgeTitle": "{{count}} awaiting approval"
   },
   "staffDashboard": {
     "welcome": "Welcome back, {{name}}",
@@ -397,7 +413,10 @@
     "statusChartTitle": "Engagements by status",
     "upcomingEngagements": "Upcoming engagements",
     "viewAll": "View all",
-    "noUpcoming": "No upcoming engagements right now."
+    "noUpcoming": "No upcoming engagements right now.",
+    "pendingTitle": "Your account is awaiting approval",
+    "pendingMessage": "Upload your documents so our team can verify you. You won't appear in family booking matches until you're approved.",
+    "pendingUploadCta": "Upload documents"
   },
   "staffEngagementDetail": {
     "engagements": "Engagements",
@@ -482,11 +501,11 @@
   },
   "superAdminDashboard": {
     "chartUsers": "Users",
-    "chartStaff": "Staff",
+    "chartStaff": "Caregivers",
     "chartAdmins": "Admins",
     "chartSuperAdmins": "Super Admins",
     "cardAdminAccounts": "Admin accounts",
-    "cardStaffAccounts": "Staff accounts",
+    "cardStaffAccounts": "Caregiver accounts",
     "cardServiceCategories": "Service categories",
     "cardTotalBookings": "Total bookings",
     "cardRevenueCollected": "Revenue collected",
@@ -608,5 +627,39 @@
     "emptyThread": "No messages in this conversation yet.",
     "replyPlaceholder": "Type a reply…",
     "send": "Send"
+  },
+  "caregiverRegister": {
+    "badge": "Caregiver Registration",
+    "heading": "Join as a caregiver",
+    "sub": "Register as an independent caregiver and start receiving booking requests from families near you.",
+    "feeNote": "Joining is free. A platform fee applies only on completed bookings.",
+    "fullName": "Full name",
+    "mobile": "Mobile number",
+    "email": "Email",
+    "city": "City",
+    "area": "Area",
+    "experienceYears": "Experience (years)",
+    "servicesOffered": "Services you offer",
+    "documentsNote": "You'll upload your documents — Aadhaar, PAN, qualifications and photo — from your profile after you log in.",
+    "submit": "Submit registration",
+    "submitting": "Submitting…",
+    "alreadyRegistered": "Already registered?",
+    "logInHere": "Log in here",
+    "notRegistered": "New caregiver?",
+    "registerHere": "Register here",
+    "errorPhone": "Enter a valid 10-digit mobile number.",
+    "errorCategories": "Select at least one service you offer.",
+    "successTitle": "Registration received",
+    "successMessage": "Your caregiver account has been created and is awaiting approval by our team. You can log in with your mobile number right away.",
+    "successDocuments": "Next step: log in and upload your Aadhaar, PAN, qualification certificates and photo from your profile. Approved caregivers appear in family booking matches.",
+    "goToLogin": "Go to caregiver login"
+  },
+  "rewards": {
+    "title": "Reward points",
+    "subtitleSeeker": "You earn 1 point for every ₹1 spent on bookings.",
+    "subtitleCaregiver": "You earn 1 point for every ₹1 earned from completed engagements.",
+    "pointsLabel": "points",
+    "pointsEarned": "+{{points}} pts",
+    "futureNote": "Points accumulate for upcoming rewards. Redemption coming soon."
   }
 }

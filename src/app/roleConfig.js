@@ -44,7 +44,7 @@ export const STAFF_NAV = [
 
 export const ADMIN_NAV = [
   { to: '/admin/dashboard', label: 'adminNav.dashboard', icon: LayoutDashboard },
-  { to: '/admin/staff', label: 'adminNav.staffAccounts', icon: Users },
+  { to: '/admin/staff', label: 'adminNav.staffAccounts', icon: Users, badge: 'pendingCaregivers' },
   { to: '/admin/categories', label: 'adminNav.serviceCategories', icon: FolderKanban },
   { to: '/admin/service-pages', label: 'adminNav.servicePagesCms', icon: FileText },
   { to: '/admin/bookings', label: 'adminNav.bookingsOversight', icon: ClipboardList },
@@ -53,7 +53,7 @@ export const ADMIN_NAV = [
 export const SUPER_ADMIN_NAV = [
   { to: '/super-admin/dashboard', label: 'superAdminNav.dashboard', icon: LayoutDashboard },
   { to: '/super-admin/admins', label: 'superAdminNav.adminAccounts', icon: ShieldCheck },
-  { to: '/super-admin/staff', label: 'adminNav.staffAccounts', icon: Users },
+  { to: '/super-admin/staff', label: 'adminNav.staffAccounts', icon: Users, badge: 'pendingCaregivers' },
   { to: '/super-admin/categories', label: 'adminNav.serviceCategories', icon: FolderKanban },
   { to: '/super-admin/service-pages', label: 'adminNav.servicePagesCms', icon: FileText },
   { to: '/super-admin/bookings', label: 'adminNav.bookingsOversight', icon: ClipboardList },
