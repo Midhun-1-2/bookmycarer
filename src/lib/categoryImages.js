@@ -1,6 +1,6 @@
 const CATEGORY_PHOTO_IDS = {
   Stethoscope: 'photo-1691139601099-932c01ec198b', // Nursing & Clinical — nurse checking a senior's vitals
-  Activity: 'photo-1522898467493-49726bf28798', // Physio, Rehab & Speech — therapist guiding recovery work
+  Activity: 'photo-1571019613454-1cb2f99b2d8b', // Physio, Rehab & Speech — bright, sunlit rehab exercise session
   HeartHandshake: 'photo-1543333995-a78aea2eee50', // Elder & Disability Care — caregiver assisting a senior
   HandHeart: 'photo-1587556930720-58ec521056a5', // Personal & Daily Living — help with everyday living
   Baby: 'photo-1552819289-e14fbbcea868', // Mother & Baby Care — newborn with mother

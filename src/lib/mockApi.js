@@ -221,7 +221,12 @@ export async function registerCaregiver(data) {
     return { ok: false, message: 'A caregiver account already exists for this mobile number.' }
   }
   const caregiver = await createStaffAccount(
-    { ...data, status: 'pending', documents: [], registeredAt: new Date().toISOString() },
+    {
+      ...data,
+      status: 'pending',
+      documents: data.documents ?? [],
+      registeredAt: new Date().toISOString(),
+    },
     'self-registered'
   )
   return { ok: true, caregiver }

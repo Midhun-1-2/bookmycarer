@@ -19,7 +19,12 @@
   "trust": {
     "verified": "Background-verified caregivers",
     "flexible": "Flexible hourly, daily & weekly plans",
-    "rated": "Rated 4.7+ average by families"
+    "rated": "Rated 4.7+ average by families",
+    "familiesTitle": "Thousands of Families Trust Us",
+    "verifiedTitle": "Verified & Trained Caregivers",
+    "ratedTitle": "4.7+ Average Rating",
+    "supportTitle": "24/7 Support Always Here",
+    "quote": "Because your loved ones deserve the best."
   },
   "browse": {
     "title": "Browse by Care Type",
@@ -38,7 +43,20 @@
     "ctaTitle": "Ready to find the right caregiver?",
     "ctaSubtitle": "Tell us what you need and we'll match you with qualified, verified caregivers near you.",
     "ctaButton": "Get started",
-    "heroImageAlt": "Caregiver supporting a senior at home"
+    "heroImageAlt": "Caregiver supporting a senior at home",
+    "featuredBadge": "Our Services",
+    "featuredTitle": "Professional care for every stage of life",
+    "featuredSubtitle": "From post-surgery recovery to daily living support, we're here when you need us most.",
+    "featuredCta": "Explore all services",
+    "ctaEyebrow": "Your Family, Our Priority",
+    "ctaTrust1": "Trusted & Verified",
+    "ctaTrust1Desc": "Background-checked caregivers",
+    "ctaTrust2": "Flexible Scheduling",
+    "ctaTrust2Desc": "Hourly, daily & weekly plans",
+    "ctaTrust3": "Care You Can Count On",
+    "ctaTrust3Desc": "Rated 4.7+ by families",
+    "heroCaption1": "Better Care",
+    "heroCaption2": "Brighter Days"
   },
   "servicesListPage": {
     "title": "All Care Services",
@@ -640,7 +658,7 @@
     "area": "Area",
     "experienceYears": "Experience (years)",
     "servicesOffered": "Services you offer",
-    "documentsNote": "You'll upload your documents — Aadhaar, PAN, qualifications and photo — from your profile after you log in.",
+    "documentsNote": "You can add or replace documents anytime from your profile after logging in.",
     "submit": "Submit registration",
     "submitting": "Submitting…",
     "alreadyRegistered": "Already registered?",
@@ -651,8 +669,16 @@
     "errorCategories": "Select at least one service you offer.",
     "successTitle": "Registration received",
     "successMessage": "Your caregiver account has been created and is awaiting approval by our team. You can log in with your mobile number right away.",
-    "successDocuments": "Next step: log in and upload your Aadhaar, PAN, qualification certificates and photo from your profile. Approved caregivers appear in family booking matches.",
-    "goToLogin": "Go to caregiver login"
+    "successDocuments": "You can review, replace or add more documents anytime from your profile. Approved caregivers appear in family booking matches.",
+    "goToLogin": "Go to caregiver login",
+    "documentsTitle": "Upload your documents",
+    "documentsSubtitle": "Add each file with a label so our team knows what it is — for example Aadhaar Card, PAN Card, certificates or a photo.",
+    "documentTypePlaceholder": "Document type, e.g. Aadhaar Card",
+    "chooseFile": "Choose file",
+    "changeFile": "Change file",
+    "noFileChosen": "No file chosen",
+    "addAnotherDocument": "Add another document",
+    "removeDocument": "Remove"
   },
   "rewards": {
     "title": "Reward points",
